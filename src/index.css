@@ -1,0 +1,21 @@
+@import './bootstrap.css';
+
+.caption-nav {
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* Efecto de desenfoque para Safari */
+    padding: 0.2rem;
+    border-radius: 5px; /* Bordes redondeados */
+    color: black; /* Asegúrate de que el texto sea visible */
+  }
+  .caption-title {
+    z-index: 10;
+    max-width: 60vw;
+    background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* Efecto de desenfoque para Safari */
+    padding: 1rem;
+    border-radius: 8px; /* Bordes redondeados */
+    color: black; /* Asegúrate de que el texto sea visible */
+  }

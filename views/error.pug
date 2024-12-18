@@ -1,0 +1,19 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Error
+        link(rel="stylesheet" href="/index.css")
+    body 
+      div(style="display: flex; align-items: center; justify-content: center")
+        div
+          div
+            h1 Error: #{status}
+            h2 #{message}
+            h3 (¡¡¡Creo que algo salió mal!!!)
+            a.button(href='/') Volver
+    script. 
+      setTimeout(() => {
+          window.location.href = '/';
+        }, 9000);
