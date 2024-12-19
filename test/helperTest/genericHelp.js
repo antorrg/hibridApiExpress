@@ -44,3 +44,13 @@ export const dataCreated = {
     enable: true,
     deletedAt: null,
   };
+
+  const redirectionImages = jest.fn().mockImplementation((imageUrl) => {
+    try {
+      if(imageUrl.trim()=== 'url')
+      
+      throw new Error('Simulated error');
+    } catch (error) {
+      throw error;
+    }
+  });

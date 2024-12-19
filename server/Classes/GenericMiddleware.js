@@ -1,123 +1,106 @@
-import eh from '../errorHandler.js';
+import { middError } from '../errorHandler.js';
 import {validate as isUUID} from 'uuid'
 
 class GenericMidd {
     constructor(requiredFields = []) {
         this.requiredFields = requiredFields;
+        this.validateFields = this.validateFields.bind(this);
+        
     }
 
-    validateFields() {
+    validateFields(requiredFields = this.requiredFields){
+        //console.log('Constructor requiredFields:', requiredFields);
         return (req, res, next) => {
             const newData = req.body;
 
             // Verificar si req.body está vacío o no tiene claves
             if (!newData || Object.keys(newData).length === 0) {
-                return next(eh.middError('Invalid parameters', 400))
+                return next(middError('Invalid parameters', 400))
             }
 
             // Filtrar campos faltantes
-            const missingFields = this.requiredFields.filter(field => !(field in newData));
+            //console.log('a ver si estan: ',requiredFields)
+            const missingFields = requiredFields.filter(field => !(field in newData));
             if (missingFields.length > 0) {
-                return next(eh.middError(`Missing parameters: ${missingFields.join(', ')}`, 400));
+                return next(middError(`Missing parameters: ${missingFields.join(', ')}`, 400));
             }
             next();
         };
     }
-        // Middleware para validar UUIDs en un campo específico
-        validateUUID() {
-            return (req, res, next) => {
-                const {id} = req.params
-                
-                if (!id || !isUUID(id)) {
-                    return next(eh.middError(`El campo id debe ser un UUID válido`, 400));
-                }
-    
-                next();
-            };
-        }     
-        validateINT() {
-            return (req, res, next)=>{
-                const {id} = req.params;
-                const idIsNumber = !isNaN(id) && Number.isInteger(parseFloat(id));
-                if (!id) {return next(eh.middError('Missing id',400))}
-               if (id && !idIsNumber) {return next(eh.middError('Invalid parameters', 400))}
-                next()
+     // Middleware para validar UUIDs en un campo específico
+     validateUUID(fieldName) {
+        return (req, res, next) => {
+            const value = req.params[fieldName]
+            
+            if (!value|| !isUUID(value)) {
+                return next(middError(`El campo ${value} debe ser un UUID válido`, 400));
             }
+            next();
+        };
+    }     
+    validateINT(fieldName) {
+        return (req, res, next)=>{
+            const value = req.params[fieldName];
+            const idIsNumber = !isNaN(value) && Number.isInteger(parseFloat(value));
+            if (!value) {return next(middError(`Missing ${value}.`,400))}
+           if (id && !idIsNumber) {return next(eh.middError('Invalid parameters', 400))}
+            next()
         }
+    }
         // Middleware para validar números en un campo específico
         validateNumbers(fieldName) {
             return (req, res, next) => {
                 const value = req.body[fieldName];
     
                 if (value === undefined || isNaN(Number(value))) {
-                    return next(eh.middError(`El campo ${fieldName} debe ser un número válido`, 400));
+                    return next(middError(`El campo ${fieldName} debe ser un número válido`, 400));
                 }
     
                 next();
             };
         }
-    
-        // Middleware para validar formato de email en un campo específico
+       
         validateFieldContent(fieldName, fieldRegex, errorMessage = null) {
             return (req, res, next) => {
                 const value = req.body[fieldName];
         
                 if (!value || !fieldRegex.test(value)) {
                     const defaultMessage = `El campo '${fieldName}' no cumple con el formato requerido.`;
-                    return next(eh.middError(errorMessage || defaultMessage, 400));
+                    return next(middError(errorMessage || defaultMessage, 400));
                 }
         
                 next();
             };
         }
+    
         
 };
-
 class ProductMidd extends GenericMidd {
     constructor(requiredFields = [], secondFields = []) {
         super(requiredFields);
-        this.secondFields = secondFields; // Campos dentro de "items"
-    }
-
+        this.defaultSecondFields = secondFields;
+    };
     // Validar los campos del body y además los items
-    validateFieldsWithItems() {
+    validateFieldsWithItems(requiredFields = this.requiredFields, secondFields = this.defaultSecondFields) {
         return (req, res, next) => {
-            const newData = req.body;
-
-            // Llamar a validateFields del padre para los campos generales
-            const validateGeneralFields = super.validateFields();
+            //console.log('primero: ', requiredFields+ ' // '+secondFields)
+            // Llamar al método del padre para validar los campos generales
+            const validateGeneralFields = super.validateFields(requiredFields);
             validateGeneralFields(req, res, (err) => {
-                if (err) return next(err); // Si hay error en campos generales, salir
+                if (err) return next(err); // Si hay error en los campos generales, salir
 
                 // Validar el array de "items"
-                const secondData = newData.items;
+                const secondData = req.body.items;
 
                 if (!secondData || !Array.isArray(secondData) || secondData.length === 0) {
-                    return next(eh.middError('Missing items array or empty array', 400));
+                    return next(middError('Missing items array or empty array', 400));
                 }
 
-                // Iterar sobre cada objeto dentro de items
-                // for (let i = 0; i < secondData.length; i++) {
-                //     const item = secondData[i];
-
-                //     const missingFields = this.secondFields.filter(
-                //         (field) => !(field in item)
-                //     );
-
-                //     if (missingFields.length > 0) {
-                //         return next(
-                //             eh.middError(
-                //                 `Missing parameters in items[${i}]: ${missingFields.join(', ')}`,
-                //                 400
-                //             )
-                //         );
-                //     }
-                // }
                 secondData.forEach((item, index) => {
-                    const missingFields = this.secondFields.filter((field) => !(field in item));
-                    if (missingFields.length > 0) {
+                    const missingItemFields = secondFields.filter((field) => !(field in item));
+                    if (missingItemFields.length > 0) {
                         return next(
-                            eh.middError(`Missing parameters in items[${index}]: ${missingFields.join(', ')}`, 400)
+                          middError(`Missing parameters in items[${index}]: ${missingItemFields.join(', ')}`, 400)
                         );
                     }
                 });
@@ -127,9 +110,12 @@ class ProductMidd extends GenericMidd {
             });
         };
     }
-}
+};
 
 export {
-GenericMidd,
-ProductMidd,
-}
+        GenericMidd,
+        ProductMidd
+       }
+
+
+

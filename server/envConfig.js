@@ -15,11 +15,12 @@ dotenv.config({path:envFile})
 const status = Object.keys(configEnv).find(key => configEnv[key] === envFile) || 'production';
 
 
-const {PORT, URL, DATABASE_URL}= process.env;
+const {PORT, URL, DATABASE_URL, SECRET_KEY,}= process.env;
 
 export default {
     Port : PORT,
     Url : URL,
     Status :status,
+    SecretKey : SECRET_KEY,
     dbConnect: DATABASE_URL,
 }

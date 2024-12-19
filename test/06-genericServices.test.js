@@ -1,16 +1,21 @@
 import GenericService from '../server/Classes/genericService.js'
 import * as store from './helperTest/testStore.js'
-import * as help from './helperTest/02-helpdata.js'
+import * as help from './helperTest/genericHelp.js'
 import {redirectionImages } from './helperTest/imageServices.js'
+
 import {Landing} from '../server/database.js'
+
+const mockDeleteImages = jest.fn(); // Creamos el mock de deleteImages
 
 const test = new GenericService(Landing, false, false, redirectionImages) //(model, useCache, useImage)
 const testCache = new GenericService(Landing, true, false, null ) //(model, useCache, useImage)
-const testImage = new GenericService(Landing, false, true, redirectionImages) //(model, useCache, useImage, deleteImage)
+const testImage = new GenericService(Landing, false, true, mockDeleteImages) //(model, useCache, useImage, deleteImage)
 
 
 describe('Unit testing of the GenericService class: CRUD operations.', ()=>{
- 
+  beforeEach(() => {
+    mockDeleteImages.mockReset();
+});
   describe('The "create" function for creating a service', ()=>{
     it('should create an element with the correct parameters', async() => {
       const response = await test.create(help.element, 'title', help.landParser) //(data, uniqueField, parserFunction)
@@ -77,21 +82,30 @@ describe('Unit testing of the GenericService class: CRUD operations.', ()=>{
     });
     
   })
-  xdescribe('Images managment', () => { 
+  describe('Images managment', () => { 
     it('should delete old images when updating', async() => {
       await testImage.create(help.element, 'title', help.landParser)
       const id = 2
       const newData= {picture: "urlSecond"}
+      mockDeleteImages.mockResolvedValue();
       const response = await testImage.update(id, newData)
       const responseJs = help.landParser(response)
-      expect(responseJs).toMatchObject(help.dataImageUpdated ) 
+      expect(responseJs).toMatchObject(help.dataImageUpdated )
+      expect(mockDeleteImages).toHaveBeenCalledWith('urls') 
      })
-     it('should throw an error if there is a problem with the deletion', async() => {
+     xit('should throw an error if there is a problem with the deletion', async() => {
       const id = 2
-      const newData= {picture: "urlSecond"}
+      const newData= {picture: "urlthird"}
+      mockDeleteImages.mockRejectedValueOnce(new Error('Error deleting image'));
       const response = await testImage.update(id, newData)
-      const responseJs = help.landParser(response)
-      expect(responseJs).toMatchObject(help.dataImageUpdated ) 
+      // const responseJs = help.landParser(response)
+      // expect(responseJs).toMatchObject(help.dataImageUpdated )
+      // await expect(mockDeleteImages).toThrow('error');
+      await expect(testImage.update(id, newData)).rejects.toThrow('Error deleting image');
+
+      // Verificar que el mock se haya llamado con el valor correcto
+      expect(mockDeleteImages).toHaveBeenCalledWith('urlSecond'); // Ajusta según el dato esperado
      })
+  
   })
 })

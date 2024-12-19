@@ -7,21 +7,18 @@ import env from './envConfig.js'
 import mainRouter from './routers/router.js'
 
 
-
-
 //cambio de carpetas para dev y production (views y statics)
-const rootDir = path.resolve()
 
 const viewPath = env.Status === 'development' 
-  ? path.join(rootDir, 'views') 
-  : path.join(rootDir, 'dist/views');
+  ? path.resolve('views') 
+  : path.resolve('dist/views');
 
 const staticPath = env.Status === 'development' 
-? path.join(rootDir, 'src') 
-: path.join(rootDir, 'dist/assets');
+? path.resolve('src') 
+: path.resolve('dist/assets');
 
 const app = express()
-//probar automatizacion en el build para pug
+//setear automatizacion en el build para pug
 
 let manifest;
 if (env.Status === 'production') {

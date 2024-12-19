@@ -1,4 +1,4 @@
-import GenericService from './genericServices.js';
+import GenericService from './genericService.js';
 import bcrypt from 'bcrypt'
 import {generateToken} from '../middlewares/authMiddlewares.js'
 

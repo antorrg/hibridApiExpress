@@ -1,4 +1,4 @@
-import { renderError } from '../errorHandler.js'
+import { renderError, catchController } from '../errorHandler.js'
 import serv from './index.js'
 import env from '../envConfig.js'
 
@@ -11,6 +11,10 @@ const appPath = env.Status==='production'? "/form" : "http://localhost:5173/"
 
 export default {
    
+   probarMiddlewares : catchController(async(req, res)=>{
+     
+      return res.status(200).json('passed middleware')
+   }), 
    getLanding : renderError(async(req, res)=>{
     res.render('landing', {url: appPath})
    }),
