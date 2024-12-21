@@ -11,5 +11,7 @@ mvcRouter.get('/about', controller.getAbout);
 mvcRouter.get('/form', controller.getReact);
 
 mvcRouter.post('/api', mdd.validCreateProduct, controller.probarMiddlewares)
-mvcRouter.post('/land', mdd.validateLand, controller.probarMiddlewares)
+
+mvcRouter.post('/land', mdd.validateEmail, controller.probarMiddlewares)
+
 export default mvcRouter;

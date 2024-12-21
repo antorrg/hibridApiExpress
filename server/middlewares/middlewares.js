@@ -4,7 +4,6 @@ const createProductValidator = new ProductMidd(['title', 'logo', 'landing', 'inf
 
 const createUserValidator = new GenericMidd(['email', 'password', 'role'])
 
-const requiredFields = ['title', 'info_header', 'picture', 'description']
 const createLandingValidator = new GenericMidd(['title', 'info_header', 'picture', 'description'])
 
 
@@ -15,7 +14,7 @@ validCreateProduct : createProductValidator.validateFieldsWithItems(),
 //validUpdateProduct: createProductValidator.validateFieldsWithItems(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'enable', 'saver', 'useImg'], ['id', 'text', 'img', 'enable', 'saver', 'useImg']),
 validCreateUser : createUserValidator.validateFields,
 validateLand : createLandingValidator.validateFields(),
-//validateUUid : paramValidator.validateUUID,
-//validateInt : paramValidator.validateINT,
-//validateEmail : paramValidator.validateFieldContent,  //parametros: ('fieldName', 'fieldRegex', 'errorMessage')
+validateUUid : createUserValidator.validateUUID('id'),
+validateInt : createUserValidator.validateINT('id'),
+validateEmail : createUserValidator.validateFieldContent('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email format'),  //parametros: ('fieldName', 'fieldRegex', 'errorMessage')
 }

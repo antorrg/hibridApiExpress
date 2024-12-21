@@ -1,6 +1,6 @@
 import GenericService from './genericService.js';
 import bcrypt from 'bcrypt'
-import {generateToken} from '../middlewares/authMiddlewares.js'
+
 
 
 class UserService extends GenericService{
@@ -40,10 +40,9 @@ class UserService extends GenericService{
             }
             const passwordMatch = await bcrypt.compare(data.password, existingRecord.password)
             if (!passwordMatch) {eh.throwError('Invalid password', 400)}
-            return {
-                user: parserFunction ? parserFunction(existingRecord) : existingRecord,
-                token: generateToken(existingRecord)
-            }
+
+            return  existingRecord
+            
         } catch (error) {
             throw error;
         }

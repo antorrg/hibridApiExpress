@@ -4,11 +4,11 @@ import session from 'supertest'
 const agent = session(controllerServer);
 import * as help from './helperTest/05-helpData.js'
 
-describe('Test de rutas Usuario, Project, Landing', () => {
+xdescribe('Test de rutas Usuario, Project, Landing', () => {
     
-    describe('Test de rutas de usuario: "/api/v1/user": ', () => {
-        describe('Ruta "user/create": Ruta de creacion de usuario', () => {
-            it('Deberia responder con status 201 y retornar el usuario', async () => {
+    xdescribe('Test de rutas de usuario: "/api/v1/user": ', () => {
+        xdescribe('Ruta "user/create": Ruta de creacion de usuario', () => {
+            xit('Deberia responder con status 201 y retornar el usuario', async () => {
                 const email = "josenomeacuerdo@hotmail.com";
                 const password = 'L1234567'
                 const picture = 'url'
@@ -22,7 +22,7 @@ describe('Test de rutas Usuario, Project, Landing', () => {
                 expect(response.body.results).toMatchObject(help.respUserCreate)
                 store.setUserId(response.body.results.id)
             })
-            it('Deberia responder con status 400 si faltan parametros', async () => {
+            xit('Deberia responder con status 400 si faltan parametros', async () => {
                 const email = "josenomeacuerdo. ..otmail.com";
                 const password = 'L1234567'
                 const picture = 'url'

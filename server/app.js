@@ -3,6 +3,9 @@ import path from 'path'
 import fs from 'fs'
 import morgan from 'morgan'
 import cors from 'cors'
+import getAssetPath from './assetsConfig.js'
+import cookieParser from 'cookie-parser'
+import {sessionMiddle} from './authConfig.js'
 import env from './envConfig.js'
 import mainRouter from './routers/router.js'
 
@@ -20,27 +23,9 @@ const staticPath = env.Status === 'development'
 const app = express()
 //setear automatizacion en el build para pug
 
-let manifest;
-if (env.Status === 'production') {
-  const manifestPath = path.resolve('dist/.vite/manifest.json');
-  manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-}
-
-app.locals.getAssetPath = (assetName) => {
-  if (env.Status === 'production') {
-    // Verificamos si el assetName existe en el manifiesto
-    const key = `src/files/${assetName}`; // Asegúrate de que esta clave coincida con la del manifiesto
-    if (manifest[key]) {
-        //console.log(assetName)
-        //return `/${manifest[key].file}`; // Retorna la ruta generada en dist
-        return `/${assetName}`
-    }
-    console.warn(`Asset "${assetName}" no encontrado en el manifest.`);
-    return assetName; // Fallback si no se encuentra el asset
-  }
-  console.log(assetName)
-  return `/files/${assetName}`; // Ruta en desarrollo
-};
+app.locals.getAssetPath = getAssetPath;
+app.use(cookieParser())
+app.use(sessionMiddle)
 
 app.use(morgan('dev'))
 app.use(cors())

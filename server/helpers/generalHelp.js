@@ -1,25 +1,21 @@
 
 import env from '../envConfig.js'
-const productCleaner = (data, isObj, isAdmin)=>{
-    return isObj? cleaner(data, true, isAdmin): data.map((dat)=>cleaner(dat, false, isAdmin))
-}
 
-const cleaner = (cont, bl, isAdmin)=>{
- 
-    const dataItems = bl? filterItem(cont.Items, isAdmin):null
-     const items = bl? dataItems.map((it)=> aux(it, false)): null
+
+const productCleaner = (cont, withItem)=>{
+    const dataItems = cont.Items? cont.Items : []
+     const items = withItem? dataItems.map((item)=> aux(item, false)): null
     const info = {
         id:cont.id,
         title:cont.title,
         landing: cont.landing,
         logo:cont.logo,
-        infoHeader: cont.info_header,
-        infoBody: cont.info_body,
+        info_header: cont.info_header,
+        info_body: cont.info_body,
         url: cont.url,
-        show: cont.to_show,
         enable: cont.enable,
     };
-    return bl? {info, items} : info
+    return withItem? {info, items} : info
       
     
 };
@@ -79,10 +75,10 @@ const dataEmptyLanding = ()=> {
         enable: true,
     }
 };
-function userParser (info, isObj, valid) { 
-    return isObj? parser(info, valid) :  info.map((dt)=> parser(dt, true))
- };
- const parser = (data, valid) => {
+// function userParser (info, isObj, valid) { 
+//     return isObj? parser(info, valid) :  info.map((dt)=> parser(dt, true))
+//  };
+ const userParser = (data, valid) => {
     const roleParsed = valid ? scope(data.role) : data.role
     return {
         id: data.id,
@@ -97,12 +93,10 @@ function userParser (info, isObj, valid) {
  };
 const scope = (role)=>{
     switch(role){
-      case 0:
-      return "Administrador"
       case 2 : 
       return "Moderador"
       case 9 :
-      return "Super Admin"
+      return "Administrador"
       case 1 :
       default :
       return "Usuario"
@@ -110,12 +104,10 @@ const scope = (role)=>{
 }
 const revertScope = (role)=>{
     switch(role){
-      case "Administrador":
-      return 0;
       case "Moderador": 
       return 2;
-      case "Super Admin":
-      return 1
+      case "Administrador":
+      return 9
       case "Usuario":
       default :
       return 1

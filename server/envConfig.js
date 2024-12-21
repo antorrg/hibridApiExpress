@@ -15,7 +15,7 @@ dotenv.config({path:envFile})
 const status = Object.keys(configEnv).find(key => configEnv[key] === envFile) || 'production';
 
 
-const {PORT, URL, DATABASE_URL, SECRET_KEY,}= process.env;
+const {PORT, URL, DATABASE_URL, SECRET_KEY, API_KEY, PROJECT_ID, AUTH_DOMAIN, STORAGE_BUCKET, MESSAGIN_SEND_ID, APP_ID, MEASUREMENT_ID }= process.env;
 
 export default {
     Port : PORT,
@@ -23,4 +23,12 @@ export default {
     Status :status,
     SecretKey : SECRET_KEY,
     dbConnect: DATABASE_URL,
+
+    fireApiK:API_KEY,
+    firePId: PROJECT_ID,
+    fireDomain: AUTH_DOMAIN,
+    fireStoreBuck: STORAGE_BUCKET,
+    fireMess : MESSAGIN_SEND_ID,
+    fireAppId: APP_ID,
+    fireMeasure: MEASUREMENT_ID,
 }

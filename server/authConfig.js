@@ -1,5 +1,52 @@
-import pkg from 'jsonwebtoken'
+import session from 'express-session';
+import { Sequelize } from 'sequelize';
+import connectSessionSequelize from 'connect-session-sequelize';
 import crypto from 'crypto'
+import pkg from 'jsonwebtoken'
+import env from './envConfig.js';
+import * as eh from './errorHandler.js'
+
+const SequelizeStore = connectSessionSequelize(session.Store);
+
+// Inicializa Sequelize con tu configuración de PostgreSQL
+const sequelize = new Sequelize(env. dbConnect, {
+    dialect: 'postgres',
+    logging: false,
+});
+
+// Crea el almacén de sesiones
+export const myStore = new SequelizeStore({
+    db: sequelize,
+    tableName: 'sessions', // Nombre de la tabla donde se guardarán las sesiones
+    checkExpirationInterval: 10 * 60 * 1000, // Intervalo en milisegundos para eliminar las sesiones expiradas
+    expiration: 24 * 60 * 60 * 1000 // Tiempo en milisegundos después del cual las sesiones expiran
+});
+
+// Sincroniza el modelo de sesiones con la base de datos
+myStore.sync();
+
+// Configura el middleware de sesión
+export const sessionMiddle = session({
+    secret: env.SecretKey,
+    resave: false,
+    saveUninitialized: false,
+    store: myStore,
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60 // Tiempo de vida de la cookie en milisegundos
+    }
+});
+
+// Manejo de errores
+myStore.on('error', (error) => {
+    console.error(error);
+});
+
+
+//! Esta parte corresponde a jsonwebtoken: 
+
 
 //Estas funciones no se exportan porque intervienen en la confeccion de jsonwebtoken
 const disguiseRole = (role, position)=>{
@@ -27,10 +74,11 @@ const recoveryRole = (str, position)=>{
 //En recoveryRole str es el dato entrante (string)
 
 
-export const generateToken = (user)=>{
+export const generateToken = (user, session)=>{
         const intData = disguiseRole(user.role, 5)
+        const expiresIn = Math.ceil(session.cookie.maxAge / 1000); // Obtener el tiempo de expiración en segundos
         //console.log('estoy en el token: ', expiresIn)
-        const token = pkg.sign({userId: user.id, email:user.email, internalData:intData}, env.SecretKey, {expiresIn: '30m'});
+        const token = pkg.sign({userId: user.id, email:user.email, internalData:intData}, env.SecretKey, {expiresIn});
         return token;
     };
 export const verifyToken = (req, res, next)=>{
@@ -40,6 +88,7 @@ export const verifyToken = (req, res, next)=>{
             // Eliminar el prefijo 'Bearer ' del token
             token = token.slice(7, token.length);
               }
+            if (!req.session.user || req.session.user.token !== token) {eh.throwError('Token o sesión invalidos!', 401)}
             pkg.verify(token, env.SecretKey, (err, decoded)=>{
             if(err){
                 if(err.name === 'TokenExpiredError'){eh.throwError('Token expirado', 401)
@@ -56,31 +105,6 @@ export const verifyToken = (req, res, next)=>{
         })
        
     };
-
-    export const setAdminVar = async (req, res, next) => {
-        let token = req.headers['x-access-token'] || req.headers.Authorization;
-    
-        if (!token) {
-            req.admin = false;
-            return next();
-        }
-    
-        if (token.startsWith('bearer ')) {
-            token = token.slice(7, token.length).trim();
-        
-        }
-    
-        try {
-            const decoded = await pkg.verify(token, env.SecretKey); // Decodifica el token
-            req.admin = true;
-            req.user = decoded;
-        } catch (err) {
-            req.admin = false; // Token inválido
-        }
-    
-        next();
-    };
-    
 export const checkRole = (allowedRoles) => {
         return (req, res, next) => {
           const {userRole}= req.userInfo;
@@ -98,5 +122,3 @@ export const checkRole = (allowedRoles) => {
 
 //Este es un modelo de como recibe el parámetro checkRole:
   //todo   app.get('/ruta-protegida', checkRole(['admin']), (req, res) => {
-
-

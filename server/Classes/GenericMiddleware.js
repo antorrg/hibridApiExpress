@@ -33,7 +33,7 @@ class GenericMidd {
             const value = req.params[fieldName]
             
             if (!value|| !isUUID(value)) {
-                return next(middError(`El campo ${value} debe ser un UUID válido`, 400));
+                return next(middError(`The ${value} field must be a valid UUID`, 400));
             }
             next();
         };
@@ -41,10 +41,12 @@ class GenericMidd {
     validateINT(fieldName) {
         return (req, res, next)=>{
             const value = req.params[fieldName];
-            const idIsNumber = !isNaN(value) && Number.isInteger(parseFloat(value));
-            if (!value) {return next(middError(`Missing ${value}.`,400))}
-           if (id && !idIsNumber) {return next(eh.middError('Invalid parameters', 400))}
-            next()
+
+        if (value === undefined || !Number.isInteger(Number(value))) {
+            return next(middError(`The ${fieldName} must be a integer number.`, 400));
+        }
+
+        next();
         }
     }
         // Middleware para validar números en un campo específico
@@ -52,8 +54,8 @@ class GenericMidd {
             return (req, res, next) => {
                 const value = req.body[fieldName];
     
-                if (value === undefined || isNaN(Number(value))) {
-                    return next(middError(`El campo ${fieldName} debe ser un número válido`, 400));
+                if (value === undefined || !Number.isInteger(Number(value))) {
+                    return next(middError(`The ${fieldName} must be a integer number.`, 400));
                 }
     
                 next();
@@ -63,9 +65,14 @@ class GenericMidd {
         validateFieldContent(fieldName, fieldRegex, errorMessage = null) {
             return (req, res, next) => {
                 const value = req.body[fieldName];
+
+                 // Validar que fieldRegex sea una expresión regular
+                if (!(fieldRegex instanceof RegExp)) {
+                    throw new Error("fieldRegex must be a valid RegExp instance");
+                }
         
-                if (!value || !fieldRegex.test(value)) {
-                    const defaultMessage = `El campo '${fieldName}' no cumple con el formato requerido.`;
+                if (!value || value === undefined || !fieldRegex.test(value)) {
+                    const defaultMessage = `Field '${fieldName}' does not meet the required format..`;
                     return next(middError(errorMessage || defaultMessage, 400));
                 }
         

@@ -15,6 +15,7 @@ export default {
      
       return res.status(200).json('passed middleware')
    }), 
+   
    getLanding : renderError(async(req, res)=>{
     res.render('landing', {url: appPath})
    }),

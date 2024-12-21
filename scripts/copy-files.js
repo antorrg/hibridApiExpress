@@ -9,6 +9,8 @@ if (!shell.test('-d', 'dist/views')) {
 // Copiar imágenes
 //shell.cp('-R', 'src/public/images/*', 'dist/images');
 
+shell.cp('-R', 'public/favicon.png', 'dist/assets');
+
 // Copiar vistas
 shell.cp('-R', 'views/*', 'dist/views');
 
