@@ -6,29 +6,31 @@ import GenericService from "../Classes/genericService.js";
 import UserService from "../Classes/userService.js";
 import ProductServices from "../Classes/ProductServices.js";
 import clean from '../helpers/generalHelp.js'
-
+import {generateToken} from '../authConfig.js'
 //Aqui se instancian las clases y generan las funciones de servicio.
 
 //*Parametros de clase: (Model, useCache= false, useImage= false, deleteImages = null)
 
 const productService = new ProductServices(db.Product, db.Item);//doble modelo
 
-const userService = new UserService(db.User, false, true, deleteImageFromStorage);
+const userService = new GenericService(db.User, false, true, deleteImageFromStorage);
 
 const landingService = new GenericService(db.Landing);
 
 export default {
-  userRest: new GenericController(userService),
-  productRest: new GenericController(productService),
+  userRest: new GenericController(userService, clean.userParser, true),
+  productRest: new GenericController(productService),//
   landRest: new GenericController(landingService),
   productService, //funciones de servicio
   landingService, //funciones de servicio
 
   //controllers funcionales para el inicio y fin de sesion.
   loginController: catchController(async (req, res) => {
-    const { email, password } = req.body;
-    const response = await userService.login(email, password);
-    const token = vld.generateToken(response, req.session);
+    const data = req.body;
+    const response = await userService.login(data, 'email',null);
+    //console.log(response);
+    
+    const token = generateToken(response, req.session);
     req.session.user = {
       userId: response.id,
       email: response.email,

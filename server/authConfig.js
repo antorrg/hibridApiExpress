@@ -5,6 +5,7 @@ import crypto from 'crypto'
 import pkg from 'jsonwebtoken'
 import env from './envConfig.js';
 import * as eh from './errorHandler.js'
+import { log } from 'console';
 
 const SequelizeStore = connectSessionSequelize(session.Store);
 
@@ -24,11 +25,12 @@ export const myStore = new SequelizeStore({
 
 // Sincroniza el modelo de sesiones con la base de datos
 myStore.sync();
-
+const test = (env.Status==='test')? true : false
+console.log('Estoy probando a test en sesion', test)
 // Configura el middleware de sesión
 export const sessionMiddle = session({
     secret: env.SecretKey,
-    resave: false,
+    resave: test,
     saveUninitialized: false,
     store: myStore,
     cookie: {
@@ -83,23 +85,26 @@ export const generateToken = (user, session)=>{
     };
 export const verifyToken = (req, res, next)=>{
      let token = req.headers['x-access-token'] || req.headers.authorization;
-            if(!token){eh.throwError('Acceso no autorizado. Token no proporcionado', 401)}
+            if(!token){return next(eh.middError('Acceso no autorizado. Token no proporcionado', 401))}
             if (token.startsWith('Bearer')) {
             // Eliminar el prefijo 'Bearer ' del token
             token = token.slice(7, token.length);
               }
-            if (!req.session.user || req.session.user.token !== token) {eh.throwError('Token o sesión invalidos!', 401)}
+             // console.log('Session en verify:', req.session.user);
+              //console.log('SessionToken en verify:', req.session.user.token)
+            if (!req.session.user|| !req.session.user.token) {return next(eh.middError('Sesion o token invalidos', 401))}
             pkg.verify(token, env.SecretKey, (err, decoded)=>{
             if(err){
-                if(err.name === 'TokenExpiredError'){eh.throwError('Token expirado', 401)
-                }eh.throwError('Token invalido', 401)
+                if(err.name === 'TokenExpiredError'){return next(eh.middError('Token expirado', 401))
+                }return next(eh.middError('Token invalido', 401))
             }
             req.user = decoded;
             const userId = decoded.userId;
             const userRole= recoveryRole(decoded.internalData, 5);
             req.userInfo = {userId, userRole}
+            //console.log('soy userinfo: ', req.userInfo)
             //console.log('userInfo: ', req.user.userId, )
-            //console.log('soy role : ', req.user.role)
+            //console.log('soy role : ', userRole)
             next();
 
         })
@@ -107,7 +112,7 @@ export const verifyToken = (req, res, next)=>{
     };
 export const checkRole = (allowedRoles) => {
         return (req, res, next) => {
-          const {userRole}= req.userInfo;
+          
           //const userRole = req.user.role; // asumiendo que el rol está en req.user después de la autenticación
       
           if (allowedRoles.includes(userRole)) {
@@ -115,7 +120,7 @@ export const checkRole = (allowedRoles) => {
             next();
           } else {
             // El usuario no tiene el rol necesario, rechazar la solicitud
-            eh.throwError('Acceso no autorizado', 403)
+           return next(eh.middError('Acceso no autorizado', 403))
           }
         };
       };

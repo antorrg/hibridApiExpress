@@ -1,4 +1,5 @@
 import GenericService from './genericService.js';
+import * as eh from '../errorHandler.js'
 import bcrypt from 'bcrypt'
 
 
@@ -29,7 +30,6 @@ class UserService extends GenericService{
             const existingRecord = await this.Model.findOne({ 
                 where: {
                     email: data.email,
-                    deletedAt: false
                 } 
             });
             if (!existingRecord) {

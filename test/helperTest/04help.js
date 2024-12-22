@@ -211,7 +211,7 @@ export const resItem =
   
 };
 
-  const users = 
+  export const users = 
   [
     {
       "id": "2b2523a2-f16a-4475-be6c-1657dc0ca701",
@@ -219,7 +219,7 @@ export const resItem =
       "password": "$2b$12$7nCJwQ6ZqjewG8X8QSZQ.usMPjqMGqZrwDjtaJoiE1Rae06R/D6DW",
       "nickname": "antoniorodrigueztkd",
       "given_name": "",
-      "picture": "https://c0.klipartz.com/pngpicture/813/118/gratis-png-icono-de-silueta-plantilla-de-persona-en-blanco.png",
+      "picture": "https",
       "role": 1,
       "country": null,
       "enable": true,
@@ -232,40 +232,84 @@ export const resItem =
       "password": "$2b$12$Ac/VxQyHvRorcqWhq.NolerEDGsQHYv96IqrMLOY0ZBVfhIDHrR/O",
       "nickname": "usuarioejemplo",
       "given_name": "",
-      "picture": "https://c0.klipartz.com/pngpicture/813/118/gratis-png-icono-de-silueta-plantilla-de-persona-en-blanco.png",
+      "picture": "https",
       "role": 1,
       "country": null,
       "enable": true,
       "createdAt": "2024-07-19T22:37:48.652Z",
       "updatedAt": "2024-07-19T22:37:48.652Z"
     },
-    {
-        "id": "2b2523a2-f16a-4475-be6c-1657dc0ca701",
-        "email": "antoniorodrigueztkd@gmail.com",
-        "password": "$2b$12$7nCJwQ6ZqjewG8X8QSZQ.usMPjqMGqZrwDjtaJoiE1Rae06R/D6DW",
-        "nickname": "antoniorodrigueztkd",
-        "given_name": "",
-        "picture": "https://c0.klipartz.com/pngpicture/813/118/gratis-png-icono-de-silueta-plantilla-de-persona-en-blanco.png",
-        "role": 1,
-        "country": null,
-        "enable": true,
-        "createdAt": "2024-07-19T14:29:27.026Z",
-        "updatedAt": "2024-07-19T14:29:27.026Z"
-      },
+   
   ]
 
-  const user = 
+  export const user = 
   {
     "id": "2b2523a2-f16a-4475-be6c-1657dc0ca701",
     "email": "antoniorodrigueztkd@gmail.com",
     "password": "$2b$12$7nCJwQ6ZqjewG8X8QSZQ.usMPjqMGqZrwDjtaJoiE1Rae06R/D6DW",
     "nickname": "antoniorodrigueztkd",
     "given_name": "",
-    "picture": "https://c0.klipartz.com/pngpicture/813/118/gratis-png-icono-de-silueta-plantilla-de-persona-en-blanco.png",
+    "picture": "https",
     "role": 1,
     "country": null,
     "enable": true,
     "createdAt": "2024-07-19T14:29:27.026Z",
     "updatedAt": "2024-07-19T14:29:27.026Z"
   }
-///////////////////////////////////////////////////////////////////////////////
+
+  export const usersParsed = 
+  [
+    {
+      "id": "2b2523a2-f16a-4475-be6c-1657dc0ca701",
+      "email": "antoniorodrigueztkd@gmail.com",
+      "nickname": "antoniorodrigueztkd",
+      "given_name": "",
+      "picture": "https",
+      "role": "Usuario",
+      "country": null,
+      "enable": true,
+    },
+    {
+      "id": "43865094-f1de-4c89-9110-7ecd86814e66",
+      "email": "usuarioejemplo@gmail.com",
+      "nickname": "usuarioejemplo",
+      "given_name": "",
+      "picture": "https",
+      "role": "Usuario",
+      "country": null,
+      "enable": true,
+     
+    },
+   
+  ]
+
+  export const userParsed = 
+  {
+    "id": "2b2523a2-f16a-4475-be6c-1657dc0ca701",
+    "email": "antoniorodrigueztkd@gmail.com",
+    "nickname": "antoniorodrigueztkd",
+    "given_name": "",
+    "picture": "https",
+    "role": "Usuario",
+    "country": null,
+    "enable": true,
+  }
+  export const landingPage = {
+    "id":"id",
+    "title": "title",
+    "description": "description",
+    "info_header": "ididididi",
+    "enable": true,
+    "deletedAt": null,
+    "updatedAt": null,
+    "createdAt": "2024-07-19T14:29:27.026Z"   
+  }
+
+  export const landingParsed = {
+    "id":"id",
+    "title": "title",
+    "description": "description",
+    "info_header": "ididididi",
+    "enable": true,
+  
+  }

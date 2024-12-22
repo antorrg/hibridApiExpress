@@ -75,9 +75,7 @@ const dataEmptyLanding = ()=> {
         enable: true,
     }
 };
-// function userParser (info, isObj, valid) { 
-//     return isObj? parser(info, valid) :  info.map((dt)=> parser(dt, true))
-//  };
+
  const userParser = (data, valid) => {
     const roleParsed = valid ? scope(data.role) : data.role
     return {
@@ -128,10 +126,8 @@ const emptyUser = ()=>{
 const protectProtocol = (data)=>{
     return data.role === 9? true: false;
    }
-const cleanerLanding = (info, isObject)=>{
-    return isObject? parsed(info) : info.map((inf)=>parsed(inf))
-}
-const parsed = (data)=>{
+
+const cleanerLanding = (data)=>{
     return {
         id:data.id,
         image:data.image,

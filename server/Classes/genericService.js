@@ -43,12 +43,14 @@ class GenericService {
             throw error;
         }
     }
-      async login(data, parserFunction = null) {
+      async login(data, uniqueField= null, parserFunction = null) {
             try {
-                let whereClause = null;
+                let whereClause = {};
             if (uniqueField) {
                 whereClause[uniqueField] = data[uniqueField];
             }
+            console.log(whereClause);
+            
             const existingRecord = await this.Model.findOne({ where: whereClause });
                 if (!existingRecord) {
                     throwError(`This ${this.Model.name.toLowerCase()} name do not exists`, 400);
@@ -58,10 +60,7 @@ class GenericService {
                 }
                 const passwordMatch = await bcrypt.compare(data.password, existingRecord.password)
                 if (!passwordMatch) {eh.throwError('Invalid password', 400)}
-                return {
-                    user: parserFunction ? parserFunction(existingRecord) : existingRecord,
-                    token: generateToken(existingRecord)
-                }
+                return existingRecord
             } catch (error) {
                 throw error;
             }
@@ -77,7 +76,7 @@ class GenericService {
             }
         }
         try {
-            const query = queryObject? {where:{queryObject: queryObject}}: {};
+            const query = queryObject? {where:queryObject}: null;
             const data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findAll(query);
             if (data.length === 0) {
                 emptyObject? emptyObject() :

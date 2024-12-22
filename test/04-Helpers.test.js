@@ -21,20 +21,27 @@ describe('The"productCleaner" instances tests', ()=>{
         expect(info).toEqual(mock.parsedProduct)
     })
 });
-describe('Prueba de funcion "aux" (ya probada en homeCleaner filtrando los Items)', ()=>{
-    it('Prueba restante de aux entregando texto completo para Item', ()=>{
+describe('Testing the "aux" function (already tested in productCleaner filtering the Items)', ()=>{
+    it('Remaining test of aux delivering full text for Item', ()=>{
         const info = help.aux(mock.item, true)
         expect(info).toEqual(mock.resItem)
     })
 })
-xdescribe('Funcion HolderParser (propietario o usuario parseado, funcion adaptada)', ()=>{
-    it('Deberia retornar un arreglo de usuarios sin password visible', ()=>{
-        const info = help.holderParser(mock.users, false)
-        expect(info).toEqual(mock.parsedUsers)
+describe('userParser function (owner or parsed user, custom function)', ()=>{
+    it('Should return an array of users with no visible password', ()=>{
+        const info = mock.users.map(user => help.userParser(user, true))
+        expect(info).toEqual(mock.usersParsed)
     })
-    it('Deberia retornar el usuario sin password visible', ()=>{
-        const info = help.holderParser(mock.user, true)
-        expect(info).toEqual(mock.parsedUser)
+    it('It should return the user without a visible password', ()=>{
+        const info = help.userParser(mock.user, true)
+        expect(info).toEqual(mock.userParsed)
+    })
+});
+describe('The "cleanerLanding" function ', () => {
+    it('Should retrieve the landing page elements', () => {
+        const info = help.cleanerLanding(mock.landingPage)
+        expect(info).toEqual(mock.landingParsed)
     })
 })
+
 
