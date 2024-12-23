@@ -9,6 +9,7 @@ import help from '../../helpers/generalHelp.js'; // dataEmptyLanding, cleanerLan
 //* Instancia de servicio: (Se expone para usar en MVC metodo get)
 const landService = new GenericService(Landing, true, true, deleteImageFromStorage )//constructor(Model, useCache, useImage, deleteImages) 
 
+//* Controladores REST:
 const landController = new GenericController(landService, help.cleanerLanding, help.cleanerLanding, true )//(service, parserFunction, emptyObject, isAdmin)
 
 export default {// Estos son los controladores REST que se importaran en landRouter.

@@ -137,7 +137,7 @@ const midd = xx.validateFields()
 //Note: Si es necesario los paremetros pasados al metodo sobreescriben en ese caso los del contructor.
 // Esto quita la necesidad de hacer una nueva instancia cada vez que hay que validar un nuevo campo.
 //No se pueden agregar items, si se agregan es necesario incluir los antiguos tambien.
-const user = xx.validateFields(['email', 'password', 'etc...'])
+const user = xx.validateFields(['item1', 'item2', 'email', 'password', 'etc...'])
 
 // Middleware para validar UUIDs en un campo específico
 const validId =  xx.validateUUID('userId') 

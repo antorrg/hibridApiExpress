@@ -1,7 +1,7 @@
 import * as store from './helperTest/testStore.js'
-import controllerServer from './helperTest/controllerServer.js'
-import session from 'supertest'
-const agent = session(controllerServer);
+import app from '../server/app.js'
+import session from 'supertest-session'
+const agent = session(app);
 import * as help from './helperTest/05-helpData.js'
 
 xdescribe('Test de rutas Usuario, Project, Landing', () => {
