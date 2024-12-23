@@ -76,7 +76,7 @@ class GenericService {
             }
         }
         try {
-            const query = queryObject? {where:queryObject}: null;
+            const query = queryObject? {where:queryObject}: {};
             const data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findAll(query);
             if (data.length === 0) {
                 emptyObject? emptyObject() :

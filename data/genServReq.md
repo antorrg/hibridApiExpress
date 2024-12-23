@@ -1,10 +1,61 @@
-import {catchController} from '../errorHandler.js'
+# Requerimientos de constructor y metodos clase `GenericService`
 
+Constructor:
+
+```javascript
+class GenericService {
+    constructor(Model, useCache= false, useImage= false, deleteImages = null) {
+        this.Model = Model;
+        this.useCache = useCache;
+        this.useImage = useImage;
+        this.deleteImages = deleteImages;
+    }
+```
+Metodos: 
+```javascript
+async create(data, uniqueField=null, parserFunction=null) 
+
+async login(data, uniqueField= null, parserFunction = null)
+
+async getAll(parserFunction = null, queryObject = null, emptyObject= null, isAdmin = false)
+
+async getById(id, parserFunction = null, emptyObject= null,isAdmin = false)
+
+async update(id, newData, parserFunction=null) 
+
+async patcher(id, newData, parserFunction=null)
+
+async delete(id)
+
+```
+
+
+<hr>
+
+## Requerimientos de constructor y metodos clase `GenericController`
+
+Constructor: 
+
+```javascript
 class GenericController {
- constructor(service, parserFunction, emptyObject, isAdmin){
+ constructor(service, parserFunction, isAdmin){
     this.service = service;
     this.parserFunction = parserFunction || null;
-    this.emptyObject = emptyObject || null;
+    this.isAdmin = isAdmin || false;
+ }
+}
+```
+
+Metodos: 
+
+```javascript
+
+```
+
+class GenericController {
+ constructor(service, parserFunction, isAdmin){
+    this.service = service;
+    this.parserFunction = parserFunction || null;
     this.isAdmin = isAdmin || false;
  }
  //Methods:
@@ -38,7 +89,7 @@ class GenericController {
 getAll = catchController(async (req, res) => {
     const queryObject = req.query || null;
     console.log('req.query: ', queryObject)
-    const response = await this.service.getAll(this.parserFunction, queryObject, this.emptyObject, this.isAdmin);
+    const response = await this.service.getAll(this.parserFunction, queryObject, this.isAdmin);
     if(response.cache===true){return GenericController.responder(res, 203, true,  null , response.data, )}
     return GenericController.responder(res, 200, true,  null , response.data, )
 });

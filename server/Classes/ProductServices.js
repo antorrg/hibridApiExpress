@@ -1,9 +1,10 @@
 import GenericService from "./genericService.js";
 import { sequelize } from "../database.js";
+import {throwError} from '../errorHandler.js'
 
 class ProductServices extends GenericService {
-  constructor(Model, Model2, deleteFunction, useImage) {
-    super(Model);
+  constructor(Model, Model2, useCache, useImage , deleteFunction) {
+    super(Model, useCache, useImage, deleteFunction);
     this.Model2 = Model2;
     this.deleteFunction = deleteFunction || null;
     this.useImage = useImage || false;
@@ -12,8 +13,8 @@ class ProductServices extends GenericService {
   async create(data, uniqueField = null, parserFunction = null) {
     let transaction;
     try {
-      transaction = sequelize.transaction();
-      const whereClause = {};
+      transaction = await sequelize.transaction();
+      let whereClause = {};
       if (uniqueField) {
         whereClause[uniqueField] = data[uniqueField];
       }
@@ -41,10 +42,10 @@ class ProductServices extends GenericService {
         })
       );
       await transaction.commit();
-
-      return parserFunction
-        ? parserFunction({ newRecord, items: newitems })
-        : { newRecord, items: newitems };
+        return 'Product created successfully'
+      // return parserFunction
+      //   ? parserFunction({ newRecord, items: newitems })
+      //   : { newRecord, items: newitems };
     } catch (error) {
       if (transaction) {
         await transaction.rollback();
@@ -52,22 +53,23 @@ class ProductServices extends GenericService {
       throw error;
     }
   }
-  async addItem(data, parserFunction) {
+  async addItem(data) {
     try {
       const id = data.id;
+      const body= {img:data.img, text:data.text}
       const referenceFound = await this.Model.findByPk(id);
-      if (referenceFound) {
+      if (!referenceFound) {
         throwError(
-          `This ${this.Model.name.toLowerCase()} ${
-            uniqueField || "entry"
-          } do not exists`,
+          `This ${this.Model.name.toLowerCase()}
+           do not exists`,
           404
         );
       }
-      const newItem = await this.Model2.create(data);
+      const newItem = await this.Model2.create(body);
       await referenceFound.addItem(newItem);
       return "Item created successfully";
     } catch (error) {
+      console.error('error en addItem: ',error)
       throw error;
     }
   }
@@ -79,12 +81,10 @@ class ProductServices extends GenericService {
   ) {
     try {
       //const data = await this.Model.findByPk(id);
-      const data = await this.Model.scope(
-        isAdmin ? "allRecords" : "enabledOnly"
-      ).findByPk(id, {
+      const data = await this.Model.scope(isAdmin ? "allRecords" : "enabledOnly").findByPk(id, {
         include: [
           {
-            model: Item,
+            model: this.Model2,
             attributes: ["id", "img", "text", "ProductId", "enable"],
           },
         ],
@@ -97,7 +97,7 @@ class ProductServices extends GenericService {
         );
       }
 
-      return parserFunction ? parserFunction(data) : data;
+      return parserFunction ? parserFunction(data, true) : data;
     } catch (error) {
       throw error;
     }
@@ -123,7 +123,7 @@ class ProductServices extends GenericService {
             );
       }
 
-      return parserFunction ? parserFunction(data) : data;
+      return parserFunction ? parserFunction(data, true) : data;
     } catch (error) {
       throw error;
     }
@@ -162,8 +162,11 @@ class ProductServices extends GenericService {
   }
   async deleteAll(id) {
     let imageUrl = "";
+    let transaction
     try {
-      const dataFound = await this.Model.findByPk(id);
+      transaction = await sequelize.transaction()
+
+      const dataFound = await this.Model.findByPk(id,{transaction});
       if (!dataFound) {
         throwError(`${this.Model} not found`, 404);
       }
