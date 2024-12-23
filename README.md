@@ -2,7 +2,7 @@
 REST API and MVC for my webPage  
 
 You can read this documentation in Spanish:  
-[Documentación en español.](/README.md)  
+[Documentación en español.](/data/LEEME.md)  
 
 ## Table of Contents:  
 
