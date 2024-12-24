@@ -2,7 +2,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser';
 import {catchController} from '../../server/errorHandler.js'
 import clean from '../../server/helpers/generalHelp.js'
-import {sessionMiddle, generateToken, verifyToken} from '../../server/authConfig.js'
+import {sessionMiddle, generateToken, verifyToken} from '../../server/utils/authConfig.js'
 
 const mockUserLogin = (email, password, role)=>{
     return {id: "c1d970cf-9bb6-4848-aa76-191f905a2edd",

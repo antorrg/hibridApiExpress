@@ -1,18 +1,24 @@
 import express from 'express'
-import ctr from '../../Index&Controllers/index.js'
+import ctr from './controllerService.js'
+import midd from './userMiddlewares.js'
+import dataUser from './createUserMidd.js'
 import { verifyToken } from '../../authConfig.js'
 
 
 const restRouter = express.Router()
 
-restRouter.post('/user/login', ctr.loginController)
+restRouter.post('/user/create', verifyToken, dataUser, midd.loginUser, midd.validEmail, ctr.userCreate)
 
-restRouter.post('/user/create', ctr.userRest.create)
+restRouter.get('/user', verifyToken, ctr.userGetAll)
 
-restRouter.get('/user', verifyToken, ctr.userRest.getAll)
+restRouter.get('/user/:id', verifyToken, midd.validUUid, ctr.userGetById)
 
-restRouter.post('/user/logout', ctr.logoutController)
+restRouter.put('/user/:id', verifyToken, midd.validUUid, ctr.userUpdate)
 
+restRouter.delete('/user/:id', verifyToken, midd.validUUid, ctr.userDelete)
 
+restRouter.post('/user/login', midd.loginUser, midd.validEmail, midd.validPass, ctr.loginController)
+
+restRouter.post('/user/logout', verifyToken, ctr.logoutController)
 
 export default restRouter;

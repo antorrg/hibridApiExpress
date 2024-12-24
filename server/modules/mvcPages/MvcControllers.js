@@ -1,19 +1,21 @@
 import { renderError } from '../../errorHandler.js'
-import {landService} from '../landingPage/landControllerService.js'
-import help from '../../helpers/generalHelp.js'; // dataEmptyLanding, cleanerLanding
+import land from '../landingPage/landControllerService.js'
+import product from '../productItems/controllerService.js'
 import env from '../../envConfig.js'
 
 
 
-const prd = serv.productService;
-const land = landService;
+const prodGetAll = product.getProdMvc;
+const prodGetById = product.getProdByIdMvc;
+const prodGetItem = product.getItemMvc;
+const landing = land.landServGetAll;
 const appPath = env.Status==='production'? "/form" : "http://localhost:5173/"
 
 
 export default {
    
    getLanding : renderError(async(req, res)=>{
-      const response = await land.getAll(help.cleanerLanding, null, help.dataEmptyLanding)
+      const response = await landing()
     res.render('landing', {url: appPath, landing: response, isAuthenticated: null})
    }),
 

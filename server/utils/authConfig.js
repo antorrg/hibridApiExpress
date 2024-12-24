@@ -3,9 +3,9 @@ import { Sequelize } from 'sequelize';
 import connectSessionSequelize from 'connect-session-sequelize';
 import crypto from 'crypto'
 import pkg from 'jsonwebtoken'
-import env from './envConfig.js';
-import * as eh from './errorHandler.js'
-import { log } from 'console';
+import env from '../envConfig.js';
+import * as eh from '../errorHandler.js'
+
 
 const SequelizeStore = connectSessionSequelize(session.Store);
 

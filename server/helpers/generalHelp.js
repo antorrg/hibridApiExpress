@@ -117,7 +117,7 @@ const emptyUser = ()=>{
         email: 'No hay datos aun',
         nickname: 'No hay datos aun',
         given_name: 'No hay datos aun',
-        picture: env.userImg,
+        picture: "https://c0.klipartz.com/pngpicture/813/118/gratis-png-icono-de-silueta-plantilla-de-persona-en-blanco.png",
         role: 'No hay datos aun',
         country: 'No hay datos aun',
         enable: 'No hay datos aun',

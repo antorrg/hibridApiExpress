@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import env from './envConfig.js' // Ajusta la ruta al archivo donde tienes tu configuración de entorno
+import env from '../envConfig.js' // Ajusta la ruta al archivo donde tienes tu configuración de entorno
 
 let manifest;
 
