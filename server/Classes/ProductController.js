@@ -1,4 +1,4 @@
-import GenericController from "./GenericController";
+import GenericController from "./GenericController.js";
 import { catchController } from "../errorHandler.js";
 
 class ProductController extends GenericController {

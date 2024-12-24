@@ -36,8 +36,8 @@ class GenericController {
 });
 
 getAll = catchController(async (req, res) => {
-    const queryObject = req.query || null;
-    console.log('req.query: ', queryObject)
+    const queryObject = req.query && Object.keys(req.query).length > 0 ? req.query : {};
+   
     const response = await this.service.getAll(this.parserFunction, queryObject, this.emptyObject, this.isAdmin);
     if(response.cache===true){return GenericController.responder(res, 203, true,  null , response.data, )}
     return GenericController.responder(res, 200, true,  null , response.data, )

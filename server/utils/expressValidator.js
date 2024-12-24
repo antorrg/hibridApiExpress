@@ -1,5 +1,5 @@
 import { body, query, header, validationResult } from 'express-validator';
-import { middError } from '../errorHandler';
+import { middError } from '../errorHandler.js';
 
 export default {
   sanitizeBody: [

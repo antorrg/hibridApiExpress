@@ -28,8 +28,10 @@ class GenericService {
             const whereClause = {};
             if (uniqueField) {
                 whereClause[uniqueField] = data[uniqueField];
+                
             }
-            const existingRecord = await this.Model.findOne({ where: whereClause });
+           
+            const existingRecord = await this.Model.findOne({where: whereClause });
             
             if (existingRecord) {
                 throwError(`This ${this.Model.name.toLowerCase()} ${uniqueField || 'entry'} already exists`, 400);
@@ -49,7 +51,7 @@ class GenericService {
             if (uniqueField) {
                 whereClause[uniqueField] = data[uniqueField];
             }
-            console.log(whereClause);
+            
             
             const existingRecord = await this.Model.findOne({ where: whereClause });
                 if (!existingRecord) {
@@ -59,7 +61,7 @@ class GenericService {
                     throwError(`User is blocked`, 400);
                 }
                 const passwordMatch = await bcrypt.compare(data.password, existingRecord.password)
-                if (!passwordMatch) {eh.throwError('Invalid password', 400)}
+                if (!passwordMatch) {throwError('Invalid password', 400)}
                 return existingRecord
             } catch (error) {
                 throw error;

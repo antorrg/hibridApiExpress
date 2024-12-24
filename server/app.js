@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
-import {sessionMiddle} from './authConfig.js'
+import {sessionMiddle} from './utils/authConfig.js'
 import env from './envConfig.js'
 import mainRouter from './routers/router.js'
 
@@ -23,6 +23,7 @@ const staticPath = env.Status === 'development'
 const app = express()
 //setear automatizacion en el build para pug
 
+
 app.locals.getAssetPath = getAssetPath;
 app.use(cookieParser())
 app.use(sessionMiddle)
@@ -35,6 +36,7 @@ app.set('views', viewPath)
 app.use(express.static(staticPath))
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas para API y React en `/home`
 app.use(mainRouter) 

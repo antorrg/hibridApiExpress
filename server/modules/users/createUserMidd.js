@@ -1,5 +1,5 @@
 import env from '../../envConfig.js'
-import { middError } from '../../errorHandler';
+import { middError } from '../../errorHandler.js';
 
 
 

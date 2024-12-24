@@ -13,11 +13,11 @@ const landService = new GenericService(Landing, true, true, deleteImageFromStora
 const landController = new GenericController(landService, help.cleanerLanding, help.dataEmptyLanding, true )//(service, parserFunction, emptyObject, isAdmin)
 
 export default {// Estos son los controladores REST que se importaran en landRouter.
-    landCreate : landController.create(),
-    landGetAll : landController.getAll(), //parserFunction = null, queryObject = null, emptyObject,
-    landGetById : landController.getById(),
-    landUpdate : landController.update(),
+    landCreate : landController.create,
+    landGetAll : landController.getAll, //parserFunction = null, queryObject = null, emptyObject,
+    landGetById : landController.getById,
+    landUpdate : landController.update,
 //* Aqui se expone la clase del servicio para MVC.
-    landServGetAll: landService.getAll(help.cleanerLanding, null,help.dataEmptyLanding, false ),
+    landServGetAll:  landService.getAll(help.cleanerLanding, null,help.dataEmptyLanding, false ),
 
 }

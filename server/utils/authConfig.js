@@ -26,7 +26,7 @@ export const myStore = new SequelizeStore({
 // Sincroniza el modelo de sesiones con la base de datos
 myStore.sync();
 const test = (env.Status==='test')? true : false
-console.log('Estoy probando a test en sesion', test)
+//console.log('Estoy probando a test en sesion', test)
 // Configura el middleware de sesión
 export const sessionMiddle = session({
     secret: env.SecretKey,

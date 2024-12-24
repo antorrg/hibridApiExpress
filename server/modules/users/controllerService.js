@@ -1,25 +1,27 @@
 import {User} from '../../database.js'
 import GenericService from '../../Classes/genericService.js'
+import UserService from '../../Classes/userService.js'
 import GenericController from '../../Classes/GenericController.js'
 import { deleteImageFromStorage } from '../../firebase.js'
 import help from '../../helpers/generalHelp.js';
 import { catchController } from '../../errorHandler.js';
-import {generateToken}  from '../../authConfig.js'
+import {generateToken}  from '../../utils/authConfig.js'
 
 //* Instancia de servicio: (Se expone para usar en MVC metodo get)
-const userService = new GenericService(User, false, true, deleteImageFromStorage )//constructor(Model, useCache, useImage, deleteImages) 
+const userService = new UserService(User, false, true, deleteImageFromStorage )//constructor(Model, useCache, useImage, deleteImages) 
 
 //* Controladores REST:
 const userController = new GenericController(userService, help.userParser, help.emptyUser, true )//(service, parserFunction, emptyObject, isAdmin)
 
 export default {// Estos son los controladores REST que se importaran en landRouter.
-    userCreate : userController.create(),
-    userGetAll : userController.getAll(), //parserFunction = null, queryObject = null, emptyObject,
-    userGetById : userController.getById(),
-    userUpdate : userController.update(),
-    userDelete : userController.delete(),
+    userCreate : userController.create,
+    userGetAll : userController.getAll, //parserFunction = null, queryObject = null, emptyObject,
+    userGetById : userController.getById,
+    userUpdate : userController.update,
+    userDelete : userController.delete,
     //funcion create para superusuario.
-    createSuperUser: userController.create(),
+    //createSuperUser: userService.create,
+    userService,
 
      loginController: catchController(async (req, res) => {
         const data = req.body;
@@ -42,7 +44,7 @@ export default {// Estos son los controladores REST que se importaran en landRou
           sameSite: "Strict", // Evitar CSRF
           maxAge: 1000 * 60 * 60, // 1 hora
         });
-        const userResponse = clean.userParser(response, true)
+        const userResponse = help.userParser(response, true)
         res.status(200).json({ user: userResponse, token });
         
       }),
@@ -56,6 +58,7 @@ export default {// Estos son los controladores REST que se importaran en landRou
           res.clearCookie("connect.id");
           res.clearCookie("sessionId");
           res.redirect("/");
+          res.status(200).json('Session Closed')
         });
       },
 

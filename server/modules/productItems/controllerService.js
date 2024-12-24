@@ -11,17 +11,18 @@ const productService = new ProductService(Product, Item, true, true, deleteImage
 const productController = new ProductController(productService, help.productCleaner,help.aux, help.dataEmptyPage, true )//(service, parserFunction, emptyObject, isAdmin)
 
 export default {
-    createProduct : productController.create(),
-    createItem : productController.createVariant(),
-    getProduct : productController.getAll(),
-    getProductById : productController.getById(),
-    getItem : productController.getDetail(),
-    updateProduct : productController.update(),
-    updateItem : productController.patcher(),
-    deleteItem: productController.delete(),
-    deleteProduct: productController.deleteAll(),
+    createProduct : productController.create,
+    createItem : productController.createVariant,
+    getProduct : productController.getAll,
+    getProductById : productController.getById,
+    getItem : productController.getDetail,
+    updateProduct : productController.update,
+    updateItem : productController.patcher,
+    deleteItem: productController.delete,
+    deleteProduct: productController.deleteAll,
     //data para MVC:
-    getProdMvc : ProductService.getAll(help.productCleaner, null, help.dataEmptyPage, false),
-    getProdByIdMvc : ProductService.getById(id, help.cleanerLanding, null, false),
-    getItemMvc : ProductService.getDetail(id, help.aux, null, false)
+    //getProdMvc : ProductService.getAll(help.productCleaner, null, help.dataEmptyPage, false),
+    //getProdByIdMvc : ProductService.getById(id, help.cleanerLanding, null, false),
+    //getItemMvc :  ProductService.getDetail(id, help.aux, null, false),
+    
 }

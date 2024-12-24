@@ -1,4 +1,4 @@
-import GenericMidd from '../../Classes/GenericMiddleware.js'
+import {GenericMidd} from '../../Classes/GenericMiddleware.js'
 
 
 const landingMidd = new GenericMidd(['title', 'description', 'info_header', 'picture'])
