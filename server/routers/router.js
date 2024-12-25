@@ -17,7 +17,7 @@ mainRouter.use(mvcRouter)
 
 mainRouter.use('/api/v1', userRouter)
 
-mainRouter.post('/api/v1/uploadImg', verifyToken, img.uploadMiddleware, img.imageUploader )
+mainRouter.post('/api/v1/uploadImage', verifyToken, img.uploadMiddleware, img.imageUploader )
 
 mainRouter.use('/api/v1',  verifyToken, landRouter)
 
