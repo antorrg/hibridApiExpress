@@ -21,8 +21,8 @@ export default {
     deleteItem: productController.delete,
     deleteProduct: productController.deleteAll,
     //data para MVC:
-    //getProdMvc : ProductService.getAll(help.productCleaner, null, help.dataEmptyPage, false),
-    //getProdByIdMvc : ProductService.getById(id, help.cleanerLanding, null, false),
-    //getItemMvc :  ProductService.getDetail(id, help.aux, null, false),
+    getProdMvc : ()=> ProductService.getAll(help.productCleaner, null, help.dataEmptyPage, false),
+    getProdByIdMvc : ()=> ProductService.getById(id, help.cleanerLanding, null, false),
+    getItemMvc : ()=> ProductService.getDetail(id, help.aux, null, false),
     
 }

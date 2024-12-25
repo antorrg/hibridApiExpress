@@ -15,7 +15,7 @@ function getAssetPath(assetName) {
     if (manifest[key]) {
       return `/${assetName}`; // O `/${manifest[key].file}` si prefieres esa lógica
     }
-    console.warn(`Asset "${assetName}" no encontrado en el manifest.`);
+    //console.warn(`Asset "${assetName}" no encontrado en el manifest.`);
     console.log('ass', assetName)
     return assetName;
   }

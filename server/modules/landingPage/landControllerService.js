@@ -18,6 +18,6 @@ export default {// Estos son los controladores REST que se importaran en landRou
     landGetById : landController.getById,
     landUpdate : landController.update,
 //* Aqui se expone la clase del servicio para MVC.
-    landServGetAll:  landService.getAll(help.cleanerLanding, null,help.dataEmptyLanding, false ),
+    landServGetAll:  ()=> landService.getAll(help.cleanerLanding, null, help.dataEmptyLanding, false ),
 
 }

@@ -2,6 +2,8 @@ extends ./layouts/mainLayout.pug
 
 block content
   div
+    img(src= landing.image alt='not found')
     h1.h2 Landing page of Rick and Morty en Pug.
+    h5= landing.title
     a.btn.btn-sm.btn-primary.me-2(href= url) Entrar
     a.btn.btn-sm.btn-success.me-2(href='/about') Acerca de 

@@ -6,17 +6,22 @@ const mvcRouter = express.Router()
 
 mvcRouter.get('/', controller.getLanding)
 
-mvcRouter.get('/products', controller.getProduct)
+mvcRouter.get('/detalles', controller.getProduct)
 
-mvcRouter.get('/product/:id', controller.getDetails)
+mvcRouter.get('/detalle/:id', controller.getDetails)
 
-mvcRouter.get('/product/item/:id', controller.getItems)
+mvcRouter.get('/detalle/item/:id', controller.getItems)
 
-mvcRouter.post('/contact',)
+mvcRouter.post('/contacto',)
 
-mvcRouter.get('/about', controller.getAbout);
+mvcRouter.get('/acerca', controller.getAbout);
 
 mvcRouter.get('/form', controller.getReact);
+
+// mvcRouter.get('*', (req, res, next)=>{
+//         // res.status(404).send('Not Found')
+//          res.render('error', { message: 'Not Found', status: 404});
+//        });
 
 
 export default mvcRouter;

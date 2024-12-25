@@ -53,8 +53,8 @@ const emptyItem = ()=>{
         enable: true,
     }]
 }
-const dataEmptyPage = ()=> {
-    return [{
+const dataEmptyPage = {
+    
         id: false,
         title: 'No hay datos aun',
         landing: 'No hay datos aun',
@@ -63,17 +63,17 @@ const dataEmptyPage = ()=> {
         info_body: 'No hay datos aun',
         url: 'No hay datos aun',
         enable: false,
-    }]
+    
 };
-const dataEmptyLanding = ()=> {
-    return {
+const dataEmptyLanding = {
+    
         id: false,
         title: 'Pagina web con ejemplos ',
-        info_header: 'Nomades web site.',
+        info_header: 'Antorrg web services. Diseño y creación de páginas web multipage y singlepage',
         picture: 'https://img.freepik.com/fotos-premium/naturaleza-natural-paisajes-naturales_1417-70.jpg',
         description: 'Esta es una descripcion del producto mostrado hecha para exhibir el contenido de la pagina',
         enable: true,
-    }
+    
 };
 
  const userParser = (data, valid) => {
@@ -111,8 +111,8 @@ const revertScope = (role)=>{
       return 1
     }
 }
-const emptyUser = ()=>{
-    return [{ 
+const emptyUser = {
+    
         id: false,
         email: 'No hay datos aun',
         nickname: 'No hay datos aun',
@@ -121,7 +121,7 @@ const emptyUser = ()=>{
         role: 'No hay datos aun',
         country: 'No hay datos aun',
         enable: 'No hay datos aun',
-    }]
+   
 }
 const protectProtocol = (data)=>{
     return data.role === 9? true: false;
@@ -130,7 +130,7 @@ const protectProtocol = (data)=>{
 const cleanerLanding = (data)=>{
     return {
         id:data.id,
-        image:data.image,
+        image:data.picture,
         title:data.title,
         info_header:data.info_header,
         description:data.description,

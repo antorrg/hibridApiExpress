@@ -41,8 +41,11 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
 
- app.use((req, res, next)=>{
-    res.render('error', { message: 'Not Found', status: 404});
+//  app.use((req, res, next)=>{
+//     res.render('error', { message: 'Not Found', status: 404});
+//   });
+ app.use('*',(req, res, next)=>{
+    res.status(404).json( { message: 'Not Found', status: 404});
   });
 
 // Manejador de errores

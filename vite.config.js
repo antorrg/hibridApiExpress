@@ -25,4 +25,9 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
   },
+  resolve: {
+    alias: {
+      '@files': path.resolve('src/files'), // Alias para facilitar la importación
+    },
+  },
 })

@@ -19,9 +19,41 @@ mainRouter.use('/api/v1', userRouter)
 
 mainRouter.post('/api/v1/uploadImg', verifyToken, img.uploadMiddleware, img.imageUploader )
 
-mainRouter.use('/api/v1', verifyToken, landRouter)
+mainRouter.use('/api/v1',  verifyToken, landRouter)
 
-mainRouter.use('api/v1', verifyToken, productRouter)
+mainRouter.use('/api/v1', verifyToken, productRouter)
+
+// Manejador de Rutas No Encontradas para MVC
+mainRouter.use((req, res, next) => {
+    if (req.originalUrl.startsWith('/api/v3/')) {
+      // Si es una ruta de la API, pasa al siguiente middleware
+      return next();
+    }
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+  
+  // Manejador de Errores para MVC
+  mainRouter.use((err, req, res, next) => {
+    if (req.originalUrl.startsWith('/api/v1/')) {
+      // Si es una ruta de la API, pasa al siguiente middleware
+      return next(err);
+    }
+    res.status(err.status || 500);
+    res.render('error', { message: err.message, status: err.status || 500 });
+  });
+  
+  // Manejador de Rutas No Encontradas para API REST
+  mainRouter.use('/api/v1/*', (req, res, next) => {
+    res.status(404).json({ error: 'Not Found' });
+  });
+  
+  // Manejador de Errores para API REST
+  mainRouter.use('/api/v1/*', (err, req, res, next) => {
+    res.status(err.status || 500).json({ error: err.message });
+  });
+  
 
 
 

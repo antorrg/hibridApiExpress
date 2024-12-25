@@ -3,15 +3,43 @@ html(lang="es")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(name="description" content="Diseño y desarrollo de páginas web, presentacionales o interactivas. Descubrea el producto para su necesidad, le brindamos lo mejor a nuestros clientes")
+        meta(name="description" content= meta)
         meta(name="author" content="Antorrg. Antonio Ricardo Rodriguez Gramajo")
         link(rel= "icon" href="/favicon.png")
+        script(type="module" crossorigin src=getAssetPath("scripts.js"))
         link(rel="stylesheet" crossorigin href="/index.css")
         title Antorrg
-    body
+    body    
+      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark.bg-gradient
+        .container-fluid
+          p.navbar-brand(href="#") Antorrg
+          button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarCollapse", aria-controls="navbarCollapse", aria-expanded="false", aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+          .collapse.navbar-collapse(id="navbarCollapse")
+            ul.navbar-nav.me-auto.mb-2.mb-md-0
+              li.nav-item
+                if isAuthenticated
+                  a.nav-link.active(aria-current="page", href="/admin") Admin
+                else
+                  a.nav-link.active(aria-current="page", href=url) .
+              li.nav-item
+                a.nav-link.active(aria-current="page" href="/acerca") Sobre mi:
+              li.nav-item
+                a.nav-link.active(href="/contacto") Contacteme:
+
+            div.dropdown
+              button#themeToggleBtn.btn.btn-outline-secondary.dropdown-toggle(type="button", data-bs-toggle="dropdown", aria-expanded="false")
+                | ☀️/🌙
+              ul.dropdown-menu
+                li
+                  a.dropdown-item(href="#", data-bs-theme-value="light") ☀️ Light
+                li
+                  a.dropdown-item(href="#", data-bs-theme-value="dark") 🌙 Dark
+                li
+                  a.dropdown-item(href="#", data-bs-theme-value="auto") 🔄 Auto
       main
-        .container.d-flex
+        .container-fluid.d-flex
           .row
             block content
-    script(type="module" crossorigin src=getAssetPath("script.js"))
+    
 

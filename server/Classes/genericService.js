@@ -68,6 +68,7 @@ class GenericService {
             }
         }
     async getAll(parserFunction = null, queryObject = null, emptyObject= null, isAdmin = false) {
+        //console.log('service',emptyObject)
         let cacheKey = `${this.Model.name.toLowerCase()}`;
         if (this.useCache) { let cachedData = cache.get(cacheKey);
             if (cachedData) {
@@ -78,17 +79,18 @@ class GenericService {
             }
         }
         try {
-            const query = queryObject? {where:queryObject}: {};
-            const data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findAll(query);
+            const query = queryObject? {where:queryObject}: {}; 
+            let data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findAll(query);
             if (data.length === 0) {
-                emptyObject? emptyObject() :
+                emptyObject? data = [emptyObject]:
                 throwError(`The ${this.Model.name.toLowerCase()} table is empty!!`, 400);
             }
             
-            const dataParsed = parserFunction ? data.map(dat => parserFunction(dat)) : data;
+           const dataParsed = parserFunction ? data.map(dat => parserFunction(dat)) : data;
+            //console.log('soy la data: ', dataParsed)
             if (this.useCache) {
                 cache.set(cacheKey, dataParsed)}
-                
+                //console.log(dataParsed)
             return {data: dataParsed,
                    cache: false
                    }
@@ -102,7 +104,7 @@ class GenericService {
             const data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findByPk(id);
             
             if (!data) {
-                emptyObject? emptyObject() :
+                emptyObject? emptyObject :
                 throwError(`The ${this.Model.name.toLowerCase()} table is empty!!`, 400);
             }
             
