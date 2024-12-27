@@ -1,0 +1,3 @@
+background ligth: "https://firebasestorage.googleapis.com/v0/b/misitioweb-d59d3.appspot.com/o/imagesApi%2Fbackground-ligth.webp?alt=media&token=56cc6c90-3e08-4f2e-8141-1885c282eaf0"
+
+background dark: https://firebasestorage.googleapis.com/v0/b/misitioweb-d59d3.appspot.com/o/imagesApi%2Fbackground-dark.webp?alt=media&token=8880fd28-c185-4f4d-bfa2-7d4bd6516de4

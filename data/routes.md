@@ -59,32 +59,38 @@ As of 12/25/2024, REST routes are divided into several groups: `user`, `product 
 
 ### User Creation (requires permissions)
 Users must be created by the administrator as this is not a page that seeks user interaction.
-
+> 01
 - Method: `POST`
-- Route: `/user/create`
+- Route: `/api/v1/user/create`
 - Description: Creates a new user.
 - Parameters:
   - `email` (string): User's email.
 
 ### User Login
-
+> 02
 - Method: `POST`
-- Route: `/user/login`
+- Route: `/api/v1/user/login`
 - Description: Logs in to obtain an access token.
 - Parameters:
   - `email` (string): User's email.
   - `password` (string): User's password.
 
 ### Get All Users (requires moderator or admin permission)
-
+> 03
 - Method: `GET`
-- Route: `/user`
+- Route: `/api/v1/user`
 - Description: Retrieves list of all users.
 
-### User Update
+### Get One User (requires moderator or admin permission)
+> 04
+- Method: `GET`
+- Route: `/api/v1/user/:id`
+- Description: Retrieves one user.
 
+### User Update
+ > 05
 - Method: `PUT`
-- Route: `/user/:id`
+- Route: `/api/v1/user/:id`
 - Description: Updates user information.
 - Parameters:
   - `email` (string): User's email.
@@ -95,9 +101,9 @@ Users must be created by the administrator as this is not a page that seeks user
   - `enable` (boolean): Enables or blocks a user.
 
 ### Delete User (Logical deletion)
-
+> 06
 - Method: `DELETE`
-- Route: `/user/:id`
+- Route: `/api/v1/user/:id`
 
 <hr>
 

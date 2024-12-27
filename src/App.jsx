@@ -1,8 +1,9 @@
 import { useEffect,useState } from 'react'
+import {Routes, Route } from 'react-router-dom'
+import View from './Views/Index'
 
 
 function App() {
-  const [count, setCount] = useState(0)
   const [theme, setTheme] = useState('auto')
  
    // Leer el tema guardado en localStorage
@@ -29,30 +30,20 @@ function App() {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme); // Guarda el tema en localStorage
   };
-  console.log('soy el tema react: ', theme)
+ 
   return (
     
     <div className={`app ${theme}-mode`}>
+      <Routes>
+        <Route path='/login' element={<View.Login/>}/>
+        <Route path='/admin' element={<View.Admin/>}/>
+        <Route path='/admin/product/:id' element={<View.Detail/>}/>
+        
+      </Routes>
       <div className='container d-flex flex-column align-items-center justify-content-center'>
         <div className='flex-row '>
-        <a className='btn btn-outline-info p-1 mt-4 me-3' href="https://vite.dev" target="_blank">vite
-        </a>
-        <a className='btn btn-warning p-1 mt-4 me-3' href="https://react.dev" target="_blank">
-          React
-        </a>
-        </div>
-      <h1>Vite + React</h1>
-      <div className="card col-4 ms-5">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </div>
       <button 
         onClick={toggleTheme} 
         className="btn btn-outline-secondary"
@@ -60,8 +51,6 @@ function App() {
         {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
       </button>
       </div>
-      </div>
-    
   )
 }
 

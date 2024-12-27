@@ -1,4 +1,6 @@
-@import './bootstrap.css';
+@import './generalStyles/bootstrap.css';
+@import './generalStyles/resetStyles.css';
+
 
 .caption-nav {
     z-index: 10;
@@ -18,4 +20,20 @@
     padding: 1rem;
     border-radius: 8px; /* Bordes redondeados */
     color: black; /* Asegúrate de que el texto sea visible */
+  }
+  .cover-container1 {
+    background-image:url('https://scontent.faep9-1.fna.fbcdn.net/v/t39.30808-6/273706860_2931088370514441_4950906474272199784_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=X53bAmSG_lYQ7kNvgFuarmz&_nc_ht=scontent.faep9-1.fna&_nc_gid=ApSLyvJxyybnTnjfCJFK6dw&oh=00_AYDZumEmiq_mR9bE2K7gO1kT-BBpxANblpaBPWSdHsPhTw&oe=66ECCA4B');
+    background-size: cover; /* Para que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
+ 
+  }
+  .container-caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    height: fit-content; 
   }

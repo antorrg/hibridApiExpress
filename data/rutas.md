@@ -64,7 +64,7 @@ Las rutas REST al día de la fecha (25/12/2024) se dividen en varios grupos: `us
 
 ### Creación de Usuario (requiere permisos)
 El usuario debe ser creado por el administrador ya que esta no es un página que busque interacción con el usuario.
-
+> 01
 - Método: `POST`
 - Ruta: `/user/create`
 - Descripción: Crea un usuario nuevo.
@@ -72,25 +72,31 @@ El usuario debe ser creado por el administrador ya que esta no es un página que
   - `email` (string): Correo electrónico del usuario.
 
 ### Inicio de Sesión de Usuario
-
+> 02
 - Método: `POST`
-- Ruta: `/user/login`
+- Ruta: `/api/v1/user/login`
 - Descripción: Inicia sesión para obtener un token de acceso.
 - Parámetros:
   - `email` (string): Correo electrónico del usuario.
   - `password` (string): Contraseña del usuario.
 
 ### Obtener Todos los Usuarios (necesita permiso de moderator o admin)
-
+> 03
 - Método: `GET`
-- Ruta: `/user`
+- Ruta: `/api/v1/user`
 - Descripción: Obtiene la lista de todos los usuarios.
+
+### Obtener un usuario(necesita permiso de moderator o admin)
+> 04
+- Método: `GET`
+- Ruta: `/api/v1/user/:id`
+- Descripción: Obtiene un usuario.
 
 ### Actualización de Usuario 
 
-
+> 05
 - Método: `PUT`
-- Ruta: `/user/:id`
+- Ruta: `/api/v1/user/:id`
 - Descripción: Actualiza la información del usuario.
 - Parámetros:
   - `email` (string): Correo electrónico del usuario.
@@ -101,9 +107,9 @@ El usuario debe ser creado por el administrador ya que esta no es un página que
   - `enable` (boolean): Habilita o bloquea un usuario.
 
   ### Eliminar Usuario (Borrado lógico).
-
+> 06
 - Método: `DELETE`
-- Ruta: `/user/:id`
+- Ruta: `/api/v1/user/:id`
 
 <hr>
 

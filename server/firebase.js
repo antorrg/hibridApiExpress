@@ -40,7 +40,7 @@ const uploadImageToFirebase = async (file) => {
 
     // Obtener la URL de descarga
     const downloadURL = await getDownloadURL(storageRef);
-    console.log('aca etoy: ',downloadURL)
+    //console.log('aca etoy: ',downloadURL)
 
     return downloadURL;
   } catch (error) {

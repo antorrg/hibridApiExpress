@@ -19,6 +19,6 @@ export const imageUploader = catchController(async(req, res)=>{
                         message: 'Imagen subida exitosamente',
                         data: {url: imageUrl}
                       }
-    console.log('response: ', response)
+    //console.log('response: ', response)
     res.status(200).json(response)
 });

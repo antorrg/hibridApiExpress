@@ -10,9 +10,10 @@ html(lang="es")
         link(rel="stylesheet" crossorigin href="/index.css")
         title Antorrg
     body    
-      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark.bg-gradient
+      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.py-1.bg-dark.bg-gradient
         .container-fluid
-          p.navbar-brand(href="#") Antorrg
+          img(src='/favicon.png' style='max-width: 70px')
+          a.navbar-brand.ms-1(href="/") Antorrg
           button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarCollapse", aria-controls="navbarCollapse", aria-expanded="false", aria-label="Toggle navigation")
             span.navbar-toggler-icon
           .collapse.navbar-collapse(id="navbarCollapse")
@@ -27,7 +28,7 @@ html(lang="es")
               li.nav-item
                 a.nav-link.active(href="/contacto") Contacteme:
 
-            div.dropdown
+            div.dropdown.me-3
               button#themeToggleBtn.btn.btn-outline-secondary.dropdown-toggle(type="button", data-bs-toggle="dropdown", aria-expanded="false")
                 | ☀️/🌙
               ul.dropdown-menu
@@ -37,9 +38,26 @@ html(lang="es")
                   a.dropdown-item(href="#", data-bs-theme-value="dark") 🌙 Dark
                 li
                   a.dropdown-item(href="#", data-bs-theme-value="auto") 🔄 Auto
-      main
-        .container-fluid.d-flex
-          .row
-            block content
-    
+      
+      main(style="min-height: 70vh") 
+        block content
 
+
+      div.container-fluid.footer.mt-auto.py-3.bg-body-tertiary(style="max-height:30vh")
+        footer.d-flex.flex-wrap.justify-content-between.align-items-center.py-3.my-4.border-top
+          .col-md-4.d-flex.aling-items-center 
+            a.mb-3.me-2.mb-md-0.text-body-secondary.text-decoration-none.lh-1(href="/") Antorrg
+              span.mb-3.mb-md-0.text-body-secondary &copy; 2024 Company, Inc
+          ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex 
+          li.ms-3
+            a.text-body-secondary(href="#") X
+              svg.bi(width="24", height="24")
+                use(xlink:href="#twitter")
+          li.ms-3
+            a.text-body-secondary(href="#") Inst
+              svg.bi(width="24", height="24")
+                use(xlink:href="#instagram")
+          li.ms-3
+            a.text-body-secondary(href="#") Face
+              svg.bi(width="24", height="24")
+                use(xlink:href="#facebook")
