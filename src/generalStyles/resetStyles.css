@@ -27,6 +27,29 @@
   background-color: var( --bs-body-bg);
   color: var(--bs-body-color)
 }
+[data-bs-theme="light"] .coverBack {
+  margin-top:0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  -webkit-backdrop-filter: blur(10px); /* Efecto de desenfoque para Safari */
+  padding: 0.2rem;
+  border-radius: 5px; /* Bordes redondeados */
+  color: black; /* Asegúrate de que el texto sea visible */
+min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
+min-width: 80vw;
+}
+
+[data-bs-theme="dark"] .coverBack {
+  background-color: transparent; /* Sin efecto */
+  border: none; /* O elimina el borde */
+  margin-top:0;
+  z-index: 10;
+  padding: 0.2rem;
+  min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
+  min-width: 80vw;
+}
+
 
 /*escritura de variables clases btn*/
 .btn {

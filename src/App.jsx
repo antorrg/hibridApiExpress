@@ -1,6 +1,6 @@
 import { useEffect,useState } from 'react'
 import {Routes, Route } from 'react-router-dom'
-import View from './Views/Index'
+import {Login, Admin, Detail} from './Views/Index'
 
 
 function App() {
@@ -35,21 +35,21 @@ function App() {
     
     <div className={`app ${theme}-mode`}>
       <Routes>
-        <Route path='/login' element={<View.Login/>}/>
-        <Route path='/admin' element={<View.Admin/>}/>
-        <Route path='/admin/product/:id' element={<View.Detail/>}/>
-        
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/admin' element={<Admin/>}/>
+        <Route path='/admin/product/:id' element={<Detail/>}/>
       </Routes>
-      <div className='container d-flex flex-column align-items-center justify-content-center'>
+      {/* <div className='container d-flex flex-column align-items-center justify-content-center'>
         <div className='flex-row '>
-      </div>
-      </div>
+     
       <button 
         onClick={toggleTheme} 
-        className="btn btn-outline-secondary"
+        className="btn btn-sm btn-outline-secondary mt-4"
       >
         {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
       </button>
+      </div>
+      </div> */}
       </div>
   )
 }

@@ -2,7 +2,10 @@ import React from 'react'
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <div>
+      <h1>soy el admin</h1>
+      Admin
+      </div>
   )
 }
 

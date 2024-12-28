@@ -1,7 +1,7 @@
 import ViewUser from './UserComp/ViewUser'
 import CreateUser from './UserComp/CreateUser'
 import UpdateUser from './UserComp/UpdateUser'
-import {login, create} from './UserComp/validate'
+import {validLogin, create} from './UserComp/validate'
 import ViewLanding from './LandingComp/ViewLanding'
 import CreateLanding from './LandingComp/CreateLanding'
 import UpdateLanding from './LandingComp/UpdateLanding'
@@ -15,11 +15,11 @@ import UpdateItem from './ProductItemComp/UpdateItem'
 import Navbar from './Navbar'
 import Footer from './Footer'
 
-export default {
+export {
 ViewUser,
 CreateUser,
 UpdateUser,
-login, 
+validLogin, 
 create,
 ViewLanding,
 CreateLanding,

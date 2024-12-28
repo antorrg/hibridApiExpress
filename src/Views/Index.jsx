@@ -3,7 +3,7 @@ import Detail from './Detail'
 import Login from './Login'
 
 
-export default {
+export {
     Admin,
     Detail,
     Login

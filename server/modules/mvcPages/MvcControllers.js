@@ -9,7 +9,7 @@ const prodGetAll = product.getProdMvc;
 const prodGetById = product.getProdByIdMvc;
 const prodGetItem = product.getItemMvc;
 const landing = land.landServGetAll;
-const appPath = env.Status==='production'? "/form" : "http://localhost:5173/login"
+const appPath = env.Status==='production'? "/login" : "http://localhost:5173/login"
 
 let metaStored = '';
 const setStored = (data)=>{metaStored = data;}
