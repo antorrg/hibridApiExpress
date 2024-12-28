@@ -8,13 +8,13 @@ import {url} from '../main'
 function AlertLogout({logout}) {
     const navigate = useNavigate()
     const landing = url? url : '/'
+    //window.location.href=landing
     
   const sessionCleaner = () => {
     showSuccess("Sesión cerrada");
-    //window.location.href=landing
     // navigate("/");
+    logout();
     setTimeout(() => {
-      logout();
       window.location.href=landing
     }, 1000);
   };

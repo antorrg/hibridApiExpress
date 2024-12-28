@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { HandlError } from './Auth/generalComponents/HandlerError';
+import { handleError } from './toastify';
 
 
 const interceptor = (logout, redirectToError) => {
@@ -16,7 +16,7 @@ const interceptor = (logout, redirectToError) => {
         // Acceso no autorizado, redirigir al inicio de sesión
         redirectToLogin(logout)
       }
-      HandlError(error);
+      handleError(error);
       return Promise.reject(error);
     }
   );

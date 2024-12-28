@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
  
  // errorHandler.js
   const handleError = (error) => {
+    console.error('hand: ',error)
     if (error.response) {
       const status = error.response.status;
       const data = error.response.data;

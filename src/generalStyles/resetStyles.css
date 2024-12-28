@@ -15,6 +15,12 @@
   --ar-background-image: url("https://firebasestorage.googleapis.com/v0/b/misitioweb-d59d3.appspot.com/o/imagesApi%2Fbackground-dark.webp?alt=media&token=8880fd28-c185-4f4d-bfa2-7d4bd6516de4");
 }
 /* Establecer backgrounds con imagenes y colores cambiantes segun modo*/
+.backgroundOnlyImage {
+  background-image: var(--ar-background-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
 .backgroundPages {
   background-image: var(--ar-background-image);
   display: flex;
@@ -49,7 +55,31 @@ min-width: 80vw;
   min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
   min-width: 80vw;
 }
+[data-bs-theme="light"] .coverAdmin {
+  margin-top:0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  -webkit-backdrop-filter: blur(10px); /* Efecto de desenfoque para Safari */
+  padding: 0.2rem;
+  border-radius: 5px; /* Bordes redondeados */
+  color: var(--bs-body-color);
+min-height: fit-content;; /* Asegura que ocupe al menos la altura completa de la pantalla */
+min-width: 80vw;
+}
 
+[data-bs-theme="dark"] .coverAdmin {
+  margin-top:0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.3); /* Fondo semitransparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  -webkit-backdrop-filter: blur(10px); /* Efecto de desenfoque para Safari */
+  padding: 0.2rem;
+  border-radius: 5px; /* Bordes redondeados */
+  color: var(--bs-body-color);
+min-height: fit-content; /* Asegura que ocupe al menos la altura completa de la pantalla */
+min-width: 80vw;
+}
 
 /*escritura de variables clases btn*/
 .btn {

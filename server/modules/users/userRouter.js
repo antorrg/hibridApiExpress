@@ -19,6 +19,6 @@ restRouter.delete('/user/:id',  verifyToken, midd.validUUid, ctr.userDelete)
 
 restRouter.post('/user/login', midd.loginUser, midd.validEmail, midd.validPass, ctr.loginController)
 
-restRouter.get('/user/logout', ctr.logoutController);
+restRouter.post('/user/logout', verifyToken, ctr.logoutController);
 
 export default restRouter;

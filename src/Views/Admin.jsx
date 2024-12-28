@@ -1,10 +1,12 @@
 import React from 'react'
+import AdminNav from '../Component/AdminNav'
+import { Outlet } from "react-router-dom";
 
 const Admin = () => {
   return (
-    <div>
-      <h1>soy el admin</h1>
-      Admin
+    <div className='backgroundOnlyImage'>
+      <AdminNav/>
+      <Outlet/>
       </div>
   )
 }

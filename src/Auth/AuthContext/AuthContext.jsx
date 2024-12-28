@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import SessionWarning from './SessionWarning';
-import { userLogout} from '../../Redux/endPoints';
+import { userValid} from '../../Redux/endPoints';
 
 const AuthContext = createContext();
 
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async() => {
     try {
-      const userOut = await userLogout.get('logout', null, null, false)
+      const userOut = await userValid.post('logout', null, null, true)
       setAuthenticated(false);
       setUser(null);
       localStorage.removeItem('user');

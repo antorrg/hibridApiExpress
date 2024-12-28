@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as toast from "./toastify"
+import * as toast from "../Utils/toastify"
 
 
 class Endpoints {

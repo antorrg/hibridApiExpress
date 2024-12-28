@@ -20,9 +20,9 @@ html(lang="es")
             ul.navbar-nav.me-auto.mb-2.mb-md-0
               li.nav-item
                 if isAuthenticated
-                  a.nav-link.active(aria-current="page", href="/admin") Admin
+                  a.nav-link.active(aria-current="page", href=url+"admin") Admin
                 else
-                  a.nav-link.active(aria-current="page", href=url) .
+                  a.nav-link.active(aria-current="page", href=url+"login") .
               li.nav-item
                 a.nav-link.active(aria-current="page" href="/acerca") Sobre mi:
               li.nav-item

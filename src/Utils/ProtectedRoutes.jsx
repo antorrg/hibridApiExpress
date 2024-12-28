@@ -1,4 +1,4 @@
-import { useAuth } from "./Auth/AuthContext/AuthContext";
+import { useAuth } from "../Auth/AuthContext/AuthContext";
 import { Navigate } from "react-router-dom";
 
 // Componente de protección para rutas de admin
