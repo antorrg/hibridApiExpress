@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development concurrently \"vite\" \"nodemon server.js\"",
-    "build": "vite build && node scripts/copy-files.js",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "cross-env NODE_ENV=production concurrently \"vite preview\" \"nodemon server.js\"",
     "start": "cross-env NODE_ENV=production node server.js",
@@ -44,7 +44,8 @@
     "redux-thunk": "^3.1.0",
     "sequelize": "^6.37.5",
     "shelljs": "^0.8.5",
-    "sweetalert2": "^11.15.3"
+    "sweetalert2": "^11.15.3",
+    "vite-plugin-static-copy": "^2.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",

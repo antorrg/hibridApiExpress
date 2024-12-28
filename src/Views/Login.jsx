@@ -1,4 +1,3 @@
-
 import {useState} from 'react'
 import {url } from '../main'
  import {useAuth} from '../Auth/AuthContext/AuthContext'
@@ -6,6 +5,10 @@ import {useNavigate}from "react-router-dom" ;
 import { validLogin } from '../Component/IndexComponent';
 import {userLogin} from '../Redux/endPoints'
 import AlertLogin from '../Component/AlertLogin'
+import EyeSlash from 'bootstrap-icons/icons/eye-slash.svg';
+import Eye from 'bootstrap-icons/icons/eye.svg';
+
+
 
 const Login = () => {
   const inicio = url? url : '/'
@@ -69,7 +72,7 @@ const Login = () => {
           :
           <section>
             <div className="d-flex justify-content-between align-items-center">
-              <img className="mb-4" src="/nomadesFav.png" alt="" width="95" height="57"/>
+              <img className="mb-4" src="/logo.png" alt="" width="95" height="93"/>
               <button type="button" onClick={closeLogin}className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <h1 className="h3 mb-3 fw-normal">Inicie sesion</h1>
