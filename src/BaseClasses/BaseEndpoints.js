@@ -10,7 +10,10 @@ class Endpoints {
 
   setAuthHeader() {
     const token = localStorage.getItem('validToken');
-    const config = { headers: {} };
+    const config = { 
+      headers: {},
+      //withCredentials: true
+     };
     if (token && this.validHeader) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -25,7 +28,7 @@ class Endpoints {
         params, // Agrega los parámetros como query string
       });
       if (auxFunction) await auxFunction();
-      return response.data;
+      return response.data.results;
     } catch (error) {
       toast.handleError(error);
       console.error('Error en GET:', error);

@@ -1,3 +1,4 @@
+
 import {
     LANDING,
     PRODUCT,
@@ -27,6 +28,16 @@ const initialState = {
 
 const reducer = (state = initialState, {type, payload})=>{
     switch(type){
+        case LANDING:
+            return{
+                ...state,
+                Landing:payload[0],
+            }
+        case PRODUCT:
+            return {
+                ...state,
+                Products : payload,
+            }
         default:
             return{
                 ...state,

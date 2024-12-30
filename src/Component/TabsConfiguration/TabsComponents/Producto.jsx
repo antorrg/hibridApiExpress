@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../../../../redux/actions";
-import { booleanState } from "../../../../utils/generalHelpers";
+import { getProduct } from "../../../Redux/actions";
+import { booleanState } from "../../../Utils/generalHelpers";
 
 const Producto = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const Producto = () => {
 
   const { id } = useParams();
   const goBack = () => navigate(-1);
-  const isAdmin = true;
+  
   useEffect(() => {
-    dispatch(getProduct(isAdmin));
-  }, [id]);
+    dispatch(getProduct());
+  }, []);
   return (
     <section className="container album py-1 bg-light mb-3 ">
       <div className=" row py-lg-5">

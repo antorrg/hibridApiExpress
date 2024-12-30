@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { landingGet, productGet } from "./endPoints";
 
 export const LANDING = "LANDING";
 export const PRODUCT = "PRODUCT";
@@ -14,16 +14,30 @@ export const MEDIA_BY_ID = 'MEDIA_BY_ID'
    
 
 
-export const getInfo = (isAdmin) => {
+export const getInfo = () => {
   return async (dispatch) => {
     try {
-      const data = await axios("/api/v1/land",);
+      const data = await landingGet();
       return dispatch({
         type: LANDING,
-        payload: data.data,
+        payload: data,
       });
     } catch (error) {
       console.error(error);
     }
   };
 };
+
+export const getProduct = () => {
+  return async (dispatch) => {
+    try{
+    const data = await productGet()
+    return dispatch({
+      type: PRODUCT,
+      payload: data
+    })
+  }catch(error){
+    console.error(error)
+  }
+}
+}

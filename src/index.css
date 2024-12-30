@@ -1,6 +1,7 @@
 @import './generalStyles/bootstrap.css';
 @import './generalStyles/resetStyles.css';
 @import './generalStyles/login.css';
+@import './generalStyles/Loading.css';
 
 
 .caption-nav {

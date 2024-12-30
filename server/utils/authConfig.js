@@ -46,6 +46,13 @@ myStore.on('error', (error) => {
     console.error(error);
 });
 
+ export const checkAuthentication = (req, res, next) => {
+    res.locals.isAuthenticated = req.session && req.session.isAuthenticated ? true : false;
+    next();
+};
+
+// Aplica este middleware globalmente
+
 
 //! Esta parte corresponde a jsonwebtoken: 
 
@@ -92,7 +99,7 @@ export const verifyToken = (req, res, next)=>{
               }
              // console.log('Session en verify:', req.session.user);
               //console.log('SessionToken en verify:', req.session.user.token)
-            if (!req.session.user|| !req.session.user.token) {return next(eh.middError('Sesion o token invalidos', 401))}
+            //if (!req.session.user|| !req.session.user.token) {return next(eh.middError('Sesion o token invalidos', 401))}
             pkg.verify(token, env.SecretKey, (err, decoded)=>{
             if(err){
                 if(err.name === 'TokenExpiredError'){return next(eh.middError('Token expirado', 401))

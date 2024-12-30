@@ -49,21 +49,37 @@ export default {// Estos son los controladores REST que se importaran en landRou
         res.status(200).json({ user: userResponse, token });
         
       }),
-    
       logoutController: async (req, res, next) => {
-        req.session.isAuthenticated = false;
+        if (!req.session) {
+            return res.status(400).json({ success: false, message: 'No session found.' });
+        }
+    
+        req.session.isAuthenticated = false; // Marca como no autenticado
         req.session.destroy((err) => {
-          if (err) {
-            return next(err);
-          }
-          res.clearCookie("connect.sid"); // Limpia la cookie de sesión del cliente
-          res.clearCookie("connect.id");
-          res.clearCookie("sessionId");
-          //res.redirect();
-          res.status(200).json('todo bien')
-          console.log('hasta aqui bien')
+            if (err) {
+                return next(err); // Manejo de errores
+            }
+            res.clearCookie("connect.sid"); // Limpia la cookie principal de sesión
+            res.clearCookie("connect.id");
+            res.clearCookie("sessionId");
+            res.status(200).json({ success: true, message: 'Logout successfully.' });
         });
-      },
+    },
+    
+      // logoutController: async (req, res, next) => {
+      //   req.session.isAuthenticated = false;
+      //   req.session.destroy((err) => {
+      //     if (err) {
+      //       return next(err);
+      //     }
+      //     res.clearCookie("connect.sid"); // Limpia la cookie de sesión del cliente
+      //     res.clearCookie("connect.id");
+      //     res.clearCookie("sessionId");
+      //     //res.redirect();
+      //     res.status(200).json('Logout successfully')
+      //     console.log('hasta aqui bien')
+      //   });
+      // },
 
 
 }

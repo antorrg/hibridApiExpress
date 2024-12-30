@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import SessionWarning from './SessionWarning';
 import { userValid} from '../../Redux/endPoints';
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -28,13 +29,12 @@ const AuthProvider = ({ children }) => {
 
   const logout = async() => {
     try {
-      const userOut = await userValid.post('logout', null, null, true)
+      const userOut = await userValid.post('logout', null, null, false)
+      if(userOut){
+        localStorage.removeItem('user');
+        localStorage.removeItem('validToken');
       setAuthenticated(false);
       setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('validToken');
-      if(userOut){
-      window.location.reload()
       // Considerar usar navigate en lugar de window.location.reload()
       }
     } catch (error) {

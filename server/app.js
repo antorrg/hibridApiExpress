@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
-import {sessionMiddle} from './utils/authConfig.js'
+import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
 import env from './envConfig.js'
 import mainRouter from './routers/router.js'
 
@@ -30,6 +30,10 @@ app.use(sessionMiddle)
 
 app.use(morgan('dev'))
 app.use(cors())
+// app.use(cors({
+//   origin: 'http://localhost:5173/', // Cambia al origen de tu frontend
+//   credentials: true // Habilita el uso de cookies
+// }))
 app.set('view engine', 'pug')
 app.set('views', viewPath)
 
@@ -37,7 +41,7 @@ app.use(express.static(staticPath))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-
+app.use(checkAuthentication);
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
 

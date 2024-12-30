@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
     console.error('hand: ',error)
     if (error.response) {
       const status = error.response.status;
-      const data = error.response.data;
+      const data = error.response.data.error;
       if (status === 400) {
         // Acceso no autorizado
         toast.error(`Error ${status}. ${data}`);

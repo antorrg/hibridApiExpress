@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Container, Row } from 'react-bootstrap';
 
 
-const TabsLayout = ({ activeTab, handleTabChange, sessionCleaner, children }) => {
+const TabsLayout = ({ activeTab, handleTabChange, sessionCleaner, isLoading, children }) => {
  
   return (
     <div>
@@ -42,7 +42,7 @@ const TabsLayout = ({ activeTab, handleTabChange, sessionCleaner, children }) =>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link onClick={sessionCleaner} active={activeTab === 'logout'}>
+                <Nav.Link onClick={sessionCleaner} active={activeTab === 'logout'} disabled={isLoading}>
                   Cerrar sesión
                 </Nav.Link>
               </Nav.Item>

@@ -3,20 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { showSuccess } from '../Utils/toastify';
-import {url} from '../main'
+import {basePath} from '../main'
 
-function AlertLogout({logout}) {
+function AlertLogout({logout, isLoading, setIsLoading}) {
     const navigate = useNavigate()
-    const landing = url? url : '/'
+    const landing = basePath? basePath : '/'
     //window.location.href=landing
     
-  const sessionCleaner = () => {
-    showSuccess("Sesión cerrada");
-    // navigate("/");
-    logout();
-    setTimeout(() => {
-      window.location.href=landing
-    }, 1000);
+  const sessionCleaner = async() => {
+    if (isLoading) return; // Prevenir múltiples clics
+        setIsLoading(true);
+        const response = await logout()
+        if(response){
+          showSuccess("Sesión cerrada");
+          window.location.href=landing
+        }
+        setIsLoading(false);
   };
 
   return (
@@ -34,7 +36,7 @@ function AlertLogout({logout}) {
           <a href= {landing} className='btn btn-sm btn-outline-secondary'>
             Salir
           </a>
-          <Button onClick={() => sessionCleaner()} variant="outline-primary">
+          <Button onClick={() => sessionCleaner()} variant="outline-primary" disabled={isLoading}>
             Cerrar sesion
           </Button>
         </div>

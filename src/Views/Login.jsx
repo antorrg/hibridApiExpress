@@ -1,21 +1,23 @@
 import {useState} from 'react'
-import {url } from '../main'
+import {basePath} from '../main'
  import {useAuth} from '../Auth/AuthContext/AuthContext'
 import {useNavigate}from "react-router-dom" ;
 import { validLogin } from '../Component/IndexComponent';
 import {userLogin} from '../Redux/endPoints'
 import AlertLogin from '../Component/AlertLogin'
+import Loading from '../Component/Loading';
 import EyeSlash from 'bootstrap-icons/icons/eye-slash.svg';
 import Eye from 'bootstrap-icons/icons/eye.svg';
 
 
 
 const Login = () => {
-  const inicio = url? url : '/'
+  const inicio = basePath? basePath: '/'
   const navigate = useNavigate()
   const { authenticated, login, logout}=useAuth();
   console.log('autenticado: ',authenticated)
   const [showPassword, setShowPassword]= useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
 
   const closeLogin = ()=> window.location.href=(inicio)
@@ -45,30 +47,36 @@ const Login = () => {
   
   const handleSubmit = async(event)=>{
     event.preventDefault();
-    
-    const response = await userLogin.post('login', input, succesLogin, false);
-    if(response){
-      const user = response.user;
-      const token = response.token
-      login(user, token)
-    }
+    if (isLoading) return; // Prevenir múltiples clics
+        setIsLoading(true);
+        const response = await userLogin.post('login', input, succesLogin, false);
+        if(response){
+          const user = response.user;
+          const token = response.token
+          login(user, token)
+        }
+        setIsLoading(false);
+   
    
     setInput({
       email: "",
       password: "",
     });
   }
-  const permit= (!input.email.trim() ||!input.password.trim() ||error.email|| error.password)? true :false;
+  const permit= (!input.email.trim() ||!input.password.trim() ||error.email|| error.password || isLoading)? true :false;
 
    
   return (
     <>
   <div className="backgroundPages">
     <div className='coverBack'>
+    {isLoading?
+    <Loading/>
+    :
       <div className="container-md modal-content backgroundFormColor loginContainer rounded-4 shadow">
         <div className="form-signin m-auto p-3">
           {authenticated?
-          <AlertLogin logout={logout}/>
+          <AlertLogin logout={logout} isLoading={isLoading} setIsLoading={setIsLoading}/>
           :
           <section>
             <div className="d-flex justify-content-between align-items-center">
@@ -97,6 +105,7 @@ const Login = () => {
                   }
         </div>
       </div>
+    }
     </div>
   </div>
   </>

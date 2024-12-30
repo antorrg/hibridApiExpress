@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
+
 export default defineConfig({
   plugins: [
     react(),
@@ -50,6 +51,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@files': path.resolve('src/files'), // Alias para facilitar la importación
+      sequelize: false
     },
   },
 });

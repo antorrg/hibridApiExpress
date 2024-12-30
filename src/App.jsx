@@ -33,7 +33,7 @@ function App() {
   },[theme])
 
   const redirectToError = useCallback((status, message) => {
-    navigate('/error', { state: { status, message }})
+    navigate('/admin/error', { state: { status, message }})
   }, [navigate])
   
    useEffect(()=>{
@@ -56,8 +56,8 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/admin' element={<ProtectedRoute> <Admin/> </ProtectedRoute>}>
         <Route index element={<TabsPage/>}/>
+        <Route path='/admin/error' element={<Error/>}/>
          </Route>
-        <Route path='/error' element={<Error/>}/>
       </Routes>
       {/* <div className='container d-flex flex-column align-items-center justify-content-center'>
         <div className='flex-row '>

@@ -2,13 +2,14 @@
 import { Dropdown } from "react-bootstrap";
 import { useAuth } from "../Auth/AuthContext/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import {url} from '../main'
+import {basePath} from '../main'
+import Loading from './Loading'
 
 
 const AdminNav = () => {
   const { user} = useAuth();
   const navigate = useNavigate();
- const inicio = url? url : '/'
+ const inicio = basePath? basePath : '/'
  const goToHome = ()=> window.location.href=(inicio)
 
   const profile = () => {

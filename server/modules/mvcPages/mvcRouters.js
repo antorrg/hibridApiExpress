@@ -18,6 +18,8 @@ mvcRouter.get('/acerca', controller.getAbout);
 
 mvcRouter.get('/login', controller.getReact);
 
+mvcRouter.get('/admin', controller.getReact);
+
 // mvcRouter.get('*', (req, res, next)=>{
 //         // res.status(404).send('Not Found')
 //          res.render('error', { message: 'Not Found', status: 404});

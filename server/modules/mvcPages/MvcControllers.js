@@ -20,10 +20,10 @@ export default {
    getLanding : renderError(async(req, res)=>{
       const response = await landing()
       const products = await prodGetAll()
-      const admin = req.session.isAuthenticated
-      console.log('permisos en el admin: ',req.session.isAuthenticated)
+      const admin = req.session && req.session.isAuthenticated ? true : false;
+      console.log('permisos en el admin: ',admin)
       //console.log('soy response', products )
-    res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated: req.session.isAuthenticated})
+    res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
    }),
 
    getProduct : renderError(async(req, res)=>{

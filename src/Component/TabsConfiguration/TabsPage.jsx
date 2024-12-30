@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import {url} from '../../main'
+import {basePath} from '../../main'
 import {useNavigate,useLocation} from 'react-router-dom'
 import {useAuth} from '../../Auth/AuthContext/AuthContext'
 import { showSuccess } from '../../Utils/toastify';
 //import showConfirmationDialog from '../../Utils/sweetalert';
 import TabsLayout from './TabsLayout';
 import Config from './TabsComponents/Config'
+import Portada from './TabsComponents/Portada'
+import Producto from './TabsComponents/Producto'
+import Loading from '../Loading';
 
 
 
@@ -13,6 +16,7 @@ const TabsPage = () => {
   const {logout }= useAuth()
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false)
 
    // Lee el parámetro "tab" de la URL. Si no existe, usa un valor predeterminado.
    const queryParams = new URLSearchParams(location.search);
@@ -26,35 +30,40 @@ const TabsPage = () => {
     navigate(`/admin?tab=${activeTab}`); // Actualiza la URL.
     setActiveTab(activeTab);
   };
-   const landing = url? url : '/'
+   const landing = basePath? basePath : '/'
   const sessionCleaner = async()=>{
     // const confirmed = await showConfirmationDialog(
     //   "¿Está seguro de cerrar sesión?"
     // );
     // if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      showSuccess("Sesión cerrada");
-     
-      window.location.href=landing
-      //navigate("/");
-      setTimeout(() => {
-        logout();
-      }, 1000);
-    //}
+ 
+
+        if (isLoading) return; // Prevenir múltiples clics
+            setIsLoading(true);
+            const response = await logout()
+            if(response){
+              showSuccess("Sesión cerrada");
+              window.location.href=landing
+            }
+            setIsLoading(false);
+      
   }
 
   return (
     <>
+    {isLoading? <Loading/> : null}
     <TabsLayout
       activeTab={activeTab}
       handleTabChange={handleTabChange}
       sessionCleaner={sessionCleaner}
+      isLoading = {isLoading}
     >
       {activeTab === 'producto' && (
-        <Config/>
+        <Producto/>
       )}
       {activeTab === 'portada' && (
-        <Config/>
+        <Portada/>
       )}
       {activeTab === 'users' && (
         <Config/>

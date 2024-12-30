@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { useLocation} from "react-router-dom";
-import {url} from '../main'
+import {basePath} from '../main'
 //import './styles/error.css'
 
 const Error = () => {
   const location = useLocation();
 
-  const inicio = url ? url : "/";
+  const inicio = basePath ? basePath : "/";
 
   useEffect(() => {
     setTimeout(() => {
       window.location.href = inicio;
-    }, 5000);
+    }, 50000);
   }, []);
 
   const error = location.state || {
