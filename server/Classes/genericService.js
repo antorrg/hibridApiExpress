@@ -4,6 +4,7 @@ import NodeCache from 'node-cache';
 import bcrypt from 'bcrypt'
 
 
+const validator = parser.optionBoolean
 const cache = new NodeCache({ stdTTL: 1800 }); // TTL (Time To Live) de media hora
 
 class GenericService {
@@ -16,13 +17,21 @@ class GenericService {
     clearCache() {
         cache.del(`${this.Model.name.toLowerCase()}`);
     }
-
+    
     async handleImageDeletion(imageUrl) {
         if (this.useImage && imageUrl) {
             await this.deleteImages(imageUrl);
         }
     }
-
+    optionBoolean (save){
+        if(save==='true'|| save === true){
+            return true
+        }else if(save==='false'|| save === false){
+            return false;
+        }else{
+            return false;
+        }
+    }
     async create(data, uniqueField=null, parserFunction=null) {
         try {
             const whereClause = {};
@@ -38,7 +47,8 @@ class GenericService {
             }
             
             const newRecord = await this.Model.create(data);
-            
+
+            if (this.useCache) this.clearCache();
             return parserFunction ? parserFunction(newRecord) : newRecord;
             
         } catch (error) {
@@ -115,6 +125,7 @@ class GenericService {
     }
 
     async update(id, newData, parserFunction=null) {
+       
         let imageUrl =''
         try {
             const dataFound = await this.Model.findByPk(id);
@@ -125,7 +136,7 @@ class GenericService {
             
             // Si newData.enable existe, parsea el booleano
             if (newData.enable !== undefined) {
-                newData.enable = parser.optionBoolean(newData.enable);
+                newData.enable = this.optionBoolean(newData.enable);
             }
             if(this.useImage && dataFound.picture && dataFound.picture !== newData.picture){
              imageUrl= dataFound.picture;
@@ -135,7 +146,7 @@ class GenericService {
 
             await this.handleImageDeletion(imageUrl);
             
-            if (this.useCache) clearCache();
+            if (this.useCache) this.clearCache();
             return parserFunction ? parserFunction(upData) : upData;
         } catch (error) {
             throw error;
@@ -153,7 +164,7 @@ class GenericService {
             
             // Si newData.enable existe, parsea el booleano
             if (newData.enable !== undefined) {
-                newData.enable = parser.optionBoolean(newData.enable);
+                newData.enable = this.optionBoolean(newData.enable);
             }
             if(this.useImage && dataFound.picture && dataFound.picture !== newData.picture){
                 imageUrl= dataFound.picture;
@@ -162,7 +173,7 @@ class GenericService {
 
             await this.handleImageDeletion(imageUrl);
             
-            if (this.useCache) clearCache();
+            if (this.useCache) this.clearCache();
 
             return parserFunction ? parserFunction(upData) : upData;
             //return `${this.Model.name} updated succesfully`;
@@ -183,7 +194,7 @@ class GenericService {
                 await dataFound.destroy();
                 await this.handleImageDeletion(imageUrl);
 
-                if (this.useCache) clearCache();
+                if (this.useCache) this.clearCache();
                 return `${this.Model.name} deleted successfully`;
             
         } catch (error) {

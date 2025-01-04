@@ -92,15 +92,29 @@ class ProductMidd extends GenericMidd {
         return (req, res, next) => {
             //console.log('primero: ', requiredFields+ ' // '+secondFields)
             // Llamar al método del padre para validar los campos generales
+            //console.log('soy el product: ', req.body)
             const validateGeneralFields = super.validateFields(requiredFields);
             validateGeneralFields(req, res, (err) => {
                 if (err) return next(err); // Si hay error en los campos generales, salir
 
                 // Validar el array de "items"
                 const secondData = req.body.items;
+                //console.log('soy los items',secondData)
 
                 if (!secondData || !Array.isArray(secondData) || secondData.length === 0) {
                     return next(middError('Missing items array or empty array', 400));
+                }
+                //Validar que express-validator no convierta el array en una cadena de strings
+                const invalidStringItems = secondData.filter(
+                    (item) => typeof item === "string"
+                );
+                if (invalidStringItems.length > 0) {
+                    return next(
+                        middError(
+                            `Invalid "items" content: expected objects but found strings (e.g., ${invalidStringItems[0]})`,
+                            400
+                        )
+                    );
                 }
 
                 secondData.forEach((item, index) => {

@@ -5,7 +5,9 @@ import clean from '../server/helpers/generalHelp.js'
 import {redirectionImages } from './helperTest/imageServices.js'
 import {Product, Item} from '../server/database.js'
 
-const test = new ProductService(Product, Item, false,false, redirectionImages)
+const mockDeleteImages = jest.fn(); // Creamos el mock de deleteImages
+
+const test = new ProductService(Product, Item, false,false, null)
 const testImage = new ProductService(Product, Item, redirectionImages, false)
 
 describe('ProductServices Class Test, Product crud (product and item)', () => {
@@ -86,27 +88,10 @@ describe('ProductServices Class Test, Product crud (product and item)', () => {
         const response = await test.delete(id,)
         expect(response).toBe('Item deleted successfully') 
       });
-       it('Should delete one item if the parameters are corrects', async() => {
+       it('Should delete a product and its items if the parameters were correct', async() => {
         const id = 1;
         const response = await test.deleteAll(id,)
         expect(response).toBe('Product and items asociated deleted successfully') 
       })
     })
 })
-
-
-//   describe('Function "update', () => { 
-//     it('should update the element if the parameters are corrects', async() => {
-//       const id = 1;
-//       const newData = {id, enable: false}
-//       const response = await test.update(id, newData)
-//       const responseJs = help.landParser(response)
-//       expect(responseJs).toMatchObject(help.dataUpdated) 
-//     })
-//   });
-//   describe('Delete function .', () => {
-//     it('should delete an element', async() => {
-//       const id = 1;
-//       const response = await test.delete(id)
-//       expect(response).toBe('Landing deleted successfully')
-//     });

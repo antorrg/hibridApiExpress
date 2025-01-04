@@ -1,7 +1,7 @@
 extends ./layouts/mainLayout.pug
 
 block content
- section.py-5.text-center.container
+ section.py-5.text-center.container.backgroundElements
         .row.py-lg-5
           .col-lg-6.col-md-8.mx-auto
             h1.fw-light Proyecto #{info.title}
@@ -10,7 +10,7 @@ block content
               a.btn.btn-primary.my-2(href=info.url target="_blank") Ir al sitio web
               a.btn.btn-secondary.my-2(href="../") Volver
       .album.py-5.bg-light
-        .container
+        .container.backgroundElements
           - const chunk = (arr, size) => {
           -   return arr.reduce((acc, _, i) => {
           -     if (i % size) {

@@ -1,7 +1,4 @@
 
-import env from '../envConfig.js'
-
-
 const productCleaner = (cont, withItem)=>{
     const dataItems = cont.Items? cont.Items : []
      const items = withItem? dataItems.map((item)=> aux(item, false)): null
@@ -76,8 +73,8 @@ const dataEmptyLanding = {
     
 };
 
- const userParser = (data, valid) => {
-    const roleParsed = valid ? scope(data.role) : data.role
+ const userParser = (data) => {
+    const roleParsed =  scope(data.role) 
     return {
         id: data.id,
         email: data.email,

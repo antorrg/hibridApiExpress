@@ -1,5 +1,5 @@
 import {Product, Item} from '../../database.js'
-import ProductService from '../../Classes/genericService.js'
+import ProductService from '../../Classes/ProductServices.js'
 import ProductController from '../../Classes/ProductController.js'
 import { deleteImageFromStorage } from '../../firebase.js'
 import help from '../../helpers/generalHelp.js';

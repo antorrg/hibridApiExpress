@@ -1,11 +1,8 @@
-import ViewUser from './UserComp/ViewUser'
 import CreateUser from './UserComp/CreateUser'
 import UpdateUser from './UserComp/UpdateUser'
-import {validLogin, create} from './UserComp/validate'
-import ViewLanding from './LandingComp/ViewLanding'
+import {validLogin, ValidCreate} from './UserComp/validate'
 import CreateLanding from './LandingComp/CreateLanding'
 import UpdateLanding from './LandingComp/UpdateLanding'
-import GeneralViewProduct from './ProductItemComp/GeneralViewProduct'
 import ProductView from './ProductItemComp/ProductView'
 import ItemView from './ProductItemComp/ItemView'
 import CreateProduct from './ProductItemComp/CreateProduct'
@@ -16,15 +13,12 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 
 export {
-ViewUser,
 CreateUser,
 UpdateUser,
 validLogin, 
-create,
-ViewLanding,
+ValidCreate,
 CreateLanding,
 UpdateLanding,
-GeneralViewProduct,
 ProductView,
 ItemView,
 CreateProduct,
@@ -33,5 +27,4 @@ UpdateProduct,
 UpdateItem, 
 Navbar, 
 Footer, 
-
 }

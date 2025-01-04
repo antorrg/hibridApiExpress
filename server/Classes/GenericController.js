@@ -14,8 +14,9 @@ class GenericController {
  //Controllers:
  create = catchController(async (req, res) => {
     const {uniqueField, ...data} = req.body;
-    const response = await this.service.create(data, uniqueField);
-    return GenericController.responder(res, 201, true, "Created succesfuly!", response)
+    
+    const response = await this.service.create(data, uniqueField, this.parserFunction);
+    return GenericController.responder(res, 201, true, "Created succesfully!", response)
  });
 
  createVariant = catchController(async (req, res) => {

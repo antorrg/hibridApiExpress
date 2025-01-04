@@ -12,7 +12,9 @@ const userService = new UserService(User, false, true, deleteImageFromStorage )/
 
 //* Controladores REST:
 const userController = new GenericController(userService, help.userParser, help.emptyUser, true )//(service, parserFunction, emptyObject, isAdmin)
+
 const appPath = env.Status==='production'? "/" : "http://localhost:5173/login"
+
 export default {// Estos son los controladores REST que se importaran en landRouter.
     userCreate : userController.create,
     userGetAll : userController.getAll, //parserFunction = null, queryObject = null, emptyObject,

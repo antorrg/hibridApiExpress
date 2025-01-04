@@ -29,12 +29,13 @@ const AuthProvider = ({ children }) => {
 
   const logout = async() => {
     try {
-      const userOut = await userValid.post('logout', null, null, false)
+      const userOut = await userValid.post('logout', null, null, false, 'User is logout')
       if(userOut){
         localStorage.removeItem('user');
         localStorage.removeItem('validToken');
-      setAuthenticated(false);
-      setUser(null);
+       setAuthenticated(false);
+       setUser(null);
+       window.location.reload()
       // Considerar usar navigate en lugar de window.location.reload()
       }
     } catch (error) {

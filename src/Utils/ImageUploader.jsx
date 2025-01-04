@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { showSuccess, showError } from "../Auth/generalComponents/HandlerError";
-import InfoFormField from '../views/AdminViews/InfoFormField'
-import {imageUpladmessage} from '../infoHelpers'
+import { showSuccess, } from "../Utils/toastify";
 
-const ImageUploader = ({ titleField, imageValue, onImageUpload }) => {
+
+const ImageUploader = ({  titleField, imageValue, onImageUpload, maxWidth = "200px"}) => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(imageValue || ""); // Inicializa con imageValue
   const [previewUrl, setPreviewUrl] = useState(imageValue || ""); // Inicializa con imageValue
@@ -42,8 +41,8 @@ const ImageUploader = ({ titleField, imageValue, onImageUpload }) => {
     const token = localStorage.getItem("validToken");
     try {
       // Simulación del envío del formulario
-      console.log("formData:", formData);
-      const response = await axios.post("/api/v1/imgupload", formData, {
+      //console.log("formData:", formData);
+      const response = await axios.post("/api/v1/uploadImage", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "x-access-token": `${token}`,
@@ -51,8 +50,9 @@ const ImageUploader = ({ titleField, imageValue, onImageUpload }) => {
       });
       // Simular la respuesta para la demo
       if (response.status === 200) {
-        setImageUrl(response.data.url); // Actualiza imageUrl con la URL de la imagen cargada
-        onImageUpload(response.data.url);
+        //console.log('url resultante:', response.data.data.url)
+        setImageUrl(response.data.data.url); // Actualiza imageUrl con la URL de la imagen cargada
+        onImageUpload(response.data.data.url);
         showSuccess("Imagen Cargada exitosamente");
         setAlert(true);
       }
@@ -67,7 +67,6 @@ const ImageUploader = ({ titleField, imageValue, onImageUpload }) => {
         <section>
           <div className="d-flex justify-content-start align-items-center">
           <label className="form-label">{titleField}</label>
-          <InfoFormField info={imageUpladmessage} place={'bottom'} action={'hover'}/>
           </div>
           <input
             type="file"
@@ -85,7 +84,7 @@ const ImageUploader = ({ titleField, imageValue, onImageUpload }) => {
               <img
                 src={previewUrl}
                 alt="Preview"
-                style={{ maxWidth: "200px", marginTop: "10px" }}
+                style={{ maxWidth: maxWidth, marginTop: "10px" }}
               />
               {file && (
                 <button

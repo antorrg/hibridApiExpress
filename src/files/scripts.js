@@ -1,6 +1,7 @@
 import './bootstrap.bundle.js'
 import {  toggleTheme } from './color-modes.js'
 import { colorModes } from './colorModes.js';
+import modalService from './modalService.mjs'
 
 document.addEventListener('DOMContentLoaded', () => {
     colorModes();

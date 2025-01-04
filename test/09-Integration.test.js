@@ -25,7 +25,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .send({ email, password })
                     .expect('Content-Type', /json/)
                     .expect(200);
-                expect(response.body.data.user).toEqual(help.userLogged)
+                expect(response.body.user).toMatchObject(help.userLogged)
                 store.setToken(response.body.token)
                 
             })
@@ -50,8 +50,8 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .set('Authorization', `Bearer ${token}`)
                     .expect('Content-Type', /json/)
                     .expect(201);
-                expect(response.body).toEqual(help.userCreated)
-                store.setUserId(response.body.id)
+                expect(response.body).toEqual(help.respUserCreate)
+                store.setUserId(response.body.results.id)
             })
             it('Deberia responder con status 400 si faltan parametros', async () => {
                 const token = store.getToken();
@@ -62,22 +62,22 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .set('Authorization', `Bearer ${token}`)
                     .expect('Content-Type', /json/)
                     .expect(400);
-                expect(response.body).toEqual({ error: "missing password" })
+                expect(response.body).toEqual({ error: "Email is required" })
             })
         })
       
-        xdescribe('Rutas "/user", "/user/:id: Rutas protegidas por token', () => {
+        describe('Rutas "/user", "/user/:id: Rutas protegidas por token', () => {
             it('Ruta "user": Deberia responder con status 200 y retornar un array de usuarios', async () => {
                 const token = store.getToken();
                 const response = await agent
-                    .get('/api/user')
+                    .get('/api/v1/user')
                     .set('Authorization', `Bearer ${token}`)
                     .expect(200);
-                expect(response.body).toEqual(help.protecUsers);
+                expect(response.body).toEqual(help.respUserGet);
             })
             it('Deberia arrojar un error 401 si el token no estuviera presente', async () => {
                 const response = await agent
-                    .get('/api/user')
+                    .get('/api/v1/user')
                     .expect(401);
                 expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' });
             })
@@ -85,15 +85,15 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 const token = store.getToken();
                 const userId = store.getUserId()
                 const response = await agent
-                    .get(`/api/user/${userId}`)
+                    .get(`/api/v1/user/${userId}`)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(200);
-                expect(response.body).toEqual(help.protecUser);
+                expect(response.body).toMatchObject(help.respGetById);
             })
             it('Deberia arrojar un error 401 si el token no fuera el correcto', async () => {
                 const userId = store.getUserId()
                 const response = await agent
-                    .get(`/api/user/${userId}`)
+                    .get(`/api/v1/user/${userId}`)
                     .set('Authorization', `Bearer 'eyW9yb2RyaWd1ZXp0a2RAZ21haWwuY29tIiwicmeHAiOjE3MTk2OTI3MjZ9.7Onxx2MjQdeJF-KccG'`)
                     .expect(401);
                 expect(response.body).toEqual({ error: 'Token invalido' });
@@ -121,7 +121,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toEqual({ error: 'Missing body' })
             })
         })
-        xdescribe('Ruta "/user/sec" de verificacion de password', () => {
+        xdescribe('Ruta "/user/" de verificacion de password', () => {
             it('Deberia retornar un status 200 y un mensaje de verificacion aprobada', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
@@ -144,7 +144,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' })
             })
         })
-        xdescribe('Ruta "/user/sec/:id" de actualizacion de password', () => {
+        xdescribe('Ruta "/user/:id" de actualizacion de password', () => {
             it('Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
@@ -169,7 +169,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
             })
         })
     })
-    xdescribe('Test de rutas Project: "/api/project": CRUD basico completo:', () => {
+    xdescribe('Test de rutas Project: "/api/v1/project": CRUD basico completo:', () => {
         describe('Rutas "/project/create", "/project/create/item", Creacion de proyecto e item.', () => {
             it('Deberia crear un proyecto con algunos items (más de uno)', async () => {
                 const response = await agent

@@ -23,8 +23,8 @@ block content
   section.container.marketing.mt-4.ms-4 
         .row
           each inf in info
-            .col-lg-4
-              img.bd-placeholder-img(src=inf.logo, width="100", height="100", alt="Placeholder")
+            .col-lg-4.backgroundElements
+              img.bd-placeholder-img.rounded-circle(src=inf.logo, width="70", height="70", alt="Placeholder")
               h2.fw-normal= inf.title
               p= inf.infoHeader
               p

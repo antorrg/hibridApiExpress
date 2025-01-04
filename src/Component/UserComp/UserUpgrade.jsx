@@ -1,6 +1,12 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import ImageUploader from "../../../utils/ImageUploader";
+import showConfirmationDialog from "../../../Auth/generalComponents/sweetAlert";
+import * as endpoint from "../../../Auth/authHelpers/Auth";
+import { getUserById } from "../../../redux/actions";
 
-const UpdateUser = () => {
+const UserUpgrade = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,19 +21,15 @@ const UpdateUser = () => {
   };
 
   const [user, setUser] = useState({
-    email: "",
-    picture: "",
-    given_name: "",
-    country: "",
+    role: "",
+    enable: "",
   });
 
   useEffect(() => {
     if (user1) {
       setUser({
-        email: user1.email || "",
-        picture: user1.picture || "",
-        given_name: user1.given_name || "",
-        country: user1.country || "",
+        role: user1.role || "",
+        enable: user1.enable || "",
       });
     }
   }, [user1]);
@@ -40,13 +42,6 @@ const UpdateUser = () => {
     }));
   };
 
-  const handleImageChange = (imageUrl) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      picture: imageUrl,
-    }));
-  };
-
   const handleSubmit = async () => {
     // Lógica para actualizar el producto
     const confirmed = await showConfirmationDialog(
@@ -54,68 +49,54 @@ const UpdateUser = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      await endpoint.updateUser(id, user, onClose);
+      console.log(user);
+      await endpoint.upgradeUser(id, user, onClose);
     }
   };
+
   return (
     <div className="imageBack">
       <div className="coverBack">
         <div className="container-md modal-content colorBack formProductContainer rounded-4 shadow">
           <div className="container mt-5">
-            <h1>Actualizacion de usuario:</h1>
+            <h1>Cambio de roles, bloqueo:</h1>
             <section
               className="needs-validation"
               id="updateItemForm"
               noValidate
             >
               <div className="row">
-                <div className="col-md-6 mb-3">
-                  <ImageUploader
-                    titleField={"Imagen:"}
-                    imageValue={user.picture}
-                    onImageUpload={handleImageChange}
-                  />
-                </div>
                 <div className="col-md-6 mb-3"></div>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email:
+                  <label htmlFor="role" className="form-label">
+                    Rol:
                   </label>
-                  <input
+                  <select
+                    name="role"
                     className="form-control"
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={user.email}
+                    value={user.role}
                     onChange={handleInputChange}
-                  />
-                </div>{" "}
-                <div className="mb-3">
-                  <label htmlFor="given_name" className="form-label">
-                    Nombre:
-                  </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="given_name"
-                    name="given_name"
-                    value={user.given_name}
-                    onChange={handleInputChange}
-                  />
+                  >
+                    <option value={"Administrador"}>Administrador</option>
+                    <option value={"Usuario"}>Usuario</option>
+                    <option value={"Moderador"}>Moderador</option>
+                  </select>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="country" className="form-label">
-                    Pais:
+                  <label htmlFor="enable" className="form-label">
+                    Estado:
                   </label>
-                  <input
+                  <select
+                    name="enable"
                     className="form-control"
-                    type="text"
-                    id="country"
-                    name="country"
-                    value={user.country}
+                    value={user.enable}
                     onChange={handleInputChange}
-                  />
+                  >
+                    <option value={true}>Activo</option>
+                    <option value={false}>Bloqueado</option>
+                  </select>
                 </div>
+
                 <div className="d-flex flex-row me-3">
                   <button
                     className="btn btn-md btn-primary mb-3 me-2"
@@ -141,6 +122,6 @@ const UpdateUser = () => {
       </div>
     </div>
   );
-}
+};
 
-export default UpdateUser
+export default UserUpgrade;

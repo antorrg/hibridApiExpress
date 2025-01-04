@@ -10,8 +10,8 @@ import {verifyToken} from '../utils/authConfig.js'
 const mainRouter = express.Router()
 
 //mainRouter.use(sanit.sanitizeHeaders)
-mainRouter.use(sanit.sanitizeBody)
-mainRouter.use(sanit.sanitizeQuery)
+//mainRouter.use(sanit.sanitizeBody)
+//mainRouter.use(sanit.sanitizeQuery)
 
 mainRouter.use(mvcRouter)
 

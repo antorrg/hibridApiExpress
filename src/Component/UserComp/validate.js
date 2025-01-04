@@ -29,22 +29,17 @@ const validLogin = (input) => {
     return errors;
   };
   
-  const create = (input) => {
-    //   const allUsers = useSelector((state) => state.allUsers)
-    //  const all = allUsers.data
-    //  console.log(all)
+  const ValidCreate = (input) => {
+    
       let errors = {};
     
-      // Using Regular Expressions to validate the appropriate use
+    
       const validEmail = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
       const validPass = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-     //const avoidRepetition = all.filter((email) => email.email === input.email);
       
       // Validaciones para el campo de email
       if (!input.email.trim()) {
         errors.email = "Este campo no puede estar vacio";
-      // } else if (avoidRepetition.length !== 0) {
-      //   errors.email = "Please choose another email, it already exists";
       } else if (!validEmail.test(input.email.trim())) {
         errors.email = "Formato de email invalido";
       } else if (input.email.length >= 50) {
@@ -100,7 +95,7 @@ const validLogin = (input) => {
     };
   export {
     validLogin,
-    create,
+    ValidCreate,
     ValidPass,
     ValidContact
   }; 

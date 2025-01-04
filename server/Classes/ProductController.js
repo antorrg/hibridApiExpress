@@ -10,7 +10,7 @@ class ProductController extends GenericController {
   // Método para obtener detalles de un producto por ID
   getDetail = catchController(async (req, res) => {
     const { id } = req.params;
-    const response = await this.service.getDetail(id, this.parserFunction2, queryObject, this.isAdmin);
+    const response = await this.service.getDetail(id, this.parserFunction2, null, this.isAdmin);
     return GenericController.responder(res, 200, true, null, response);
   });
 

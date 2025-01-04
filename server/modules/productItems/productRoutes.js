@@ -4,7 +4,7 @@ import midd from './productMiddlewares.js'
 
 const productRouter = express.Router()
 
-productRouter.post('/product/create', midd.createProd, ctr.createProduct);
+productRouter.post('/product/create', midd.createProd,ctr.createProduct);
 
 productRouter.get('/product', ctr.getProduct);
 

@@ -12,6 +12,95 @@ export default {
       next();
     }
   ],
+  sanitizeProduct: [
+    // Sanea campos específicos que son cadenas
+    body('uniqueField').trim().escape(),
+    body('title').trim().escape(),
+    body('landing').trim().escape(),
+    body('logo').trim().escape(),
+    body('info_header').trim().escape(),
+    body('info_body').trim().escape(),
+    body('url').trim().escape(),
+
+    // Sanea los campos internos de "items" si es un array
+    body('items').customSanitizer((items) => {
+        // Verificar si 'items' es un array y luego mapear cada elemento
+        if (Array.isArray(items)) {
+            return items.map((item, index) => {
+                // Verificar si 'item' tiene las propiedades 'img' y 'text'
+                console.log(`Item ${index}:`, item);  // Depurar el item en el log
+                const sanitizedItem = {};
+                
+                // Sanitizar los campos 'img' y 'text' si son cadenas de texto
+                if (typeof item.img === 'string') {
+                    sanitizedItem.img = item.img.trim().escape();
+                } else {
+                    sanitizedItem.img = item.img;  // Mantenerlo tal cual si no es una cadena
+                }
+
+                if (typeof item.text === 'string') {
+                    sanitizedItem.text = item.text.trim().escape();
+                } else {
+                    sanitizedItem.text = item.text;  // Mantenerlo tal cual si no es una cadena
+                }
+
+                return sanitizedItem;  // Retornar el objeto sanitizado
+            });
+        }
+        return items;  // Si no es un array, retornamos los datos tal cual
+    }),
+
+    // Manejo de errores de validación
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return next(middError('Error filtering body', 400));
+        }
+        next();
+    },
+],
+sanitizeProduct2: [
+  // Sanea campos específicos que son cadenas
+  body('uniqueField').trim().escape(),
+  body('title').trim().escape(),
+  body('landing').trim().escape(),
+  body('logo').trim().escape(),
+  body('info_header').trim().escape(),
+  body('info_body').trim().escape(),
+  body('url').trim().escape(),
+
+  // Sanea los campos internos de "items" si es un array
+   // Sanea los campos internos de "items" si es un array
+   body('items').customSanitizer((items) => {
+    if (Array.isArray(items)) {
+        // Usamos un bucle for para iterar y sanitizar manualmente cada objeto
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+
+            // Sanitizar 'img' solo si es una cadena
+            if (item.img && typeof item.img === 'string') {
+                item.img = item.img.trim().escape();
+            }
+
+            // Sanitizar 'text' solo si es una cadena
+            if (item.text && typeof item.text === 'string') {
+                item.text = item.text.trim().escape();
+            }
+        }
+    }
+    return items;  // Si no es un array, retornamos tal cual
+}),
+
+  // Manejo de errores de validación
+  (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return next(middError('Error filtering body', 400));
+      }
+      next();
+  },
+],
+
 
 sanitizeQuery : [
   query('*').trim().escape(), // Sanea todos los parámetros de consulta

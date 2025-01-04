@@ -10,17 +10,17 @@ class ProductServices extends GenericService {
     this.useImage = useImage || false;
   }
   //functions:
-  async create(data, uniqueField = null, parserFunction = null) {
-    let transaction;
+  async create(data, uniqueField = null) {
+    let t;
     try {
-      transaction = await sequelize.transaction();
+      t = await sequelize.transaction();
       let whereClause = {};
       if (uniqueField) {
         whereClause[uniqueField] = data[uniqueField];
       }
       const existingRecord = await this.Model.findOne(
         { where: whereClause },
-        transaction
+        {transaction :t}
       );
 
       if (existingRecord) {
@@ -32,23 +32,23 @@ class ProductServices extends GenericService {
         );
       }
       const items = data.items;
-      const newRecord = await this.Model.create(data, { transaction });
+      const newRecord = await this.Model.create(data, { transaction: t });
 
       const newitems = await Promise.all(
         items.map(async (item) => {
-          const newItem = await this.Model2.create(item, { transaction });
-          await newRecord.addItem(newItem, { transaction });
+          const newItem = await this.Model2.create(item, { transaction : t });
+          await newRecord.addItem(newItem, { transaction : t});
           return newItem;
         })
       );
-      await transaction.commit();
+      await t.commit();
+      if (this.useCache) this.clearCache();
         return 'Product created successfully'
-      // return parserFunction
-      //   ? parserFunction({ newRecord, items: newitems })
-      //   : { newRecord, items: newitems };
+   
     } catch (error) {
-      if (transaction) {
-        await transaction.rollback();
+      if (t) {
+        //console.error('soy transaction: ',t)
+        await t.rollback();
       }
       throw error;
     }
@@ -69,7 +69,6 @@ class ProductServices extends GenericService {
       await referenceFound.addItem(newItem);
       return "Item created successfully";
     } catch (error) {
-      console.error('error en addItem: ',error)
       throw error;
     }
   }
@@ -92,8 +91,8 @@ class ProductServices extends GenericService {
 
       if (!data) {
         throwError(
-          `The ${this.Model.name.toLowerCase()} table is empty!!`,
-          400
+          `The ${this.Model.name.toLowerCase()} is not found!!`,
+          404
         );
       }
 
@@ -139,7 +138,7 @@ class ProductServices extends GenericService {
 
       // Si newData.enable existe, parsea el booleano
       if (newData.enable !== undefined) {
-        newData.enable = parser.parserBoolean(newData.enable);
+        newData.enable = this.optionBoolean(newData.enable);
       }
       if (
         this.useImage &&
@@ -152,7 +151,7 @@ class ProductServices extends GenericService {
 
       await this.handleImageDeletion(imageUrl);
 
-      if (this.useCache) clearCache();
+      if (this.useCache) this.clearCache();
 
       return parserFunction ? parserFunction(upData) : upData;
       //return `${this.Model.name} updated succesfully`;

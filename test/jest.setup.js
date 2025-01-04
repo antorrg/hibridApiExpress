@@ -27,6 +27,8 @@ beforeAll(async () => {
 afterAll(async () => {
     await resetDatabase();
     await sequelize.close();
-    //console.log('DB cerrada')
-
+    console.log('DB cerrada')
+    await sequelize.close().catch((err) => {
+      console.error('Error closing sequelize:', err);
+    });
 });

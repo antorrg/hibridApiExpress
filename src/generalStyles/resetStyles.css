@@ -33,6 +33,9 @@
   background-color: var( --bs-body-bg);
   color: var(--bs-body-color)
 }
+.backgroundElements {
+  background-color: var(--bs-tertiary-bg);
+}
 [data-bs-theme="light"] .coverBack {
   margin-top:0;
   z-index: 10;
@@ -80,7 +83,16 @@ min-width: 80vw;
 min-height: fit-content; /* Asegura que ocupe al menos la altura completa de la pantalla */
 min-width: 80vw;
 }
-
+.formProductContainer {
+  margin-top:8%;
+  max-width: 40%
+}
+@media (max-width: 768px) {
+  .formProductContainer {
+    min-width: 80%;
+    max-width: 90%;
+  }
+}
 /*escritura de variables clases btn*/
 .btn {
   --bs-btn-padding-x: 0.70rem;

@@ -1,70 +1,115 @@
-import { useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../../../redux/actions";
-import { booleanState } from "../../../../utils/generalHelpers";
+import { useNavigate, useLocation } from "react-router-dom";
+import Edition from "../../../Auth/generalComponents/Edition/Edition";
+import * as us from "../../../Auth/authHelpers/Auth";
+import showConfirmationDialog from "../../../Auth/generalComponents/sweetAlert";
+//import "./user.css";
 
-const Usuario = () => {
+const User = ({ user, isSingleUser }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.Users);
+  const location = useLocation();
+  const isProfileRoute = location.pathname.includes("profile");
 
-  const { id } = useParams();
-  const goBack = () => navigate(-1);
-  const isAdmin = true;
-  useEffect(() => {
-    dispatch(getAllUsers(isAdmin));
-  }, [id]);
+  const goToDetail = () => navigate(`/admin/users/${user.id}`);
+  const goToBack = () => navigate(-1);
+  const goToEdition = () => navigate(`/admin/users/update/${user.id}`);
+  const goToUpgrade = () => navigate(`/admin/users/upgrade/${user.id}`);
+  const onClose = () => navigate("/admin");
+  const deleteUser = () => {
+    userDelete();
+  };
+  const goToPassUpd = () => {
+    if (isProfileRoute) {
+      navigate(`/admin/users/updateinfo/${user.id}`);
+    } else {
+      resetPassword();
+    }
+  };
+  const resetPassword = async () => {
+    const confirmed = await showConfirmationDialog(
+      "¿Quiere reiniciar su contraseña?"
+    );
+    if (confirmed) {
+      // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
+      us.onResetPass(user.id, onClose);
+    }
+  };
+
+  const userDelete = async () => {
+    const confirmed = await showConfirmationDialog(
+      "¿Quiere eliminar su usuario? \n¡Esta accion no podra deshacerse!"
+    );
+    if (confirmed) {
+      // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
+      //us.onDeleteUser(user.id, onClose);
+    }
+  };
+  const userStatus = user.enable ? "Activo" : "Bloqueado";
+
+  const renderUserInfo = (label, value) => (
+    <div className="user-info">
+      <dt className="user-info-label">{label}:</dt>
+      <dd className="user-info-value">{value}</dd>
+    </div>
+  );
+
   return (
-    <section className="container album py-1 bg-light mb-3 ">
-      <div className=" row py-lg-5">
-        <div className="col-lg-6 col-md-8 col-sm-12 mx-auto text-center">
-          <h2 className="fw-light">Usuarios:</h2>
-          <Link
-            className="btn btn-sm btn-outline-success me-3 mb-3"
-            to="/admin/users/create"
-          >
-            Crear Usuario
-          </Link>
-        </div>
-        <div className="">
-          {users?.map((info) => (
-            <div
-              className="d-flex flex-column flex-md-row justify-content-between align-items-start w-100 mb-3 shadow-sm bg-white"
-              key={info?.id}
-              style={{ borderRadius: "0.5rem" }}
-            >
-              <img
-                className="bd-placeholder-img-fluid ms-2"
-                src={info?.picture}
-                alt="Imagen"
-                style={{ maxWidth: "10rem", borderRadius: "0.5rem 0 0 0.5rem" }}
-              />
-              <div className="d-flex flex-column flex-md-row justify-content-between align-items-center w-100">
-                <div className="col-lg-5 ms-2">
-                  <h2 className="fw-normal">{info.name? info.name : info.nickname}</h2>
-                  <p> <strong>Email: </strong>{info?.email}</p>
-                  <p> <strong>Rol: </strong>{info?.role}</p>
-                  <p>
-                    <strong>Estado: </strong>
-                    {booleanState(info.enable)}
-                  </p>
-                </div>
-                <p className="mt-3 mt-lg-0">
-                  <Link
-                    className="btn btn-sm btn-outline-secondary me-3"
-                    to={`/admin/users/${info?.id}`}
-                  >
-                    Ver detalles
-                  </Link>
-                </p>
-              </div>
-            </div>
-          ))}
+    <div className="col userStyle">
+      <div className="card shadow-sm p-2">
+        <img
+          className="card-img-top"
+          src={user.picture}
+          alt={`${user.nickname}'s profile`}
+        />
+        <div className="card-body">
+          <dl className="user-info-list">
+            {renderUserInfo("Email", user.email)}
+            {renderUserInfo("Apodo", user.nickname)}
+            {renderUserInfo("Rol", user.role)}
+            {isSingleUser && (
+              <>
+                {renderUserInfo("Nombre", user.given_name)}
+                {renderUserInfo("País", user.country)}
+                {renderUserInfo("Estado", userStatus)}
+              </>
+            )}
+          </dl>
+
+          <div className="d-flex justify-content-between align-items-center">
+            {isSingleUser ? (
+              <>
+                <button
+                  className="btn btn-sm btn-outline-success"
+                  onClick={goToBack}
+                >
+                  Volver
+                </button>
+
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={goToEdition}
+                >
+                  Editar
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={goToDetail}
+                >
+                  Detalles
+                </button>
+                <button
+                  className="btn btn-sm btn-outline-danger"
+                  onClick={deleteUser}
+                >Eliminar</button>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Usuario;
+export default User;

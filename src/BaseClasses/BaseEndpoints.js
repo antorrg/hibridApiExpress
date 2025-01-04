@@ -35,11 +35,12 @@ class Endpoints {
     }
   }
 
-  async post(endpoint, data = {}, auxFunction = null, admin = false) {
+
+  async post(endpoint, data = {}, auxFunction = null, admin = false, message= 'Operación exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.post(`${this.baseURL}/${endpoint}`, data, config);
-      toast.showSuccess('Operación exitosa');
+      toast.showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
