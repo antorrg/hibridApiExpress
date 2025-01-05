@@ -55,7 +55,7 @@ class GenericService {
             throw error;
         }
     }
-      async login(data, uniqueField= null, parserFunction = null) {
+      async login(data, uniqueField= null, isVerify=null) {
             try {
                 let whereClause = {};
             if (uniqueField) {
@@ -72,7 +72,8 @@ class GenericService {
                 }
                 const passwordMatch = await bcrypt.compare(data.password, existingRecord.password)
                 if (!passwordMatch) {throwError('Invalid password', 400)}
-                return existingRecord
+                const response = isVerify? 'Verify succesfully' : existingRecord;
+                return response;
             } catch (error) {
                 throw error;
             }
@@ -123,8 +124,16 @@ class GenericService {
             throw error;
         }
     }
-
-    async update(id, newData, parserFunction=null) {
+      /**
+     * Método privado para realizar actualizaciones genéricas.
+     * @param {string|number} id - Identificador del registro.
+     * @param {Object} newData - Datos nuevos para actualizar.
+     * @param {Function|null} parserFunction - Función opcional para procesar los datos.
+     * @returns {Promise<Object>} Resultado de la operación.
+     */
+    async #generalUpdater(id, newData, parserFunction=null) {
+       // console.log('soy el id en el service : ', id)
+        //console.log('soy newData en el service : ', newData)
        
         let imageUrl =''
         try {
@@ -153,35 +162,28 @@ class GenericService {
         }
     }
 
-    async patcher(id, newData, parserFunction=null) {
-        let imageUrl =''
-        try {
-            const dataFound = await this.Model.findByPk(id);
-            
-            if (!dataFound) {
-                throwError(`${this.Model.name} not found`, 404);
-            }
-            
-            // Si newData.enable existe, parsea el booleano
-            if (newData.enable !== undefined) {
-                newData.enable = this.optionBoolean(newData.enable);
-            }
-            if(this.useImage && dataFound.picture && dataFound.picture !== newData.picture){
-                imageUrl= dataFound.picture;
-               }
-            const upData = await dataFound.update(newData);
-
-            await this.handleImageDeletion(imageUrl);
-            
-            if (this.useCache) this.clearCache();
-
-            return parserFunction ? parserFunction(upData) : upData;
-            //return `${this.Model.name} updated succesfully`;
-        } catch (error) {
-            throw error;
-        }
+    /**
+     * Actualiza completamente un registro.
+     * @param {string|number} id - Identificador del registro.
+     * @param {Object} newData - Datos nuevos.
+     * @param {Function|null} parserFunction - Función opcional para procesar los datos.
+     * @returns {Promise<Object>} Resultado de la operación.
+     */
+    async update(id, newData, parserFunction = null) {
+        return this.#generalUpdater(id, newData, parserFunction);
     }
 
+    /**
+     * Realiza un parcheo parcial en un registro.
+     * @param {string|number} id - Identificador del registro.
+     * @param {Object} newData - Datos nuevos.
+     * @param {Function|null} parserFunction - Función opcional para procesar los datos.
+     * @returns {Promise<Object>} Resultado de la operación.
+     */
+    async patcher(id, newData, parserFunction = null) {
+        return this.#generalUpdater(id, newData, parserFunction);
+    }
+    
     async delete(id) {
         let imageUrl =''
         try {

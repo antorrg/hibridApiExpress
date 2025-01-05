@@ -32,7 +32,7 @@ class GenericController {
         return GenericController.responder(res, 501, false, "Login is not implemented in this service",null,);
     }
     const data  = req.body;
-    const response = await this.service.login(data, this.parserFunction);
+    const response = await this.service.login(data, uniqueField, isVerify);
     return GenericController.responder(res, 200, true, "Login succesfully", response,);
 });
 
@@ -54,13 +54,13 @@ getById = catchController(async (req, res) => {
 update = catchController(async (req, res) => {
     const { id } = req.params;
     const newData = req.body;
-    const response = await this.service.update(id, newData);
+    const response = await this.service.update(id, newData, this.parserFunction);
     return GenericController.responder(res, 200, true, "Updated succesfully", response )
 });
 patcher = catchController(async (req, res) => {
     const { id } = req.params;
     const newData = req.body;
-    const response = await this.service.patcher(id, newData);
+    const response = await this.service.patcher(id, newData, this.parserFunction);
     return GenericController.responder(res, 200, true, "Updated succesfully", response )
 });
 

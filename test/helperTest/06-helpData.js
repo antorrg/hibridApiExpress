@@ -71,3 +71,25 @@ export const respGetById ={
     "role": "Usuario"
   }, "success": true
 }
+export const newUser = {
+  "country": "argentina", // Parametro a actualizar. 
+    "email": "josenomeacuerdo@hotmail.com", 
+    "enable": true, 
+    "picture": "url",
+   "name": "jose", // Parametro a actualizar. 
+   "surname": "nomeacuerdo" // Parametro a actualizar. 
+    
+}
+export const updatedUser = {
+  "message": "Updated succesfully", 
+  "results": {
+    "country": "argentina", 
+    "email": "josenomeacuerdo@hotmail.com", 
+    "enable": true, 
+    "id": expect.any(String), 
+    "nickname": "josenomeacuerdo", 
+    "picture": expect.any(String), 
+    "role": "Usuario"
+  }, "success": true
+
+}

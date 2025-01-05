@@ -1,6 +1,6 @@
 import {User} from '../../database.js'
 import UserService from '../../Classes/userService.js'
-import GenericController from '../../Classes/GenericController.js'
+import UserController from '../../Classes/UserController.js'
 import { deleteImageFromStorage } from '../../firebase.js'
 import help from '../../helpers/generalHelp.js';
 import { catchController } from '../../errorHandler.js';
@@ -8,10 +8,11 @@ import {generateToken}  from '../../utils/authConfig.js'
 import env from '../../envConfig.js'
 
 //* Instancia de servicio: (Se expone para usar en MVC metodo get)
-const userService = new UserService(User, false, true, deleteImageFromStorage )//constructor(Model, useCache, useImage, deleteImages) 
+const testHandlerImage= env.Status==='test'? false : true
+const userService = new UserService(User, false, testHandlerImage, deleteImageFromStorage )//constructor(Model, useCache, useImage, deleteImages) 
 
 //* Controladores REST:
-const userController = new GenericController(userService, help.userParser, help.emptyUser, true )//(service, parserFunction, emptyObject, isAdmin)
+const userController = new UserController(userService, help.userParser, help.emptyUser, true )//(service, parserFunction, emptyObject, isAdmin)
 
 const appPath = env.Status==='production'? "/" : "http://localhost:5173/login"
 
@@ -21,13 +22,18 @@ export default {// Estos son los controladores REST que se importaran en landRou
     userGetById : userController.getById,
     userUpdate : userController.update,
     userDelete : userController.delete,
+    verifyPass : userController.verify,
+    userUpgrade : userController.upgrade,
+    userResetPass : userController.resetPassword,
+    userUpdatePass : userController.modifyPassword,
     //funcion create para superusuario.
     //createSuperUser: userService.create,
     userService,
 
      loginController: catchController(async (req, res) => {
         const data = req.body;
-        const response = await userService.login(data, 'email',null);
+        //console.log('soy data en el controller: ', {data})
+        const response = await userService.login(data, false);
         //console.log(response);
         
         const token = generateToken(response, req.session);

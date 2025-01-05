@@ -12,6 +12,7 @@ class GenericMidd {
         //console.log('Constructor requiredFields:', requiredFields);
         return (req, res, next) => {
             const newData = req.body;
+            //console.log('soy el body en middleware: ',{newData})
 
             // Verificar si req.body está vacío o no tiene claves
             if (!newData || Object.keys(newData).length === 0) {
@@ -24,6 +25,24 @@ class GenericMidd {
             if (missingFields.length > 0) {
                 return next(middError(`Missing parameters: ${missingFields.join(', ')}`, 400));
             }
+
+              // Filtrar campos adicionales no permitidos
+              const extraFields = Object.keys(newData).filter(key => !requiredFields.includes(key));
+              if (extraFields.length > 0) {
+                  // OPCIÓN 1: Lanzar error
+                  // return next(middError(`Extra parameters not allowed: ${extraFields.join(', ')}`, 400));
+  
+                  // OPCIÓN 2: Filtrar los campos adicionales
+                  Object.keys(newData).forEach(key => {
+                      if (!requiredFields.includes(key)) {
+                          delete newData[key];
+                      }
+                  });
+              }
+  
+              // Continuar con los campos filtrados
+              req.body = newData;
+             // console.log('soy la newData filtrada: ', req.body)
             next();
         };
     }

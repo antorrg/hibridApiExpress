@@ -59,6 +59,31 @@ export default {
         next();
     },
 ],
+sanitizeMultipartHeaders : [
+  // Sanitizar y validar la cabecera Authorization
+  header('Authorization')
+    .notEmpty().withMessage('Authorization header is required')
+    .trim()
+    .escape(),
+
+  // Validar que el Content-Type sea multipart/form-data
+  header('Content-Type')
+    .custom((value) => {
+      if (!value || !value.startsWith('multipart/form-data')) {
+        throw new Error('Invalid Content-Type, expected multipart/form-data');
+      }
+      return true;
+    }),
+
+  // Middleware para manejar errores de validación
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(middError(`Header validation error: ${errors.array().map(err => err.msg).join(', ')}`, 400));
+    }
+    next();
+  }
+],
 sanitizeProduct2: [
   // Sanea campos específicos que son cadenas
   body('uniqueField').trim().escape(),
@@ -124,5 +149,33 @@ sanitizeQuery : [
     next();
   }
 ],
+
+
+sanitizeHeaders2 : [
+  // Valida y sanea la cabecera 'Authorization'
+  header('Authorization')
+    .trim()
+    .escape()
+    .matches(/^Bearer\s[\w-]+\.[\w-]+\.[\w-]+$/) // Validación básica de JWT (opcional)
+    .withMessage('Invalid Authorization format'),
+
+  // Valida el 'Content-Type'
+  header('Content-Type')
+    .isIn(['application/json'])
+    .withMessage('Invalid Content-Type'),
+
+  // Manejo de errores
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // Proporcionar más contexto en el error
+      return next(middError(`Header validation failed: ${errors.array().map(err => err.msg).join(', ')}`, 400));
+    }
+    next();
+  }
+],
+
+
+
 
 }

@@ -13,11 +13,12 @@ const userMock = new UserService(User, false, false, null )//constructor(Model, 
 describe('Test de rutas REST:  Usuario, Project, Landing', () => {
     
     describe('Test de rutas de usuario: "/api/v1/user": ', () => {
-        describe('Ruta "user/login": Ruta de validacion de usuario', () => {
+        describe('Ruta "user/login": Ruta POST de validacion de usuario', () => {
             it('Deberia responder con status 200 y retornar el usuario con el token', async () => {
                 // Creacion de usuario:
                 const data = {email:'josenomeacuerdo@hotmail.com', password:'L1234567', role: 1, picture: 'url'}
-                const newUser = await userMock.create(data, 'email', null)
+                const user = await userMock.create(data, 'email', null)
+                //console.log('Response create: ',user)
                 const email = "josenomeacuerdo@hotmail.com";
                 const password = 'L1234567'
                 const response = await agent
@@ -27,6 +28,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .expect(200);
                 expect(response.body.user).toMatchObject(help.userLogged)
                 store.setToken(response.body.token)
+                store.setUserId(response.body.user.id)
                 
             })
             it('Deberia responder con status 400 si faltan parametros', async () => {
@@ -40,7 +42,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toEqual({ error: "Invalid password. It must be at least 8 characters long and one uppercase letter."})
             })
         });
-        describe('Ruta "user/create": Ruta de creacion de usuario', () => {
+        describe('Ruta "user/create": Ruta POST de creacion de usuario', () => {
             it('Deberia responder con status 201 y retornar el usuario', async () => {
                 const token = store.getToken();
                 const data = {email:"juangarcia@gmail.com"};
@@ -51,7 +53,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .expect('Content-Type', /json/)
                     .expect(201);
                 expect(response.body).toEqual(help.respUserCreate)
-                store.setUserId(response.body.results.id)
+                store.setUserId2(response.body.results.id)
             })
             it('Deberia responder con status 400 si faltan parametros', async () => {
                 const token = store.getToken();
@@ -62,11 +64,11 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .set('Authorization', `Bearer ${token}`)
                     .expect('Content-Type', /json/)
                     .expect(400);
-                expect(response.body).toEqual({ error: "Email is required" })
+                expect(response.body).toEqual({  error: "Invalid parameters"})
             })
         })
       
-        describe('Rutas "/user", "/user/:id: Rutas protegidas por token', () => {
+        describe('Rutas "/user", "/user/:id: Rutas GET protegidas por token', () => {
             it('Ruta "user": Deberia responder con status 200 y retornar un array de usuarios', async () => {
                 const token = store.getToken();
                 const response = await agent
@@ -83,7 +85,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
             })
             it('Ruta "/user/:id": Deberia responder con status 200 y retornar un usuario', async () => {
                 const token = store.getToken();
-                const userId = store.getUserId()
+                const userId = store.getUserId2()
                 const response = await agent
                     .get(`/api/v1/user/${userId}`)
                     .set('Authorization', `Bearer ${token}`)
@@ -91,7 +93,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toMatchObject(help.respGetById);
             })
             it('Deberia arrojar un error 401 si el token no fuera el correcto', async () => {
-                const userId = store.getUserId()
+                const userId = store.getUserId2()
                 const response = await agent
                     .get(`/api/v1/user/${userId}`)
                     .set('Authorization', `Bearer 'eyW9yb2RyaWd1ZXp0a2RAZ21haWwuY29tIiwicmeHAiOjE3MTk2OTI3MjZ9.7Onxx2MjQdeJF-KccG'`)
@@ -99,13 +101,13 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toEqual({ error: 'Token invalido' });
             })
         })
-        xdescribe('Ruta "/user/:id" actualizacion de usuario (ruta protegida con token).', () => {
+        describe('Ruta "/user/profile/:id" Ruta PUT de actualizacion de perfil de usuario (ruta protegida con token).', () => {
             it('Deberia recibir un status 200 al actualizar un usuario con exito', async () => {
                 const userId = store.getUserId();
                 const newData = help.newUser;
                 const token = store.getToken()
                 const response = await agent
-                    .put(`/api/user/${userId}`)
+                    .put(`/api/v1/user/profile/${userId}`)
                     .send(newData)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(200);
@@ -115,36 +117,49 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 const userId = store.getUserId();
                 const token = store.getToken()
                 const response = await agent
-                    .put(`/api/user/${userId}`)
+                    .put(`/api/v1/user/profile/${userId}`)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body).toEqual({ error: 'Missing body' })
+                expect(response.body).toEqual({ error: 'Invalid parameters' })
             })
         })
-        xdescribe('Ruta "/user/" de verificacion de password', () => {
+        describe('Ruta "/user/verify" de verificacion de password', () => {
             it('Deberia retornar un status 200 y un mensaje de verificacion aprobada', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
                 const token = store.getToken()
                 const response = await agent
-                    .post(`/api/user/sec`)
+                    .post(`/api/v1/user/verify`)
                     .send({ id, password })
                     .set('Authorization', `Bearer ${token}`)
                     .expect(200);
-                expect(response.body).toEqual({ message: "Password successfully verified" })
+                expect(response.body.message).toEqual("Verify succesfully" )
+                
             })
             it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
                 const token = store.getToken()
                 const response = await agent
-                    .post(`/api/user/sec`)
+                    .post(`/api/v1/user/verify`)
                     .send({ id, password })
                     .expect(401);
                 expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' })
             })
+            it('Deberia retornar un status 400 y un mensaje de error si el usuario no es propietario de la cuenta.', async () => {
+                const id = store.getUserId2();
+                const password = 'L1234567';
+                const token = store.getToken()
+                const response = await agent
+                    .post(`/api/v1/user/verify`)
+                    .send({ id, password })
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(400);
+                expect(response.body).toEqual({ error: "Only the owner can perform this action"})
+            })
+            //restRouter.put('/user/update/:id', verifyToken, verifyOwnerActions, midd.validPass, ctr.userUpdatePass)
         })
-        xdescribe('Ruta "/user/:id" de actualizacion de password', () => {
+        xdescribe('Ruta "/user/sec/:id" de actualizacion de password', () => {
             it('Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
@@ -168,23 +183,23 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                 expect(response.body).toEqual({ error: 'Token invalido' })
             })
         })
-    })
+    });
     xdescribe('Test de rutas Project: "/api/v1/project": CRUD basico completo:', () => {
         describe('Rutas "/project/create", "/project/create/item", Creacion de proyecto e item.', () => {
             it('Deberia crear un proyecto con algunos items (más de uno)', async () => {
                 const response = await agent
-                    .post('/api/project/create')
+                    .post('/api/v1/project/create')
                     .send(page.bodyPage)
                     .expect('Content-Type', /json/)
                     .expect(201);
                 expect(response.body).toMatchObject(page.responsePage)
             })
-            it('Ruta "/project/item/create". Deberia crear un item individualmente', async () => {
+            it('Ruta "/item/create". Deberia crear un item individualmente', async () => {
                 const id = 1; //El id de page para relacionar
                 const img = "url";
                 const text = "Texto de prueba"
                 const response = await agent
-                    .post('/api/project/item/create')
+                    .post('/api/v1/item/create')
                     .send({ id, img, text })
                     .expect('Content-Type', /json/)
                     .expect(201);
@@ -264,4 +279,4 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
             })
         })
     })
-});
+})
