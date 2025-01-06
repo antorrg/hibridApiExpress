@@ -11,6 +11,7 @@ import UpdateProduct from './ProductItemComp/UpdateProduct'
 import UpdateItem from './ProductItemComp/UpdateItem'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import UserComp from './UserComp/UserComp'
 
 export {
 CreateUser,
@@ -27,4 +28,5 @@ UpdateProduct,
 UpdateItem, 
 Navbar, 
 Footer, 
+UserComp,
 }

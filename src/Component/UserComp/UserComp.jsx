@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import User from './User'
 //import './userComponent.css'
-import {getAllUsers, getUserById, cleanState}from '../../../Redux/actions'
+import {getUsers, getUserById, cleanState}from '../../Redux/actions'
 
 const UserComp = () => {
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const UserComp = () => {
       dispatch(getUserById(id))
     }else{
       setSingle(false)
-    dispatch(getAllUsers())
+    dispatch(getUsers())
     }
     return ()=>{
       dispatch(cleanState())}

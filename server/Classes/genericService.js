@@ -173,16 +173,6 @@ class GenericService {
         return this.#generalUpdater(id, newData, parserFunction);
     }
 
-    /**
-     * Realiza un parcheo parcial en un registro.
-     * @param {string|number} id - Identificador del registro.
-     * @param {Object} newData - Datos nuevos.
-     * @param {Function|null} parserFunction - Función opcional para procesar los datos.
-     * @returns {Promise<Object>} Resultado de la operación.
-     */
-    async patcher(id, newData, parserFunction = null) {
-        return this.#generalUpdater(id, newData, parserFunction);
-    }
     
     async delete(id) {
         let imageUrl =''

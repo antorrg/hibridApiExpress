@@ -43,7 +43,7 @@ verify = (req, res) => this.#loginVerifyMethod(req, res, "Verify")
 #patcherHandler = catchController(async (req, res, action) => {
     const { id } = req.params;
     const newData = req.body;
-    const response = await this.service.patcher(id, newData, this.parserFunction);
+    const response = await this.service.update(id, newData, this.parserFunction);
     return GenericController.responder(res, 200, true, `${action} successfully`, response);
 });
 

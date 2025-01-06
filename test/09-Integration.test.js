@@ -16,7 +16,7 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
         describe('Ruta "user/login": Ruta POST de validacion de usuario', () => {
             it('Deberia responder con status 200 y retornar el usuario con el token', async () => {
                 // Creacion de usuario:
-                const data = {email:'josenomeacuerdo@hotmail.com', password:'L1234567', role: 1, picture: 'url'}
+                const data = {email:'josenomeacuerdo@hotmail.com', password:'L1234567', role: 9, picture: 'url'}
                 const user = await userMock.create(data, 'email', null)
                 //console.log('Response create: ',user)
                 const email = "josenomeacuerdo@hotmail.com";
@@ -156,31 +156,134 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
                 expect(response.body).toEqual({ error: "Only the owner can perform this action"})
-            })
-            //restRouter.put('/user/update/:id', verifyToken, verifyOwnerActions, midd.validPass, ctr.userUpdatePass)
-        })
-        xdescribe('Ruta "/user/sec/:id" de actualizacion de password', () => {
-            it('Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
+            });
+        });
+        describe('Ruta "/user/update" de actualizacion de password', () => {
+            it('Deberia retornar un status 200 y un mensaje de actualizacion realizada', async () => {
+                const id = store.getUserId();
+                const password = 'D12345678';
+                const token = store.getToken()
+                const response = await agent
+                    .put(`/api/v1/user/update/${id}`)
+                    .send({password})
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200);
+                expect(response.body.message).toEqual("Update password successfully" )
+                
+            });
+            it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
                 const token = store.getToken()
                 const response = await agent
-                    .patch(`/api/user/sec/${id}`)
-                    .send({ password })
+                    .post(`/api/v1/user/verify`)
+                    .send({ id, password })
+                    .expect(401);
+                expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' })
+            });
+            it('Deberia retornar un status 400 y un mensaje de error si el usuario no es propietario de la cuenta.', async () => {
+                const id = store.getUserId2();
+                const password = 'L1234567';
+                const token = store.getToken()
+                const response = await agent
+                    .post(`/api/v1/user/verify`)
+                    .send({ id, password })
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(400);
+                expect(response.body).toEqual({ error: "Only the owner can perform this action"})
+            });
+            it('Deberia responder con status 200 al hacer login con el nuevo password', async () => {
+            
+                const email = "josenomeacuerdo@hotmail.com";
+                const password = 'D12345678'
+                const response = await agent
+                    .post('/api/v1/user/login')
+                    .send({ email, password })
+                    .expect('Content-Type', /json/)
+                    .expect(200);
+                expect(response.body.user).toMatchObject(help.newUserLogged)
+            });
+        });
+        describe('Ruta "/user/reset" de blanqueo (reset) de password', () => {
+            it('Deberia retornar un status 200 y un mensaje de actualizacion realizada', async () => {
+                const id = store.getUserId();
+                const token = store.getToken()
+                const response = await agent
+                    .put(`/api/v1/user/reset/${id}`)
+                    .send({})
                     .set('Authorization', `Bearer ${token}`)
                     .expect(200);
-                expect(response.body).toBe("Password updated successfully")
+                expect(response.body.message).toEqual("Reset password successfully" )
+                
+            });
+            it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
+                const id = store.getUserId();
+                const token = store.getToken()
+                const response = await agent
+                    .put(`/api/v1/user/reset/${id}`)
+                    .send({})
+                    .expect(401);
+                expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' })
+            });
+            it('Deberia responder con status 200 al hacer login con el nuevo password', async () => {
+            
+                const email = "josenomeacuerdo@hotmail.com";
+                const password = 'L1234567'
+                const response = await agent
+                    .post('/api/v1/user/login')
+                    .send({ email, password })
+                    .expect('Content-Type', /json/)
+                    .expect(200);
+                expect(response.body.user).toMatchObject(help.newUserLogged)
+            });
+        })
+        describe('Ruta "/user/upgrade/:id" de actualizacion de roles y bloqueo/desbloqueo de usuario', () => {
+            it('Cambio de rol. Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
+                const id = store.getUserId2();
+                const role = 9
+                const enable = true
+                const token = store.getToken()
+                const response = await agent
+                    .put(`/api/v1/user/upgrade/${id}`)
+                    .send({ role , enable})
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200);
+                expect(response.body.message).toBe("Upgrade successfully")
+            })
+            it('Bloqueo de usuario. Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
+                const id = store.getUserId2();
+                const enable= false
+                const role = 9
+                const token = store.getToken()
+                const response = await agent
+                    .put(`/api/v1/user/upgrade/${id}`)
+                    .send({ role, enable })
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200);
+                expect(response.body.message).toBe("Upgrade successfully")
             })
             it('Deberia retornar un status 401 y un mensaje error por token invalido', async () => {
-                const id = store.getUserId();
-                const password = 'L1234567';
+                const id = store.getUserId2();
+                const enable= false
+                const role = 9
                 const token = 'asoifasdofisadoifasdoifjsoadfi'
                 const response = await agent
-                    .patch(`/api/user/sec/${id}`)
-                    .send({ password })
+                    .put(`/api/v1/user/upgrade/${id}`)
+                    .send({ role, enable })
                     .set('Authorization', `Bearer ${token}`)
                     .expect(401);
                 expect(response.body).toEqual({ error: 'Token invalido' })
+            })
+        })
+        describe('Ruta "/user/:id" de eliminacion de usuario', () => {
+            it('Deberia retornar un status 200 y un mensaje de borrado exitoso', async () => {
+                const id = store.getUserId2();
+                const token = store.getToken()
+                const response = await agent
+                    .delete(`/api/v1/user/${id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200);
+                expect(response.body.message).toBe("User deleted successfully")
             })
         })
     });

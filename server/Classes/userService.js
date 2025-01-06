@@ -26,8 +26,8 @@ class UserService extends GenericService{
        }
     }
     async login(data, isVerify = null) {
-        console.log('soy el loginservice: ',data)
-        console.log('soy verify en el service:', isVerify)
+        //console.log('soy el loginservice: ',data)
+        //console.log('soy verify en el service:', isVerify)
         try {
             // Buscar usuario según el caso
             const user = isVerify 

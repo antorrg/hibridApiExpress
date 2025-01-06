@@ -74,20 +74,4 @@ export default {// Estos son los controladores REST que se importaran en landRou
         });
     },
     
-      // logoutController: async (req, res, next) => {
-      //   req.session.isAuthenticated = false;
-      //   req.session.destroy((err) => {
-      //     if (err) {
-      //       return next(err);
-      //     }
-      //     res.clearCookie("connect.sid"); // Limpia la cookie de sesión del cliente
-      //     res.clearCookie("connect.id");
-      //     res.clearCookie("sessionId");
-      //     //res.redirect();
-      //     res.status(200).json('Logout successfully')
-      //     console.log('hasta aqui bien')
-      //   });
-      // },
-
-
 }

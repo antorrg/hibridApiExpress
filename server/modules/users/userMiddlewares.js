@@ -9,7 +9,6 @@ export default {
     validCreateUser: userMidd.validateFields(),
     loginUser : userMidd.validateFields(['email', 'password']),
     validatePassword: userMidd.validateFields(['id', 'password']),
-    resetPassword: userMidd.validateFields(['']),
     upgradeUser: userMidd.validateFields(['role', 'enable']),
     updateUser : userMidd.validateFields(['email', 'name','surname', 'picture', 'country']),
     validUUid : userMidd.validateUUID('id'),

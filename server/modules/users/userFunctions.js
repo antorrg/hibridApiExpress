@@ -1,6 +1,7 @@
 import env from '../../envConfig.js'
 import { middError } from '../../errorHandler.js';
 import help from '../../helpers/generalHelp.js'
+import bcrypt from 'bcrypt'
 
 
 
@@ -14,28 +15,20 @@ const dataUser = (req, res, next)=>{
     next();
 }
 const upgradeUserParser =(req, res, next) =>{
-    
-        try {
-            // Validar si el role está presente en el body
-            if (!req.body.role) {
-               return next(middError('El campo role es obligatorio', 400 ));
-            }
+
             const role = req.body.role;
-    
+            const enable= req.body.enable;
             // Intentar convertir el role
             const newRole = help.revertScope(role);
             //console.log('soy newRole', newRole)
-    
             if (newRole === undefined || newRole === null) {
                 return next(middError('El campo role no es válido', 400 ));
             }
+            req.body.enable = help.optionBoolean(enable)
             req.body.role = newRole;
-            //console.log('Middleware ejecutado correctamente:', req.body);
+            console.log('Middleware ejecutado correctamente:', req.body);
             next();
-        } catch (error) {
-            //console.error('Error en el middleware updateUserParser:', error);
-            return next(middError('Error interno en el servidor', 500 ));
-        }
+      
 };
 const profileUserAccess = (req, res, next)=>{
     const {id} = req.params;
@@ -55,7 +48,7 @@ const profileParserInfo = (req, res, next)=>{
 
     next();
 }
-const verifyOwnerActions = (req, res, next)=>{
+const verifyOwnerActionsInBody = (req, res, next)=>{
     const {id} = req.body;
     const {userId}= req.userInfo;
     if(!id || !userId){return next(middError('Missing parameters', 400))}
@@ -63,10 +56,26 @@ const verifyOwnerActions = (req, res, next)=>{
     next();
 };
 
-const resetPassParser = (req, res, next)=>{
-  
-    req.body.password = env.pass;
+const verifyOwnerActionsInParam = (req, res, next)=>{
+    const {id} = req.params;
+    const {userId}= req.userInfo;
+    if(!id || !userId){return next(middError('Missing parameters', 400))}
+    if(id !== userId){return next(middError('Only the owner can perform this action', 400))}
+    next();
+};
 
+const hasheredPass = async(req, res, next)=>{
+    const hashedPass = await bcrypt.hash(req.body.password, 12);
+    
+    req.body.password = hashedPass;
+
+    next()
+}
+
+const resetPassParser = async(req, res, next)=>{
+    req.body = {};
+    const hashedPass = await bcrypt.hash(env.pass, 12);
+    req.body.password = hashedPass;
     next()
 };
 
@@ -75,6 +84,8 @@ export {
     upgradeUserParser,
     profileUserAccess,
     profileParserInfo,
-    verifyOwnerActions,
+    verifyOwnerActionsInBody,
+    verifyOwnerActionsInParam,
+    hasheredPass,
     resetPassParser 
 };

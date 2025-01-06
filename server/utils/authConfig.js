@@ -119,8 +119,7 @@ export const verifyToken = (req, res, next)=>{
     };
 export const checkRole = (allowedRoles) => {
         return (req, res, next) => {
-          
-          //const userRole = req.user.role; // asumiendo que el rol está en req.user después de la autenticación
+        const {userRole} = req.userInfo; // asumiendo que el rol está en req.user después de la autenticación
       
           if (allowedRoles.includes(userRole)) {
             // El usuario tiene el rol necesario, permitir el acceso

@@ -5,6 +5,10 @@ import BaseEndpoint from '../BaseClasses/BaseEndpoints';
 //post(endpoint, data = {}, auxFunction = null, admin = false)
 //put(endpoint, data = {}, auxFunction = null, admin = false)
 //delete(endpoint, auxFunction = null, admin = false)
+/**
+ * data y tipos 
+ * Post 
+ */
 
 export const userLogin = new BaseEndpoint('/api/v1/user', false)
 
@@ -55,8 +59,10 @@ export const deleteItem = (id, aux) => itemAdmin.delete(`${id}`,aux, true)
 
 export const userGet = ()=> userValid.get('', null, null, true)
 
-export const userGetbyid = (id)=> userValid.getById(`${id}`, null, null, true)
+export const userGetbyid = (id)=> userValid.get(`${id}`, null, null, true)
 
 export const userUpdate = (id, data, aux)=> userValid.put(`${id}`, data, aux, true)
+
+export const userCreate = (data, aux)=> userValid.post('create',data, aux, true )
 
 export const userDelete = (id, aux)=> userValid.delete(`${id}`,aux, true)

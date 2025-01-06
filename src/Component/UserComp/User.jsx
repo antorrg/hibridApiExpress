@@ -1,22 +1,28 @@
+import {useState} from 'react'
 import { useNavigate, useLocation } from "react-router-dom";
-import Edition from "../../../Auth/generalComponents/Edition/Edition";
-import * as us from "../../../Auth/authHelpers/Auth";
-import showConfirmationDialog from "../../../Auth/generalComponents/sweetAlert";
-//import "./user.css";
+import Edition from "../../Utils/Edition/Edition";
+
+import showConfirmationDialog from "../../Utils/sweetalert";
+import Loading from "../Loading";
+
 
 const User = ({ user, isSingleUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isProfileRoute = location.pathname.includes("profile");
+  const [load, setLoad] = useState(false)
 
   const goToDetail = () => navigate(`/admin/users/${user.id}`);
   const goToBack = () => navigate(-1);
   const goToEdition = () => navigate(`/admin/users/update/${user.id}`);
   const goToUpgrade = () => navigate(`/admin/users/upgrade/${user.id}`);
-  const onClose = () => navigate("/admin");
-  const deleteUser = () => {
-    userDelete();
+
+  const onClose = () => {
+    setLoad(false)
+    navigate("/admin")
   };
+
+ 
   const goToPassUpd = () => {
     if (isProfileRoute) {
       navigate(`/admin/users/updateinfo/${user.id}`);
@@ -31,6 +37,7 @@ const User = ({ user, isSingleUser }) => {
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       us.onResetPass(user.id, onClose);
+      setLoad(true)
     }
   };
 
@@ -40,7 +47,8 @@ const User = ({ user, isSingleUser }) => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      //us.onDeleteUser(user.id, onClose);
+      us.onDeleteUser(user.id, onClose);
+      setLoad(true)
     }
   };
   const userStatus = user.enable ? "Activo" : "Bloqueado";
@@ -54,6 +62,8 @@ const User = ({ user, isSingleUser }) => {
 
   return (
     <div className="col userStyle">
+      {load?
+      <Loading/>: null}
       <div className="card shadow-sm p-2">
         <img
           className="card-img-top"
@@ -83,7 +93,21 @@ const User = ({ user, isSingleUser }) => {
                 >
                   Volver
                 </button>
-
+                <Edition
+                  allowedRoles={["Super Admin", "Administrador"]}
+                  className="btn btn-sm btn-outline-success"
+                  userEditId={user.id}
+                  text={isProfileRoute ? "Contraseña" : "Reset Contr"}
+                  onClick={goToPassUpd}
+                />
+                {!isProfileRoute && (
+                  <Edition
+                    allowedRoles={["Super Admin", "Administrador"]}
+                    className="btn btn-sm btn-outline-danger"
+                    text="Rol-Bloqueo"
+                    onClick={goToUpgrade}
+                  />
+                )}
                 <button
                   className="btn btn-sm btn-outline-primary"
                   onClick={goToEdition}
@@ -99,10 +123,12 @@ const User = ({ user, isSingleUser }) => {
                 >
                   Detalles
                 </button>
-                <button
+                <Edition
+                  allowedRoles={["Super Admin", "Administrador"]}
                   className="btn btn-sm btn-outline-danger"
-                  onClick={deleteUser}
-                >Eliminar</button>
+                  text="Eliminar"
+                  onClick={userDelete}
+                />
               </>
             )}
           </div>

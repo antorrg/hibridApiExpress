@@ -1,8 +1,8 @@
 import { useEffect,useState, useCallback } from 'react'
 import {Routes, Route, useNavigate } from 'react-router-dom'
-import {Login, Admin, Detail, Error} from './Views/Index'
+import {Login, Admin, Error} from './Views/Index'
 import {useAuth} from './Auth/AuthContext/AuthContext'
-import {CreateUser, UpdateUser,  CreateLanding, UpdateLanding, ProductView, ItemView, CreateProduct, CreateItem, UpdateProduct, UpdateItem, } from './Component/IndexComponent'
+import {CreateUser, UpdateUser,  CreateLanding, UpdateLanding, ProductView, ItemView, CreateProduct, CreateItem, UpdateProduct, UpdateItem, UserComp } from './Component/IndexComponent'
 import SessionWarning from './Auth/AuthContext/SessionWarning'
 import ProtectedRoute from './Utils/ProtectedRoutes'
 import interceptor from './Utils/Interceptor'
@@ -52,12 +52,12 @@ function App() {
   return (
     
     <div className={`app ${theme}-mode`}>
-      {/* <button 
+      <button 
         onClick={toggleTheme} 
         className="btn btn-sm btn-outline-secondary mt-4"
       >
         {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-      </button> */}
+      </button>
       <SessionWarning expirationTime={expirationTime}/>
       <Routes>
         <Route path='/login' element={<Login/>}/>
@@ -72,6 +72,7 @@ function App() {
         <Route path= '/admin/product/item/:id' element= {<ItemView/>}/>
         <Route path= '/admin/product/item/update/:id' element= {<UpdateItem/>}/>
         <Route path= '/admin/users/updateinfo/:id' element= {<UpdateUser/>}/>
+        <Route path= '/admin/users/:id' element={<UserComp/>}/>
         <Route path= '/admin/users/create' element=  {<CreateUser/>}/>
         <Route path='/admin/error' element={<Error/>}/>
 

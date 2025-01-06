@@ -34,7 +34,7 @@ export const userLogged = {
     "enable": true, 
     "nickname": "josenomeacuerdo", 
     "picture": "url", 
-    "role": "Usuario"
+    "role": "Administrador"
 }
 
 export const respUserGet = {
@@ -46,7 +46,7 @@ export const respUserGet = {
     "id": expect.any(String), 
     "nickname": "josenomeacuerdo", 
     "picture": expect.any(String), 
-    "role": "Usuario"
+    "role": "Administrador"
   }, {
     "country": null, 
     "email": "juangarcia@gmail.com", 
@@ -80,6 +80,7 @@ export const newUser = {
    "surname": "nomeacuerdo" // Parametro a actualizar. 
     
 }
+
 export const updatedUser = {
   "message": "Updated succesfully", 
   "results": {
@@ -89,7 +90,16 @@ export const updatedUser = {
     "id": expect.any(String), 
     "nickname": "josenomeacuerdo", 
     "picture": expect.any(String), 
-    "role": "Usuario"
+    "role": "Administrador"
   }, "success": true
 
+}
+export const newUserLogged = {
+  "id": expect.any(String), 
+  "country": 'argentina', 
+    "email": "josenomeacuerdo@hotmail.com", 
+    "enable": true, 
+    "nickname": "josenomeacuerdo", 
+    "picture": "url", 
+    "role": "Administrador"
 }

@@ -114,7 +114,7 @@ export const getUserById = (id) => {
 }
 
 export const cleanState = () =>{
-  return dispatch({
+  return ({
     type : CLEAN_STATE,
     payload: []
   })
