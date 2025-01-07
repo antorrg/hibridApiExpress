@@ -37,7 +37,7 @@ authServer.post('/test/auth/login', catchController(async (req, res) => {
       sameSite: "None", // Evitar CSRF
       maxAge: 1000 * 60 * 60, // 1 hora
     });
-    console.log('soy la sesion iniciada: ',req.session.user)
+    //console.log('soy la sesion iniciada: ',req.session.user)
     const userResponse = clean.userParser(response, true)
     res.status(200).json({ user: userResponse, token });
     

@@ -26,7 +26,7 @@ const upgradeUserParser =(req, res, next) =>{
             }
             req.body.enable = help.optionBoolean(enable)
             req.body.role = newRole;
-            console.log('Middleware ejecutado correctamente:', req.body);
+            //console.log('Middleware ejecutado correctamente:', req.body);
             next();
       
 };

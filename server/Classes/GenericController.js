@@ -60,7 +60,8 @@ update = catchController(async (req, res) => {
 patcher = catchController(async (req, res) => {
     const { id } = req.params;
     const newData = req.body;
-    const response = await this.service.patcher(id, newData, this.parserFunction);
+    //console.log('etoy in classes', req.body)
+    const response = await this.service.update(id, newData, this.parserFunction);
     return GenericController.responder(res, 200, true, "Updated succesfully", response )
 });
 

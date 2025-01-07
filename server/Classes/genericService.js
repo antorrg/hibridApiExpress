@@ -169,7 +169,7 @@ class GenericService {
      * @param {Function|null} parserFunction - Función opcional para procesar los datos.
      * @returns {Promise<Object>} Resultado de la operación.
      */
-    async update(id, newData, parserFunction = null) {
+    async update(id, newData, parserFunction) {
         return this.#generalUpdater(id, newData, parserFunction);
     }
 

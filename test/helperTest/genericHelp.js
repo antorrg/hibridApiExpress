@@ -158,6 +158,27 @@ export const dataCreated = {
       enable: true,
       
     }
+    export const bodyUpdate = {
+      id:1,
+      title: "Title",
+      logo: "logo",
+      landing: "landing",
+      info_header: "info_header",
+      info_body: "info_body",
+      url: "pepe",
+      enable: true
+    }; 
+    export const wrongBodyUpdate = {
+      id:1,
+      title: "Title",
+      logo: "logo",
+      landing: "landing",
+      info_header: "info_header",
+      info_body: "info_body",
+      url: "pepe",
+     
+    }; 
+
     export const productUpdated = {
        
        id:1,
@@ -167,16 +188,31 @@ export const dataCreated = {
        info_header: "info_header",
        info_body: "info_body",
        url: "pepe",
-       enable: true}
-    
-       export const itemUpdated = {
+       enable: true
+      }
+      export const itemForUpdated = {
         id:1,
         ProductId:1,
-        img:"pepe",
+        img:"https://donpepitos.com",
         text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
         enable: true,
         
       }
+       export const itemUpdated = {
+        id:1,
+        ProductId:1,
+        img:"https://donpepitos.com",
+        text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
+        enable: true,
+        
+      }
+
+      export const wrongItemUpdate =   { 
+      id:1,
+      ProductId:1,
+      img:"https://donpepitos.com",
+      
+    }
 
   // export const product ={
   //   title: "title",

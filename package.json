@@ -10,7 +10,7 @@
     "preview": "cross-env NODE_ENV=production concurrently \"vite preview\" \"nodemon server.js\"",
     "start": "cross-env NODE_ENV=production node server.js",
     "unit:test": "cross-env NODE_ENV=test jest --detectOpenHandles",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 01 run: 09 --coverage"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 09 run: 10 run: 11 --coverage"
   },
   "dependencies": {
     "axios": "^1.7.9",

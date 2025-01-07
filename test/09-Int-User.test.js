@@ -1,23 +1,19 @@
-import UserService from '../server/Classes/userService.js';
-import {User} from '../server/database.js'
+import {createMock, admin, setTokens} from './helperTest/jwtHelper.js'
 import * as store from './helperTest/testStore.js'
 import app from '../server/app.js'
 import session from 'supertest-session'
 const agent = session(app);
 import * as help from './helperTest/06-helpData.js'
 
-//* Por causa de los métodos de creación (con usuario preexistente) el usuario debe crearse antes.
 
-const userMock = new UserService(User, false, false, null )//constructor(Model, useCache, useImage, deleteImages) 
 
-describe('Test de rutas REST:  Usuario, Project, Landing', () => {
-    
+describe('Test de rutas REST:  Usuario', () => {
+  
     describe('Test de rutas de usuario: "/api/v1/user": ', () => {
         describe('Ruta "user/login": Ruta POST de validacion de usuario', () => {
             it('Deberia responder con status 200 y retornar el usuario con el token', async () => {
                 // Creacion de usuario:
-                const data = {email:'josenomeacuerdo@hotmail.com', password:'L1234567', role: 9, picture: 'url'}
-                const user = await userMock.create(data, 'email', null)
+                const user = await createMock(admin)
                 //console.log('Response create: ',user)
                 const email = "josenomeacuerdo@hotmail.com";
                 const password = 'L1234567'
@@ -287,99 +283,4 @@ describe('Test de rutas REST:  Usuario, Project, Landing', () => {
             })
         })
     });
-    xdescribe('Test de rutas Project: "/api/v1/project": CRUD basico completo:', () => {
-        describe('Rutas "/project/create", "/project/create/item", Creacion de proyecto e item.', () => {
-            it('Deberia crear un proyecto con algunos items (más de uno)', async () => {
-                const response = await agent
-                    .post('/api/v1/project/create')
-                    .send(page.bodyPage)
-                    .expect('Content-Type', /json/)
-                    .expect(201);
-                expect(response.body).toMatchObject(page.responsePage)
-            })
-            it('Ruta "/item/create". Deberia crear un item individualmente', async () => {
-                const id = 1; //El id de page para relacionar
-                const img = "url";
-                const text = "Texto de prueba"
-                const response = await agent
-                    .post('/api/v1/item/create')
-                    .send({ id, img, text })
-                    .expect('Content-Type', /json/)
-                    .expect(201);
-                expect(response.body).toBe("Item creado exitosamente")
-            })
-        })
-        xdescribe('Rutas "/project", "/project/:id". Metodo GET obtencion de informacion', () => {
-            it('Ruta "/project". Deberia responder con status 200 y retornar un array con todos los proyectos.', async () => {
-                const response = await agent
-                    .get('/api/project')
-                    .expect(200);
-                expect(response.body).toEqual(page.resGetPage);
-            })
-            it('Ruta "/project/:id". Deberia responder con status 200 y retornar la informacion del proyecto mas los items correspondientes', async () => {
-                const id = 1
-                const response = await agent
-                    .get(`/api/project/${id}`)
-                    .expect(200);
-                expect(response.body).toEqual(page.resDetailPage);
-            })
-            it('Deberia responder con status 400 y retornar un error si el id no fuera un numero', async () => {
-                const id = '1.5abd'
-                const response = await agent
-                    .get(`/api/project/${id}`)
-                    .expect(400);
-                expect(response.body).toEqual({ error: 'Parámetros no permitidos' })
-            })
-        })
-        describe('Rutas "/project/:id". Metodo PUT actualizacion de proyecto', () => {
-            it('Deberia responder con un status 200 y actualizar el proyecto', async() => {
-                const id = 1
-                const newData = page.bodyUpd;
-                const response = await agent
-                    .put(`/api/project/${id}`)
-                    .send(newData)
-                    .expect(200);
-                expect(response.body).toMatchObject(page.bodyUpdResponse)
-            })
-            it('Deberia responder con status 400 y un mensaje de error si faltan parametros', async()=>{
-                const id = 1
-                const newData = page.wrongBody;
-                const response = await agent
-                    .put(`/api/project/${id}`)
-                    .send(newData)
-                    .expect(400);
-                expect(response.body).toEqual({error: 'missing parameter'})
-            })
-        })
-        describe('Rutas "/project/:id". Metodo PATCH actualizacion de item', () => {
-                it('Deberia responder con status 200 y actualizar el item', async()=>{
-                    const id=1
-                    const body = page.itemUpdate
-                    const response = await agent
-                    .patch(`/api/project/${id}`)
-                    .send(body)
-                    .expect(200)
-                    expect(response.body).toMatchObject(page.responseItemUpdate)
-                })
-                it('Deberia responder con status 400 y retornar un mensaje de error si faltan parametros', async()=>{
-                    const id= 1
-                    const body = page.wrongItem
-                    const response = await agent
-                    .patch(`/api/project/${id}`)
-                    .send(body)
-                    .expect(400)
-                    expect(response.body).toEqual({error: "Missing fields: text, enable"})
-                })
-        })
-        describe('Ruta "/api/project/id". Metodo DELETE. Eliminar proyecto e items', ()=>{
-            it('Deberia responder con status 200 y un mensaje de eliminacion exitosa', async()=>{
-                const id= 1
-                const body = help.itemUpdate
-                const response = await agent
-                .delete(`/api/project/${id}`)
-                .expect(200)
-                expect(response.body).toMatchObject({ message: 'Page and associated items deleted successfully' })
-            })
-        })
-    })
-})
+});

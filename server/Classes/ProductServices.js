@@ -128,6 +128,7 @@ class ProductServices extends GenericService {
     }
   }
   async patcher(id, newData, parserFunction = null) {
+    //console.log('soy newData en el patcher: ', newData)
     let imageUrl = "";
     try {
       const dataFound = await this.Model2.findByPk(id);
@@ -153,7 +154,7 @@ class ProductServices extends GenericService {
 
       if (this.useCache) this.clearCache();
 
-      return parserFunction ? parserFunction(upData) : upData;
+      return parserFunction ? parserFunction(upData, true) : upData;
       //return `${this.Model.name} updated succesfully`;
     } catch (error) {
       throw error;
@@ -161,11 +162,11 @@ class ProductServices extends GenericService {
   }
   async deleteAll(id) {
     let imageUrl = "";
-    let transaction
+    let t;
     try {
-      transaction = await sequelize.transaction()
+      t = await sequelize.transaction()
 
-      const dataFound = await this.Model.findByPk(id,{transaction});
+      const dataFound = await this.Model.findByPk(id,{transaction: t});
       if (!dataFound) {
         throwError(`${this.Model} not found`, 404);
       }
@@ -174,18 +175,18 @@ class ProductServices extends GenericService {
       // Borrar los Items asociados
       await this.Model2.destroy({
         where: { ProductId: id },
-        transaction,
+        transaction : t,
       });
 
-      await dataFound.destroy({ transaction });
+      await dataFound.destroy({ transaction :t });
       await this.handleImageDeletion(imageUrl);
-      await transaction.commit();
+      await t.commit();
 
-      if (this.useCache) clearCache();
+      if (this.useCache) this.clearCache();
       return `${this.Model.name} and items asociated deleted successfully`;
     } catch (error) {
-      if (transaction) {
-        await transaction.rollback();
+      if (t) {
+        await t.rollback();
       }
       throw error;
     }
@@ -202,7 +203,7 @@ class ProductServices extends GenericService {
       await dataFound.destroy();
       await this.handleImageDeletion(imageUrl);
 
-      if (this.useCache) clearCache();
+      if (this.useCache) this.clearCache();
       return `${this.Model2.name} deleted successfully`;
     } catch (error) {
       throw error;

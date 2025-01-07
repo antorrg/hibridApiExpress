@@ -116,32 +116,33 @@ export const product =
       }
     ]
   }
-  export const ResProd = 
+  export const resProd = 
   [
       {
         "id": 1,
-        "title": "Boscarol Hnos",
-        "landing": "asdfasdfasdf",
-        "logo": "jsdkjdsahfsad",
-        "info_header": "djjjdjdd",
-        "info_body": "ggggg",
-        "url": "https",
+        "title": "Title",
+        "landing": "landing",
+        "logo": "logo",
+        "info_header": "info_header",
+        "info_body": "info_body",
+        "url": "url",
         "enable": true,
       },
      
     ]
 
-    export const parsedProduct = 
+    export const parsedProduct = {
 
-    {
-      "info": {"id": 1,
-      "title": "Boscarol Hnos",
-      "landing": "asdfasdfasdf",
-      "logo": "jsdkjdsahfsad",
-      "info_header": "djjjdjdd",
-      "info_body": "ggggg",
-      "url": "https",
-      "enable": true},
+     "info":{
+      "id": 1,
+      "title": "Title",
+      "landing": "landing",
+      "logo": "logo",
+      "info_header": "info_header",
+      "info_body": "info_body",
+      "url": "url",
+      "enable": true,
+    },
      
       "items": [
         {

@@ -31,4 +31,5 @@ afterAll(async () => {
     await sequelize.close().catch((err) => {
       console.error('Error closing sequelize:', err);
     });
+  
 });

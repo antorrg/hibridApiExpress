@@ -8,9 +8,9 @@ const productUpdateMidd = new GenericMidd(['title', 'logo', 'landing', 'info_hea
 const itemMidd = new GenericMidd(['id','text', 'img'])
 
 export default {
-    createProd : productMidd.validateFieldsWithItems(['title', 'logo', 'landing', 'info_header', 'info_body', 'url'], ['img', 'text']),
-    updateProd : productUpdateMidd.validateFields(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'enable']),
-    createItem: productMidd.validateFields(),
+    createProd : productMidd.validateFieldsWithItems(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'items'], ['img', 'text']),
+    updateProd : productUpdateMidd.validateFields(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'enable',]),
+    createItem: itemMidd.validateFields(),
     updateItem : itemMidd.validateFields(['id', 'text', 'img', 'enable']),
     validId : productMidd.validateINT('id'),
 }

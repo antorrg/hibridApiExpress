@@ -19,7 +19,7 @@ productRouter.post('/item/create', midd.createItem, ctr.createItem);
 
 productRouter.get('/item/:id', midd.validId,  ctr.getItem);
 
-productRouter.put('/item/:id', midd.validId, ctr.updateItem);
+productRouter.put('/item/:id', midd.validId, midd.updateItem ,ctr.updateItem);
 
 productRouter.delete('/item/:id', midd.validId, ctr.deleteItem);
 

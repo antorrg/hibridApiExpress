@@ -101,6 +101,7 @@ class GenericMidd {
     
         
 };
+
 class ProductMidd extends GenericMidd {
     constructor(requiredFields = [], secondFields = []) {
         super(requiredFields);
@@ -144,6 +145,7 @@ class ProductMidd extends GenericMidd {
                         );
                     }
                 });
+                
 
                 // Si todo está bien, pasar al siguiente middleware
                 next();
