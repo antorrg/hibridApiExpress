@@ -3,8 +3,12 @@ import ProductService from '../../Classes/ProductServices.js'
 import ProductController from '../../Classes/ProductController.js'
 import { deleteImageFromStorage } from '../../firebase.js'
 import help from '../../helpers/generalHelp.js';
+import env from '../../envConfig.js'
 
-const productService = new ProductService(Product, Item, true, true, deleteImageFromStorage )//Model, Model2, useCache, useImage , deleteFunction
+//*Para no subir imagenes en pruebas:
+const testHandlerImage= env.Status==='test'? false : true
+
+const productService = new ProductService(Product, Item, true, testHandlerImage, deleteImageFromStorage )//Model, Model2, useCache, useImage , deleteFunction
 
 // controladores REST:
 

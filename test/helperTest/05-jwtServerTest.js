@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import express from 'express'
 import cookieParser from 'cookie-parser';
 import {catchController} from '../../server/errorHandler.js'

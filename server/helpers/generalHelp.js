@@ -127,7 +127,7 @@ const protectProtocol = (data)=>{
 const cleanerLanding = (data)=>{
     return {
         id:data.id,
-        image:data.picture,
+        picture:data.picture,
         title:data.title,
         info_header:data.info_header,
         description:data.description,

@@ -213,36 +213,57 @@ export const dataCreated = {
       img:"https://donpepitos.com",
       
     }
+//? Material para Landing:
 
-  // export const product ={
-  //   title: "title",
-  //   logo: "logo",
-  //   landing: "landing",
-  //   info_header: "info_header",
-  //   items :[
-  //     {id: 1,
-  //       img:2,
-  //       text: "text",
-  //       ProductId: 1,
-  //       enable: true
-  //     },
-  //     {id: 3,
-  //       img:"img",
-  //       text: "text",
-  //       ProductId: 1,
-  //       enable: true
-  //     },
-  //     {id: 4,
-  //       img:"img",
-  //       text: "text",
-  //       ProductId: 1,
-  //       enable: true
-  //     },
-  //     {id: 5,
-  //       img:"img",
-  //       text: "text",
-  //       ProductId: 1,
-  //       enable: true
-  //     }
-  //   ]
-  // }
+export const landingPage = {
+  title: "title",
+  description: "description",
+  info_header: "info_header",
+  picture: "picture", 
+}
+
+export const landingRetrieved = {
+  "id": 1,
+  "title": "title",
+  "description": "description",
+  "info_header": "info_header",
+  "picture": "picture",
+  "enable": true,
+}
+
+export const generalLandResponse = [
+  {
+    "id": 1,
+    "title": "title",
+    "description": "description",
+    "info_header": "info_header",
+    "picture": "picture",
+    "enable": true,
+  }
+]
+
+export const bodyLandUpdate ={
+    "id": 1,
+    "title": "title",
+    "description": "description",
+    "info_header": "info_header",
+    "picture": "http://tukis",
+    "enable": true,
+}
+
+export const landUpdated = {
+    "id": 1,
+    "title": "title",
+    "description": "description",
+    "info_header": "info_header",
+    "picture": "http://tukis",
+    "enable": true,
+}
+
+export const wrongBodyLandUpdate = {
+    "id": 1,
+    "title": "title",
+    "description": "description",
+    "info_header": "info_header",
+    "picture": "picture",
+}

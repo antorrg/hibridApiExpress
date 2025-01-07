@@ -6,7 +6,7 @@ const agent = session(app);
 import * as prod from './helperTest/genericHelp.js'
 
 
-describe('Test de rutas REST: Project, Landing', () => {
+describe('Test de rutas REST: Project', () => {
    
     describe('Test de rutas Product: "/api/v1/product": CRUD basico completo:', () => {
         describe('Rutas "/product/create", "/item/create", Creacion de proyecto e item.', () => {

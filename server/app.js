@@ -28,7 +28,9 @@ app.locals.getAssetPath = getAssetPath;
 app.use(cookieParser())
 app.use(sessionMiddle)
 
-app.use(morgan('dev'))
+if (env.Status !== 'test') {
+app.use(morgan('dev'))}
+
 app.use(cors())
 // app.use(cors({
 //   origin: 'http://localhost:5173/', // Cambia al origen de tu frontend

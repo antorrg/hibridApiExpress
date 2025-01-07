@@ -3,14 +3,13 @@ import ctr from './landControllerService.js'
 import midd from './landMiddleware.js'
 
 
+
 const landRouter = express.Router()
 
-landRouter.post('/land/create', midd.createLand, ctr.landCreate)
+landRouter.post('/land/create',  midd.createLand, ctr.landCreate)
 
-landRouter.get('/land', ctr.landGetAll)
+landRouter.get('/land',  ctr.landGetAll)
 
-landRouter.get('/land/:id', midd.validId, ctr.landGetById)
-
-landRouter.put('/land/:id', midd.validId, midd.updateLand, ctr.landUpdate)
+landRouter.put('/land/:id',  midd.validId, midd.updateLand, ctr.landUpdate)
 
 export default landRouter;
