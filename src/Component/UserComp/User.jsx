@@ -14,7 +14,7 @@ const User = ({ user, isSingleUser }) => {
 
   const goToDetail = () => navigate(`/admin/users/${user.id}`);
   const goToBack = () => navigate(-1);
-  const goToEdition = () => navigate(`/admin/users/update/${user.id}`);
+  const goToEdition = () => navigate(`/admin/users/profile/${user.id}`);
   const goToUpgrade = () => navigate(`/admin/users/upgrade/${user.id}`);
 
   const onClose = () => {
@@ -25,7 +25,7 @@ const User = ({ user, isSingleUser }) => {
  
   const goToPassUpd = () => {
     if (isProfileRoute) {
-      navigate(`/admin/users/updateinfo/${user.id}`);
+      navigate(`/admin/users/updater/${user.id}`);
     } else {
       resetPassword();
     }
@@ -69,6 +69,7 @@ const User = ({ user, isSingleUser }) => {
           className="card-img-top"
           src={user.picture}
           alt={`${user.nickname}'s profile`}
+          style={{maxWidth:'500px'}}
         />
         <div className="card-body">
           <dl className="user-info-list">

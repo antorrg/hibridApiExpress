@@ -3,28 +3,30 @@ import {useNavigate } from "react-router-dom";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
 import {landingCreate} from "../../Redux/endPoints";
-
+import Loading from '../Loading'
 
 
 
 const CreateLanding = () => {
  
   const navigate = useNavigate();
+  const [load, setLoad] = useState(false)
 
   const itemOnClose = () => {
+    setLoad(false)
     navigate(-1);
   };
 
   const [item, setItem] = useState({
     title: "",
-    image: "",
+    picture: "",
     info_header: "",
     description: "",
     
   });
 
   const handleItemImageChange = (url) => {
-    setItem((prevItem) => ({ ...prevItem, img: url }));
+    setItem((prevItem) => ({ ...prevItem, picture: url }));
   };
 
   const handleItemChange = (event) => {
@@ -37,15 +39,19 @@ const CreateLanding = () => {
       "¿Está seguro de crear el item?"
     );
     if (confirmed) {
+      setLoad(true)
       // Aquí iría la lógica para crear el producto
       await landingCreate(item, itemOnClose);
-      //console.log('soy el nuevo item: ',item);
+      console.log('soy el nuevo item: ',item);
     }
   };
 
   return (
     <div className="backgroundPages">
       <div className="coverBack">
+      {load?
+      <Loading/>
+          :
         <div className="container-md modal-content backgroundFormColor rounded-4 shadow">
           <div className="container mt-5">
             <h3>Creación de Item: </h3>
@@ -53,7 +59,7 @@ const CreateLanding = () => {
               <div className="col-md-6 mb-3">
                 <ImageUploader
                   titleField="Imagen:"
-                  imageValue={item.image}
+                  imageValue={item.picture}
                   onImageUpload={handleItemImageChange}
                 />
               </div> <div className="mb-3">
@@ -112,6 +118,7 @@ const CreateLanding = () => {
             </section>
           </div>
         </div>
+          }
       </div>
     </div>
   );

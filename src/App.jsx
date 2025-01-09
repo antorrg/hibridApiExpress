@@ -7,6 +7,8 @@ import SessionWarning from './Auth/AuthContext/SessionWarning'
 import ProtectedRoute from './Utils/ProtectedRoutes'
 import interceptor from './Utils/Interceptor'
 import TabsPage from './Component/TabsConfiguration/TabsPage'
+import UserUpgrade from './Component/UserComp/UserUpgrade'
+import EditPassword from './Component/UserComp/EditPassword'
 
 
 
@@ -71,7 +73,9 @@ function App() {
         <Route path= '/admin/product/item/create/:id' element = {<CreateItem/>}/>
         <Route path= '/admin/product/item/:id' element= {<ItemView/>}/>
         <Route path= '/admin/product/item/update/:id' element= {<UpdateItem/>}/>
-        <Route path= '/admin/users/updateinfo/:id' element= {<UpdateUser/>}/>
+        <Route path= '/admin/users/profile/:id' element= {<UpdateUser/>}/>
+        <Route path= '/admin/users/upgrade/:id' element= {<UserUpgrade/>}/>
+        <Route path= '/admin/users/updater/:id' element= {<EditPassword/>}/>
         <Route path= '/admin/users/:id' element={<UserComp/>}/>
         <Route path= '/admin/users/create' element=  {<CreateUser/>}/>
         <Route path='/admin/error' element={<Error/>}/>

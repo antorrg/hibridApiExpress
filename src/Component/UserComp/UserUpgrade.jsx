@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import ImageUploader from "../../../utils/ImageUploader";
-import showConfirmationDialog from "../../../Auth/generalComponents/sweetAlert";
-import * as endpoint from "../../../Auth/authHelpers/Auth";
-import { getUserById } from "../../../redux/actions";
+import showConfirmationDialog from "../../Utils/sweetalert";
+import * as endpoint from "../../Redux/endPoints";
+import { getUserById } from "../../Redux/actions";
+import Loading from '../Loading'
 
 const UserUpgrade = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   const user1 = useSelector((state) => state.UserById);
+  const [load, setLoad] = useState(false)
 
   useEffect(() => {
     dispatch(getUserById(id));
   }, [id]);
 
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
 
@@ -49,15 +51,19 @@ const UserUpgrade = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      console.log(user);
+      //console.log(user);
+      setLoad(true)
       await endpoint.upgradeUser(id, user, onClose);
     }
   };
 
   return (
     <div className="imageBack">
+      {load?
+      <Loading/>
+      :
       <div className="coverBack">
-        <div className="container-md modal-content colorBack formProductContainer rounded-4 shadow">
+        <div className="container-md modal-content colorBack backgroundFormColor formProductContainer rounded-4 shadow">
           <div className="container mt-5">
             <h1>Cambio de roles, bloqueo:</h1>
             <section
@@ -119,7 +125,9 @@ const UserUpgrade = () => {
             </section>
           </div>
         </div>
+      
       </div>
+        }
     </div>
   );
 };

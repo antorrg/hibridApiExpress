@@ -7,7 +7,7 @@ import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
 import env from './envConfig.js'
-import mainRouter from './routers/router.js'
+import mainRouter from './router.js'
 
 
 //cambio de carpetas para dev y production (views y statics)

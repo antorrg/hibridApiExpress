@@ -1,28 +1,36 @@
-import { ValidPass } from "../../../Auth/generalComponents/internalUtils/Validate";
-import { useAuth } from "../../../Auth/AuthContext/AuthContext";
-import * as us from "../../../Auth/authHelpers/Auth";
 import { useState } from "react";
-import showConfirmationDialog from "../../../Auth/generalComponents/sweetAlert";
-import GenericButton from "../../../Auth/generalComponents/GenericButton/GenericButton";
 import { useNavigate, useParams } from "react-router-dom";
+import {useAuth} from '../../Auth/AuthContext/AuthContext'
+import {userVerify, userChangePass,} from "../../Redux/endPoints";
+import showConfirmationDialog from "../../Utils/sweetalert";
+import { ValidPass } from "./validate";
+import Loading from '../Loading'
 //import "../../styles/login.css";
 //import "../../styles/forms.css";
 
 const EditPassword = () => {
   const { logout } = useAuth();
   const { id } = useParams();
+  const [verify, setVerify] = useState(true);
+  const [load, setLoad] = useState(false)
   const navigate = useNavigate();
   const closeLogin = () => {
+    setLoad(false)
     navigate(-1);
   };
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
+  const disabledOff = ()=>{
+    setVerify(false)
+    setLoad(false)
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
 
-  const [verify, setVerify] = useState(true);
+  
   const [inputPass, setInputPass] = useState({
     id: id,
     password: "",
@@ -72,7 +80,8 @@ const EditPassword = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      us.verifyPassword(userData, setVerify);
+      setLoad(true)
+      userVerify(userData, disabledOff);
     }
   };
 
@@ -87,7 +96,8 @@ const EditPassword = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      us.changePassword(id, passChange, setVerify, onClose, logout);
+      setLoad(true)
+      userChangePass(id, passChange, onClose, logout);
     }
   };
 
@@ -101,8 +111,11 @@ const EditPassword = () => {
 
   return (
     <div className="imageBack">
+      {load? 
+      <Loading/>
+      :
       <div className="coverBack">
-        <div className="container-md modal-content colorBack passContainer rounded-4 shadow">
+        <div className="container-md modal-content colorBack backgroundFormColor formProductContainer passContainer rounded-4 shadow">
           <div className="form-signin m-auto p-3">
             <section>
               <div className="d-flex justify-content-between align-items-center">
@@ -138,13 +151,12 @@ const EditPassword = () => {
                   ></i>
                 </button>
               </div>
-              <GenericButton
+              <button
                 type="submit"
                 className="btn btn-primary w-80 py-1"
                 onClick={handleSubmitVerify}
-                buttonText={"Verificar contraseña"}
                 disabled={!inputPass.password}
-              />
+              >Verificar contraseña</button>
 
               {/* Campos para el nuevo password */}
               {!disabledInput ? (
@@ -204,17 +216,17 @@ const EditPassword = () => {
                   <p className="errorMsg">{error.password}</p>
                 )}
               </div>
-              <GenericButton
+              <button
                 type="submit"
                 className="btn btn-primary w-80 py-1"
                 onClick={handleSubmitChange}
-                buttonText={"Cambiar contraseña"}
                 disabled={disabledBy}
-              />
+              >Cambiar contraseña</button>
             </section>
           </div>
         </div>
       </div>
+       }
     </div>
   );
 };

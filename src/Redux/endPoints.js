@@ -22,9 +22,9 @@ export const landingCreate = (data, aux)=> landingAdmin.post('create', data, aux
 
 export const landingGet = ()=> landingAdmin.get('', null, null, true)
 
-export const landingGetById = (id)=> landingAdmin.get(`/${id}`, null, null, true )
+export const landingGetById = (id)=> landingAdmin.get(`${id}`, null, null, true )
 
-export const landingUpdate = (id, data, aux)=> landingAdmin.put(`/${id}`, data, aux, true)
+export const landingUpdate = (id, data, aux)=> landingAdmin.put(`${id}`, data, aux, true)
 
 export const landingDelete = (id, aux)=> landingAdmin.delete(`/${id}`,aux, true)
 
@@ -61,7 +61,15 @@ export const userGet = ()=> userValid.get('', null, null, true)
 
 export const userGetbyid = (id)=> userValid.get(`${id}`, null, null, true)
 
-export const userUpdate = (id, data, aux)=> userValid.put(`${id}`, data, aux, true)
+export const userVerify = (data, aux)=> userValid.post('verify',data, aux, true )
+
+export const userChangePass = (id, data, aux)=> userValid.put(`update/${id}`, data, aux, true)
+
+export const userProfile = (id, data, aux)=> userValid.put(`profile/${id}`, data, aux, true)
+
+export const userUpgrade = (id, data, aux)=> userValid.put(`upgrade/${id}`, data, aux, true)
+
+export const userResetPass = (id, data, aux)=> userValid.put(`reset/${id}`, data, aux, true)
 
 export const userCreate = (data, aux)=> userValid.post('create',data, aux, true )
 

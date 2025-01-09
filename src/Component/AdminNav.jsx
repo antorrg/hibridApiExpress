@@ -14,8 +14,11 @@ const AdminNav = () => {
 
   const profile = () => {
     navigate(`/admin/users/profile/${user.id}`)
-    cerrarOffcanvas()
+   
   };
+  const change = () => {
+    navigate(`/admin/users/updater/${user.id}`)
+  }
 
 
   return (
@@ -48,6 +51,7 @@ const AdminNav = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-dark text-small shadow">
                   <Dropdown.Item onClick={profile}>Perfil</Dropdown.Item>
+                  <Dropdown.Item onClick={change}>Cambiar password</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               </div>

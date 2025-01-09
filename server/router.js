@@ -1,11 +1,12 @@
 import express from 'express'
-import * as img from '../utils/uploaderImgs.js'
-import mvcRouter from '../modules/mvcPages/mvcRouters.js';
-import landRouter from '../modules/landingPage/landRouter.js'
-import productRouter from '../modules/productItems/productRoutes.js'
-import userRouter from '../modules/users/userRouter.js'
-import sanit from '../utils/expressValidator.js'
-import {verifyToken} from '../utils/authConfig.js'
+import * as img from './utils/uploaderImgs.js'
+import mvcRouter from './modules/mvcPages/mvcRouters.js';
+import landRouter from './modules/landingPage/landRouter.js'
+import productRouter from './modules/productItems/productRoutes.js'
+import userRouter from './modules/users/userRouter.js'
+import sanit from './utils/expressValidator.js'
+import {verifyToken} from './utils/authConfig.js'
+
 
 const mainRouter = express.Router()
 

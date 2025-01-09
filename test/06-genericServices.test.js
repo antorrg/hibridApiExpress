@@ -2,10 +2,10 @@ import GenericService from '../server/Classes/genericService.js'
 import * as store from './helperTest/testStore.js'
 import * as help from './helperTest/genericHelp.js'
 import {redirectionImages } from './helperTest/imageServices.js'
-
 import {Landing} from '../server/database.js'
 
 const mockDeleteImages = jest.fn(); // Creamos el mock de deleteImages
+
 
 const test = new GenericService(Landing, false, false, redirectionImages) //(model, useCache, useImage)
 const testCache = new GenericService(Landing, true, false, null ) //(model, useCache, useImage)

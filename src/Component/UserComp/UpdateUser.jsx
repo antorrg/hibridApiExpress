@@ -1,23 +1,33 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import showConfirmationDialog from "../../Utils/sweetalert";
+import ImageUploader from "../../Utils/ImageUploader";
+import {userProfile} from "../../Redux/endPoints";
+import { getUserById } from "../../Redux/actions";
+import Loading from '../Loading'
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   const user1 = useSelector((state) => state.UserById);
+  const [load, setLoad] = useState(false)
 
   useEffect(() => {
     dispatch(getUserById(id));
   }, [id]);
 
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
 
   const [user, setUser] = useState({
     email: "",
     picture: "",
-    given_name: "",
+    name: "",
+    surname: "",
     country: "",
   });
 
@@ -26,7 +36,8 @@ const UpdateUser = () => {
       setUser({
         email: user1.email || "",
         picture: user1.picture || "",
-        given_name: user1.given_name || "",
+        name: user1.name || "",
+        surname: user1.surname || "",
         country: user1.country || "",
       });
     }
@@ -54,13 +65,17 @@ const UpdateUser = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      await endpoint.updateUser(id, user, onClose);
+      setLoad(true)
+      await userProfile(id, user, onClose);
     }
   };
   return (
     <div className="imageBack">
+      {load?
+      <Loading/>
+      :
       <div className="coverBack">
-        <div className="container-md modal-content colorBack formProductContainer rounded-4 shadow">
+        <div className="container-md modal-content colorBack backgroundFormColor formProductContainer rounded-4 shadow">
           <div className="container mt-5">
             <h1>Actualizacion de usuario:</h1>
             <section
@@ -91,15 +106,28 @@ const UpdateUser = () => {
                   />
                 </div>{" "}
                 <div className="mb-3">
-                  <label htmlFor="given_name" className="form-label">
+                  <label htmlFor="name" className="form-label">
                     Nombre:
                   </label>
                   <input
                     className="form-control"
                     type="text"
-                    id="given_name"
-                    name="given_name"
-                    value={user.given_name}
+                    id="name"
+                    name="name"
+                    value={user.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="surname" className="form-label">
+                    Apellido:
+                  </label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="name"
+                    name="surname"
+                    value={user.surname}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -139,6 +167,7 @@ const UpdateUser = () => {
           </div>
         </div>
       </div>
+          }
     </div>
   );
 }

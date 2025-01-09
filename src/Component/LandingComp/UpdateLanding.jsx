@@ -1,41 +1,46 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getInfoById} from "../../Redux/actions";
+import { getInfo} from "../../Redux/actions";
 import { landingUpdate } from "../../Redux/endPoints";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
+import Loading from "../Loading"
 
 
 const UpdateLanding = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [load, setLoad] = useState(false)
   
-  const item1 = useSelector((state) => state.LandingById);
+  const item1 = useSelector((state) => state.Landing);
 
   useEffect(() => {
-    dispatch(getInfoById(id));
+    dispatch(getInfo());
   }, [id]);
 
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
 
   const [item, setItem] = useState({
     title: "",
-    image: "",
+    picture: "",
     info_header: "",
     description: "",
+    enable:true,
   });
 
   useEffect(() => {
     if (item1) {
       setItem({
         title: item1.title || "",
-        image: item1.image || "",
+        picture: item1.picture || "",
         info_header: item1.info_header || "",
         description: item1.description || "",
+        enable: true,
       });
     }
   }, [item1]);
@@ -51,7 +56,7 @@ const UpdateLanding = () => {
   const handleImageChange = (imageUrl) => {
     setItem((prevItem) => ({
       ...prevItem,
-      image: imageUrl,
+      picture: imageUrl,
     }));
   };
 
@@ -64,6 +69,7 @@ const UpdateLanding = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
+      setLoad(true)
       await landingUpdate(id, item, onClose);
       console.log('actualizar : ', item)
       
@@ -71,6 +77,9 @@ const UpdateLanding = () => {
   };
   return (
        <div className="backgroundPages">
+        {load?
+        <Loading/>
+        :
       <div className="coverBack">
         <div className="container-md modal-content colorBack backgroundFormColor  rounded-4 shadow">
           <div className="container mt-5">
@@ -84,7 +93,7 @@ const UpdateLanding = () => {
                 <div className="col-md-6 mb-3">
                   <ImageUploader
                     titleField={"Imagen:"}
-                    imageValue={item.image}
+                    imageValue={item.picture}
                     onImageUpload={handleImageChange}
                   />
                 </div>
@@ -107,7 +116,6 @@ const UpdateLanding = () => {
                   <label htmlFor="info_header" className="form-label">
                     Info posicionamiento:
                   </label>
-                  <InfoFormField info={aboutSeo} place={'bottom'}/>
                   <textarea
                     className="form-control"
                     type="text"
@@ -155,6 +163,7 @@ const UpdateLanding = () => {
           </div>
         </div>
       </div>
+        }
     </div>
   )
 }

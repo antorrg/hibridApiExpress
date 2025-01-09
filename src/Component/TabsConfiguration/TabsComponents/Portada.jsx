@@ -30,7 +30,7 @@ const Portada = () => {
             <p className="lead text-muted">{info?.title}</p>
         <img
               className="bd-placeholder-img-fluid mb-3"
-              src={info?.image}
+              src={info?.picture}
               alt="Imagen"
               style={{ maxWidth: "100%", height:'auto' }}
             />
