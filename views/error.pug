@@ -4,11 +4,13 @@ html(lang="es")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Error
+        link(rel= "icon" href="/favicon.png")
+        script(type="module" crossorigin src=getAssetPath("scripts.js"))
         link(rel="stylesheet" crossorigin href="/index.css")
     body 
-      div.backgroundPages(style="min-width:100vw; min-height: 100vh; display: flex; align-items: center; justify-content: center")
-        div
-          div.backgroundFormColor.caption-nav
+      div.backgroundPages(style="min-width:100vw; min-height: 100vh;")  
+        div.coverBack(style="max-width:70vw; min-height: fit-content;") 
+          div
             h1 Error: #{status}
             h2 #{message}
             h3 (¡¡¡Creo que algo salió mal!!!)
@@ -16,4 +18,6 @@ html(lang="es")
     script. 
       setTimeout(() => {
           window.location.href = '/';
-        }, 5000);
+        }, 50000);
+
+//-(style="min-width:100vw; min-height: 100vh; display: flex; align-items: center; justify-content: center")

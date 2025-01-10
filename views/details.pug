@@ -1,16 +1,17 @@
 extends ./layouts/mainLayout.pug
 
 block content
- section.py-5.text-center.container.backgroundElements
+  section.py-5.text-center.container.backgroundElements
         .row.py-lg-5
           .col-lg-6.col-md-8.mx-auto
             h1.fw-light Proyecto #{info.title}
-            p.lead.text-muted=info.infoBody
+            img.img-fluid.mb-3(src=info.landing alt='Not Found' )
+            p.lead.text-muted=info.info_body
             p
-              a.btn.btn-primary.my-2(href=info.url target="_blank") Ir al sitio web
-              a.btn.btn-secondary.my-2(href="../") Volver
-      .album.py-5.bg-light
-        .container.backgroundElements
+              a.btn.btn-sm.btn-secondary.my-2.me-2(href="/detalles") Volver
+              a.btn.btn-sm.btn-primary.my-2.me-2(href=info.url target="_blank") Ir al sitio web
+        .album.py-5
+          .container.backgroundElements
           - const chunk = (arr, size) => {
           -   return arr.reduce((acc, _, i) => {
           -     if (i % size) {
@@ -23,7 +24,7 @@ block content
           - };
           - const rows = chunk(items, 3);
           each row in rows
-            .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3
+            .row.row-cols-1.row-cols-sm-2.row-cols-sm-3.g-3
               each item in row
                 .col
                   .card.shadow-sm
@@ -32,4 +33,4 @@ block content
                       p.card-text= item.text
                       .d-flex.justify-content-between.align-items-center
                         .btn-group
-                          a.btn.btn-sm.btn-outline-secondary(href=`/detalles?img=${item.img}&id=${item.id}`) Ver mas
+                          a.btn.btn-sm.btn-outline-secondary(href=`/detalles/item/${item.id}`) Ver mas

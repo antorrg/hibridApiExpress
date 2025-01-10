@@ -2,10 +2,46 @@ import './bootstrap.bundle.js'
 import {  toggleTheme } from './color-modes.js'
 import { colorModes } from './colorModes.js';
 import modalService from './modalService.mjs'
+import {showConfirmationModal, verModal, someAsyncFunction, verExit} from "./contact.mjs"
 
 document.addEventListener('DOMContentLoaded', () => {
     colorModes();
+    const sendMailButton = document.getElementById('sendMailButton');
+    if(sendMailButton){
+      sendMailButton.addEventListener('click', async()=>{
+        const accepted = await showConfirmationModal()
+        if(accepted){
+          verModal()
+
+          const response = await someAsyncFunction()
+          if (response.ok) {
+            modalService.closeAll();
+              verExit();
+              setTimeout(()=>{
+                window.location.href = '/';
+              },4000)
+             
+          } else {
+             modalService.closeAll();
+              alert("Hubo un problema.");
+          }
+        }
+      } )
+    }
   });
+
+
+
+
+
+
+
+
+
+
+
+
+//================================================================
 // document.addEventListener('DOMContentLoaded', () => {
 //     const themeToggleBtn = document.getElementById('themeToggleBtn');
 //     const themeOptions = document.querySelectorAll('.dropdown-item');

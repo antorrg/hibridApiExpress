@@ -4,7 +4,7 @@ Aqui se encuentran los parametros que son necesarios para cada clase y su instan
 
 ## Indice:
 
-- [GemericService](#clase-genericservice)
+- [GenericService](#clase-genericservice)
 - [ProductService](#usuarios)
 - [GenericController](#clase-genericcontroller)
 - [GenericMiddlewares](#clase-genericmiddlewares)

@@ -78,7 +78,8 @@ const User = ({ user, isSingleUser }) => {
             {renderUserInfo("Rol", user.role)}
             {isSingleUser && (
               <>
-                {renderUserInfo("Nombre", user.given_name)}
+                {renderUserInfo("Nombre", user.name)}
+                {renderUserInfo("Apellido", user.surname)}
                 {renderUserInfo("País", user.country)}
                 {renderUserInfo("Estado", userStatus)}
               </>

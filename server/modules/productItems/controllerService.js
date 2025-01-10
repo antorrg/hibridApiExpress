@@ -14,7 +14,10 @@ const productService = new ProductService(Product, Item, true, testHandlerImage,
 
 const productController = new ProductController(productService, help.productCleaner,help.aux, help.dataEmptyPage, true )//(service, parserFunction, emptyObject, isAdmin)
 
+
+
 export default {
+
     createProduct : productController.create,
     createItem : productController.createVariant,
     getProduct : productController.getAll,
@@ -24,9 +27,9 @@ export default {
     updateItem : productController.patcher,
     deleteItem: productController.delete,
     deleteProduct: productController.deleteAll,
-    //data para MVC:
+    //data para MVC: (Se invoca directamente a la funcion de Servicio.)
     getProdMvc : ()=> productService.getAll(help.productCleaner, null, help.dataEmptyPage, false),
-    getProdByIdMvc : ()=> productService.getById(id, help.cleanerLanding, null, false),
-    getItemMvc : ()=> productService.getDetail(id, help.aux, null, false),
+    getProdByIdMvc : (id)=> productService.getById(id, help.productCleaner, null, false),
+    getItemMvc : (id)=> productService.getDetail(id, help.aux, null, false),
     
 }

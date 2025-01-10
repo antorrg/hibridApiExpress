@@ -23,29 +23,30 @@ export default {
       const admin = req.session && req.session.isAuthenticated ? true : false;
       console.log('permisos en el admin: ',admin)
       //console.log('soy response', products )
-    res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
+      res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
    }),
 
    getProduct : renderError(async(req, res)=>{
       const getInfo = await prodGetAll()
       const response = getInfo.data;
-      console.log(response)
+      //console.log(response)
       res.render('products', {url: appPath, info: response, meta: response[0].info_header, isAuthenticated: req.session.isAuthenticated})
    }),
 
    getDetails : renderError(async(req, res)=>{
       const {id} = req.params;
       const getInfo = await prodGetById(id)
-      const response = getInfo.data;
-      console.log(getInfo.data)
-      setStored(response.info_header)
-      res.render('details', {url: appPath, info: response, meta: getStored(), isAuthenticated: req.session.isAuthenticated})
+      const response = getInfo;
+      //console.log(response)
+      setStored(response.info.info_header)
+      res.render('details', {url: appPath, info: response.info, items:response.items, meta: getStored(), isAuthenticated: req.session.isAuthenticated})
    }),
 
    getItems : renderError(async(req, res)=>{
       const {id} = req.params;
       const response = await prodGetItem(id)
-      res.render('items', {url: appPath, info: response, meta: getStored(), isAuthenticated: req.session.isAuthenticated})
+      //console.log(response)
+      res.render('item', {url: appPath, item: response, meta: getStored(), isAuthenticated: req.session.isAuthenticated})
    }),
 
    getContact : renderError(async(req, res)=>{

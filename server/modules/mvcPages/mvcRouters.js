@@ -8,9 +8,9 @@ mvcRouter.get('/', controller.getLanding)
 
 mvcRouter.get('/detalles', controller.getProduct)
 
-mvcRouter.get('/detalle/:id', midd.validId, controller.getDetails)
+mvcRouter.get('/detalles/:id',  controller.getDetails)
 
-mvcRouter.get('/detalle/item/:id', midd.validId, controller.getItems)
+mvcRouter.get('/detalles/item/:id', midd.validId, controller.getItems)
 
 mvcRouter.get('/contacto', controller.getContact)
 
