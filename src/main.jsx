@@ -13,7 +13,7 @@ import axios from "axios";
 
 export const basePath = import.meta.env.VITE_URL;
 
-axios.defaults.baseURL = basePath;
+axios.defaults.baseURL =basePath;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
