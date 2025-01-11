@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import showConfirmationDialog from "../../Utils/sweetalert";
-import * as endpoint from "../../Redux/endPoints";
+import {userUpgrade} from "../../Redux/endPoints";
 import { getUserById } from "../../Redux/actions";
 import Loading from '../Loading'
 
@@ -53,7 +53,7 @@ const UserUpgrade = () => {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       //console.log(user);
       setLoad(true)
-      await endpoint.upgradeUser(id, user, onClose);
+      await userUpgrade(id, user, onClose);
     }
   };
 

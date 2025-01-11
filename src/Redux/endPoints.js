@@ -18,7 +18,7 @@ export const userValid = new BaseEndpoint('/api/v1/user', true)//* Para las tare
 
 const landingAdmin = new BaseEndpoint('/api/v1/land', true)
 
-export const landingCreate = (data, aux)=> landingAdmin.post('create', data, aux)
+export const landingCreate = (data, aux)=> landingAdmin.post('create', data, aux, true)
 
 export const landingGet = ()=> landingAdmin.get('', null, null, true)
 

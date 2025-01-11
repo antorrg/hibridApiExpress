@@ -6,7 +6,7 @@ import { AuthProvider } from "./Auth/AuthContext/AuthContext.jsx";
 import store from "./Redux/store.js";
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "./index.css";
 import App from "./App.jsx";
 import axios from "axios";
