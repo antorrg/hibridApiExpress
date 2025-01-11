@@ -37,17 +37,17 @@ app.use(cors())
 //   credentials: true // Habilita el uso de cookies
 // }))
 
-app.use(helmet({
-        contentSecurityPolicy: {
-            useDefaults: true,
-            directives: {
-                defaultSrc: ["'self'"],
-                imgSrc: ["'self'", 'https://firebasestorage.googleapis.com', 'data:'],
+// app.use(helmet({
+//         contentSecurityPolicy: {
+//             useDefaults: true,
+//             directives: {
+//                 defaultSrc: ["'self'"],
+//                 imgSrc: ["'self'", 'https://firebasestorage.googleapis.com', 'data:'],
                 
-            },
-        },
-    })
-);
+//             },
+//         },
+//     })
+// );
 app.set('view engine', 'pug')
 app.set('views', viewPath)
 

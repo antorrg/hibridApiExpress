@@ -9,7 +9,7 @@ import BaseEndpoint from '../BaseClasses/BaseEndpoints';
  * data y tipos 
  * Post 
  */
-
+//(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction = null, message= 'Operación exitosa'
 export const userLogin = new BaseEndpoint('/api/v1/user', false)
 
 export const userValid = new BaseEndpoint('/api/v1/user', true)//* Para las tareas de edición usar esta instancia.
