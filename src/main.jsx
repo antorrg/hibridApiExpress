@@ -11,9 +11,9 @@ import "./index.css";
 import App from "./App.jsx";
 import axios from "axios";
 
-export const basePath = import.meta.env.VITE_URL;
+export const basePath = import.meta.env.VITE_BASE_PATH;
 
-axios.defaults.baseURL =basePath;
+axios.defaults.baseURL =import.meta.env.VITE_URL;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
