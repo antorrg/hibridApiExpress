@@ -45,21 +45,21 @@ function App() {
   )
    },[logout, redirectToError])
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme); // Guarda el tema en localStorage
-  };
+  // const toggleTheme = () => {
+  //   const newTheme = theme === 'dark' ? 'light' : 'dark';
+  //   setTheme(newTheme);
+  //   localStorage.setItem('theme', newTheme); // Guarda el tema en localStorage
+  // };
  
   return (
     
-    <div className={`app ${theme}-mode`}>
-      <button 
-        onClick={toggleTheme} 
-        className="btn btn-sm btn-outline-secondary mt-4"
-      >
-        {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-      </button>
+     <div className={`app ${theme}-mode`}>
+    {/*    <button 
+         onClick={toggleTheme} 
+         className="btn btn-sm btn-outline-secondary mt-4"
+       >
+         {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+       </button> */}
       <SessionWarning expirationTime={expirationTime}/>
       <Routes>
         <Route path='/login' element={<Login/>}/>

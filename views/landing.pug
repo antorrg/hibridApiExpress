@@ -18,15 +18,16 @@ block content
             h1= landing.title 
             p.lead= landing.description
             p.lead 
-            a.btn.btn-lg.btn-dark.fw-bold(href='/') Ver más: 
+            a.btn.btn-lg.btn-dark.fw-bold(href='/detalles') Ver proyectos: 
   //-hr.featurette-divider
   section.container.marketing.mt-4.ms-4 
+      h2.h2.fw-normal.mb-3 Proyectos realizados:
         .row
           each inf in info
             .col-lg-4.backgroundElements
               img.bd-placeholder-img.rounded-circle(src=inf.logo, width="70", height="70", alt="Placeholder")
-              h2.fw-normal= inf.title
+              h3.h2.fw-normal= inf.title
               p= inf.infoHeader
               p
-                a.btn.btn-sm.btn-outline-primary(href=`/detalles`) Ver detalles &raquo;
+                a.btn.btn-sm.btn-outline-primary(href=`/detalles/${inf.id}`) Ver detalles &raquo;
   hr.featurette-divider

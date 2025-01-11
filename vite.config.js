@@ -21,7 +21,9 @@ export default defineConfig({
         {
           src: 'views/*',
           dest: 'views'
-        }
+        },
+        { src: 'robots.txt', 
+          dest: '.' }
       ],
     }),
   ],

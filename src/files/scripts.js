@@ -119,8 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
           };
       })
      }
-    } else {
-    console.error('Formulario no encontrado: #sendEmail');
     }
 // Funciones de whatsApp: 
     
