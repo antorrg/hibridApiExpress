@@ -1,8 +1,8 @@
 import express from 'express'
 import path from 'path'
-import fs from 'fs'
 import morgan from 'morgan'
 import cors from 'cors'
+import helmet from 'helmet'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
@@ -36,6 +36,18 @@ app.use(cors())
 //   origin: 'http://localhost:5173/', // Cambia al origen de tu frontend
 //   credentials: true // Habilita el uso de cookies
 // }))
+
+app.use(helmet({
+        contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+                defaultSrc: ["'self'"],
+                imgSrc: ["'self'", 'https://firebasestorage.googleapis.com', 'data:'],
+                
+            },
+        },
+    })
+);
 app.set('view engine', 'pug')
 app.set('views', viewPath)
 
@@ -47,9 +59,8 @@ app.use(checkAuthentication);
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
 
-//  app.use((req, res, next)=>{
-//     res.render('error', { message: 'Not Found', status: 404});
-//   });
+
+
  app.use('*',(req, res, next)=>{
     res.status(404).json( { message: 'Not Found', status: 404});
   });
