@@ -1,109 +1,127 @@
-import './bootstrap.bundle.js'
-import {  toggleTheme } from './color-modes.js'
+import './bootstrap.bundle.js';
 import { colorModes } from './colorModes.js';
-import modalService from './modalService.mjs'
-import {showConfirmationModal, verModal, someAsyncFunction, verExit} from "./contact.mjs"
+import modalService from './modalService.mjs';
+import {
+  showConfirmationModal,
+  sendEmailFunction,
+  validateEmail,
+  capitalizeFirstLetter,
+  showModal,
+  showExit,
+} from './contact.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
-    colorModes();
-    const sendMailButton = document.getElementById('sendMailButton');
-    if(sendMailButton){
-      sendMailButton.addEventListener('click', async()=>{
-        const accepted = await showConfirmationModal()
-        if(accepted){
-          verModal()
+  colorModes();
 
-          const response = await someAsyncFunction()
-          if (response.ok) {
-            modalService.closeAll();
-              verExit();
-              setTimeout(()=>{
-                window.location.href = '/';
-              },4000)
-             
-          } else {
-             modalService.closeAll();
-              alert("Hubo un problema.");
-          }
+  // Selección del formulario
+  const contactForm = document.getElementById('sendEmail');
+  if (contactForm) {
+    const initialInput = {
+      email: '',
+      subject: '',
+      message: '',
+    };
+
+    let input = { ...initialInput };
+    let error = { ...initialInput };
+
+    const handleOnChange = (event) => {
+      const { name, value } = event.target;
+      input[name] = value;
+      error = validateEmail(input);
+
+      // Actualiza el texto de error para cada campo
+      document.getElementById(`error${capitalizeFirstLetter(name)}`).textContent =
+        error[name];
+
+      // Habilita o deshabilita el botón de enviar
+      const permit =
+        !input.email.trim() ||
+        !input.subject.trim() ||
+        !input.message.trim() ||
+        error.email ||
+        error.subject ||
+        error.message;
+      document.getElementById('submitButton').disabled = permit;
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      error = validateEmail(input);
+
+      // Verifica errores antes de enviar
+      if (Object.values(error).some((err) => err)) {
+        return;
+      }
+      //console.log('submit', input)
+      // Confirmación antes de enviar
+      const accepted = await showConfirmationModal({
+        type: 'info',
+        title :'¿Está seguro de enviar el email?',
+         message: 'Por favor confirme su acción.',
+      });
+      if (accepted) {
+        showModal();
+
+        const response = await sendEmailFunction(input);
+        if (response.ok) {
+          modalService.closeAll();
+          showExit();
+
+          // Redirección después de 4 segundos
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 4000);
+        } else {
+          modalService.closeAll();
+          alert('Hubo un problema.');
         }
-      } )
+      }
+    };
+    async function sendEmailFunction(input) {
+      try {
+        //console.log("enviando post", input)
+        const response = await fetch("/api/v1/contact", {
+          method:"POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(input)
+        });
+        if(response.ok){
+          input = { ...initialInput };
+              document.getElementById('email').value = '';
+              document.getElementById('subject').value = '';
+              document.getElementById('message').value = '';
+        return {ok: true}
+      }else{return {ok:false}}
+      } catch (error) {
+        showFailed("¡Error inesperado. Intente nuevamente más tarde!")
+         modalService.closeAll()
+      }
     }
-  });
+    // Agrega eventos a los campos y botones
+    document.getElementById('email').addEventListener('input', handleOnChange);
+    document.getElementById('subject').addEventListener('input', handleOnChange);
+    document.getElementById('message').addEventListener('input', handleOnChange);
+    const submitButton = document.getElementById('submitButton')
+    submitButton.addEventListener('click', handleSubmit);
 
-
-
-
-
-
-
-
-
-
-
-
-//================================================================
-// document.addEventListener('DOMContentLoaded', () => {
-//     const themeToggleBtn = document.getElementById('themeToggleBtn');
-//     const themeOptions = document.querySelectorAll('.dropdown-item');
-  
-//     themeOptions.forEach(option => {
-//       option.addEventListener('click', (e) => {
-//         const selectedTheme = e.target.id;
-  
-//         switch (selectedTheme) {
-//           case 'lightMode':
-//             document.documentElement.setAttribute('data-theme', 'light');
-//             themeToggleBtn.textContent = '☀️';
-//             break;
-//           case 'darkMode':
-//             document.documentElement.setAttribute('data-theme', 'dark');
-//             themeToggleBtn.textContent = '🌙';
-//             break;
-//           case 'autoMode':
-//             document.documentElement.removeAttribute('data-theme');
-//             themeToggleBtn.textContent = '☀️/🌙';
-//             break;
-//           default:
-//             break;
-//         }
-//       });
-//     });
-//   });
-  
-//Scripts para las paginas server-rendering
-// console.log('aqui estoy')
-// document.addEventListener('DOMContentLoaded', () => {
-//   const button = document.getElementById("next-page-button");
-//   if (button) {
-//       button.addEventListener("click", pageNumber);
-//   }
-// });
-// document.addEventListener('DOMContentLoaded', ()=>{
-//     const buttonTheme = document.getElementById("themeToggleBtn")
-//     if(buttonTheme){
-//         buttonTheme.addEventListener("click", ()=>{colorModes()})
-//     }
-// })
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const buttonTheme = document.getElementById('themeToggleBtn1');
-//   if (buttonTheme) {
-//     buttonTheme.addEventListener('click', toggleTheme);
-//   }
-// });
-
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//Variables que pueden estar aqui o en otro sitio.
-    // const pageNumber = () => {
-    //     // Extraer el número actual desde la URL
-    //     const currentPath = window.location.pathname;
-    //     const currentPage = parseInt(currentPath.split('/').pop(), 10) || 1;
+    // Botón de cancelar
+    const cancelButton = document.getElementById('cancelButton');
+    if (cancelButton) {
+      cancelButton.addEventListener('click', async () => {
+        const accepted = await showConfirmationModal({
+          type: 'info',
+          title :'¿Seguro quiere sali?',
+           message: 'Será redirigido a Home.',
+        });
+        if (accepted) {
+        window.location.href = '/';
+          };
+      })
+     }
+    } else {
+    console.error('Formulario no encontrado: #sendEmail');
+    }
+// Funciones de whatsApp: 
     
-    //     // Calcular la próxima página
-    //     const nextPage = currentPage < 826 ? currentPage + 1 : 1;
-    
-    //     // Redirigir a la nueva página
-    //     window.location.href = `/about/${nextPage}`;
-    // };
-    
+});

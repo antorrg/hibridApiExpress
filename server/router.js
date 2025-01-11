@@ -4,6 +4,7 @@ import mvcRouter from './modules/mvcPages/mvcRouters.js';
 import landRouter from './modules/landingPage/landRouter.js'
 import productRouter from './modules/productItems/productRoutes.js'
 import userRouter from './modules/users/userRouter.js'
+import contactRouter from './modules/contacts/contacRouter.js';
 import sanit from './utils/expressValidator.js'
 import {verifyToken} from './utils/authConfig.js'
 
@@ -18,11 +19,14 @@ mainRouter.use(mvcRouter)
 
 mainRouter.use('/api/v1', userRouter)
 
+mainRouter.use("/api/v1/", contactRouter)
+
 mainRouter.post('/api/v1/uploadImage', verifyToken, img.uploadMiddleware, img.imageUploader )
 
 mainRouter.use('/api/v1',  verifyToken, landRouter)
 
 mainRouter.use('/api/v1', verifyToken, productRouter)
+
 
 // Manejador de Rutas No Encontradas para MVC
 mainRouter.use((req, res, next) => {

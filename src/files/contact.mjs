@@ -1,12 +1,29 @@
 import modalService from "./modalService.mjs";
 
+export const validateEmail = (input) => {
+  const errors = { email: '', subject: '', message: '' };
+  if (!input.email) errors.email = 'Email es requerido';
+  else if (!/\S+@\S+\.\S+/.test(input.email)) errors.email = 'Email es invalido';
+  if (!input.subject) errors.subject = 'Asunto es requerido';
+  if (!input.message) errors.message = 'Mensaje es requerido';
+  return errors;
+};
 
-export function showConfirmationModal() {
+export const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+
+export function showConfirmationModal({
+  type = 'info',
+  title= 'Titulo',
+  message= 'mensaje',
+}) {
     return new Promise((resolve) => {
       modalService.showModal({
-            type: 'info',
-            title: '¿Está seguro de enviar el e-mail?',
-            message: 'Esta acción no se puede deshacer.',
+            type,
+            title,
+            message,
             showAcceptButton: true,
             showDenyButton: true,
             autoHide: false,
@@ -16,23 +33,37 @@ export function showConfirmationModal() {
     });
   }
   
-  export function verModal() {
+  export async function sendEmailFunction(input) {
+    try {
+      console.log("enviando post", input)
+      const response = await fetch("/api/v1/contact", {
+        method:"POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(input)
+      });
+      if(response.ok)
+        input = { ...initialInput };
+            document.getElementById('email').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('message').value = '';
+      return {ok: true}
+    } catch (error) {
+      showFailed("¡Error inesperado. Intente nuevamente más tarde!")
+       modalService.closeAll()
+    }
+  }
+
+  export function showModal() {
       modalService.showModal({
         type: 'warning',
-        title: 'Espere un poquito...',
+        title: 'Aguarde un momento...',
         loader: true,
         autoHide: false,
     });
   }
   
   
-export async function someAsyncFunction() {
-    return new Promise(resolve => {
-        setTimeout(() => resolve({ ok: true }), 2000);
-    });
-  }
-  
-export const verExit = () => {
+export const showExit = () => {
       modalService.showModal({
         type: 'success',
         title: '!Envío exitoso!',
@@ -40,4 +71,11 @@ export const verExit = () => {
         icons: true,
         iconType: 'checkmark'
     });
+}
+export const showFailed = (message) => {
+  modalService.showModal({
+    type: "error",
+    title: "¡Envío fallido!",
+    message: message,
+  })
 }

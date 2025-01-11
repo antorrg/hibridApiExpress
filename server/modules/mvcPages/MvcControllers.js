@@ -11,6 +11,8 @@ const prodGetItem = product.getItemMvc;
 const landing = land.landServGetAll;
 const appPath = env.Status==='production'? "/" : "http://localhost:5173/"
 
+const uriWhatsApp=`https://wa.me/${env.WhatsAppNumber}?text=${encodeURIComponent(env.WhatsAppMessage)}`
+
 let metaStored = '';
 const setStored = (data)=>{metaStored = data;}
 const getStored = ()=>{return metaStored}
@@ -50,11 +52,11 @@ export default {
    }),
 
    getContact : renderError(async(req, res)=>{
-      res.render('contact')
+      res.render('contact',{url: appPath, uriWhatsApp})
    }),
 
    getAbout: renderError(async(req, res)=>{
-    res.render('about', {url: appPath})
+    res.render('about', {url: appPath, })
    }),
 
    getReact: renderError(async(req, res)=>{

@@ -5,6 +5,7 @@
 }
 @media (max-width: 768px) {
   .loginContainer {
+    margin-top:25%;
     min-width: 80%;
     max-width: 90%;
   }
