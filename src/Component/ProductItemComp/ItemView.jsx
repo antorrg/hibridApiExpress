@@ -10,7 +10,7 @@ const ItemView = () => {
  const {id} = useParams()
  const item = useSelector(state =>state.Item)
 
- console.log(item)
+ //console.log(item)
 
  useEffect(()=>{
    dispatch(getItem(id))

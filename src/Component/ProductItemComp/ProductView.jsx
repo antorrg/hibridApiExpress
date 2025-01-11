@@ -70,10 +70,10 @@ const ProductView = () => {
                 />
               
                 <h4>Info posicionamiento:</h4>
-                <p className="lead text-muted">{info?.infoHeader}</p>
+                <p className="lead text-muted">{info?.info_header}</p>
                 <hr></hr>
                 <h4>Descripcion:</h4>
-            <p className="lead text-muted">{info?.infoBody}</p>
+            <p className="lead text-muted">{info?.info_body}</p>
             <hr></hr>
                 <h4>Estado:</h4>
             <p className="lead text-muted">{booleanState(info?.enable)}</p>

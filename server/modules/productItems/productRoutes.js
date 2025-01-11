@@ -2,10 +2,11 @@ import express from 'express'
 import ctr from './controllerService.js'
 import midd from './productMiddlewares.js'
 import { checkRole} from '../../utils/authConfig.js'
+import { addFields } from './productFunctions.js'
 
 const productRouter = express.Router()
 
-productRouter.post('/product/create',  midd.createProd,ctr.createProduct);
+productRouter.post('/product/create',  midd.createProd, addFields, ctr.createProduct);
 
 productRouter.get('/product',  ctr.getProduct);
 

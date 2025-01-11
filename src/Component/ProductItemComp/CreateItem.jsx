@@ -2,15 +2,25 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
-//import { createItem } from "../../Redux/endPoints";
+import Loading from '../Loading'
+import { createItem } from "../../Redux/endPoints";
 
 
 const CreateItem = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [load, setLoad]=useState(false)
+
   const itemOnClose = () => {
+    setLoad(false)
     navigate(-1);
   };
+
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
   const [item, setItem] = useState({
     img: "",
     text: "",
@@ -35,16 +45,20 @@ const CreateItem = () => {
     );
     if (confirmed) {
       // Aquí iría la lógica para crear el producto
-     // await createItem(item, itemOnClose);
-      console.log('soy el nuevo item: ',item);
+      setLoad(true)
+     await createItem(item, itemOnClose, rejectOnClose);
+      //console.log('soy el nuevo item: ',item);
     }
   };
   const permit = !item.text.trim();
 
   return (
     <div className="imageBack">
+      {load?
+      <Loading/>
+      :
       <div className="coverBack">
-        <div className="container-md modal-content colorBack formProductContainer rounded-4 shadow">
+        <div className="container-md modal-content colorBack backgroundFormColor formProductContainer rounded-4 shadow">
           <div className="container mt-5">
             <h3>Creación de Item: </h3>
             <section className="needs-validation" id="updateForm" noValidate>
@@ -87,6 +101,7 @@ const CreateItem = () => {
           </div>
         </div>
       </div>
+        }
     </div>
   );
 };

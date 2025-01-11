@@ -3,11 +3,22 @@ import { useNavigate } from "react-router-dom";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
 import { createProduct } from "../../Redux/endPoints";
+import Loading from "../Loading"
 
 
 const CreateProduct = () => {
   const navigate = useNavigate();
-  const onClose = () => navigate(-1);
+  const [load, setLoad]=useState(false)
+
+  const onClose = () => {
+    setLoad(false)
+    navigate(-1);
+  }
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
   const [product, setProduct] = useState({
     uniqueField:'title',
     title: "",
@@ -71,9 +82,10 @@ const CreateProduct = () => {
       "¿Está seguro de crear el producto?"
     );
     if (confirmed) {
-      // Aquí iría la lógica para crear el producto
-      console.log(product)
-      createProduct(product, onClose);
+      
+      setLoad(true)
+      createProduct(product, onClose, rejectOnClose);
+      
     }
   };
   const permit = !product.title.trim()||
@@ -84,6 +96,9 @@ const CreateProduct = () => {
   
   return (
     <div className="backgroundPages">
+      {load?
+      <Loading/>
+      :
       <div className="coverAdmin">
         <div className="container-sm modal-content formProductContainer backgroundFormColor rounded-4 shadow">
           <div className="container mt-5">
@@ -195,16 +210,16 @@ const CreateProduct = () => {
               </div>
               <div className="d-flex flex-row me-3">
                 <button
-                  className="btn btn-outline-success mb-3 me-2"
+                  className="btn btn-sm btn-outline-success mb-3 me-2"
                   type="button"
                   onClick={addItem}
                 >Agregar Item</button>
                 <button
-                  className="btn btn-md btn-secondary mb-3 me-2"
+                  className="btn btn-sm  btn-secondary mb-3 me-2"
                   onClick={onClose}
                 >Cancelar</button>
                 <button
-                  className="btn btn-md btn-primary mb-3 me-2"
+                  className="btn btn-sm  btn-primary mb-3 me-2"
                   type="button"
                   onClick={handleSubmit}
                   disabled={permit}
@@ -214,6 +229,7 @@ const CreateProduct = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 }

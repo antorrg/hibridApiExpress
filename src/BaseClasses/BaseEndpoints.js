@@ -36,7 +36,7 @@ class Endpoints {
   }
 
 
-  async post(endpoint, data = {}, auxFunction = null, admin = false, message= 'Operación exitosa') {
+  async post(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction = null, message= 'Operación exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.post(`${this.baseURL}/${endpoint}`, data, config);
@@ -45,32 +45,35 @@ class Endpoints {
       return response.data;
     } catch (error) {
       toast.handleError(error);
+      if(rejectFunction) await rejectFunction()
       console.error('Error en POST:', error);
     }
   }
 
-  async put(endpoint, data = {}, auxFunction = null, admin = false) {
+  async put(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction= null, message = 'Actualización exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.put(`${this.baseURL}/${endpoint}`, data, config);
-      toast.showSuccess('Actualización exitosa');
+      toast.showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
       toast.handleError(error);
+      if(rejectFunction) await rejectFunction()
       console.error('Error en PUT:', error);
     }
   }
 
-  async delete(endpoint, auxFunction = null, admin = false) {
+  async delete(endpoint, auxFunction = null, admin = false, rejectFunction= null, message= 'Eliminación exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.delete(`${this.baseURL}/${endpoint}`, config);
-      toast.showSuccess('Eliminación exitosa');
+      toast.showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
       toast.handleError(error);
+      if(rejectFunction) await rejectFunction()
       console.error('Error en DELETE:', error);
     }
   }

@@ -5,6 +5,7 @@ import { getProductById} from "../../Redux/actions";
 import { updateProduct } from "../../Redux/endPoints";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
+import Loading from "../Loading"
 
 
 
@@ -12,6 +13,7 @@ const UpdateProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [load, setLoad]=useState(false)
   const page = useSelector((state) => state.ProductId);
 
   useEffect(() => {
@@ -19,8 +21,15 @@ const UpdateProduct = () => {
   }, [id]);
 
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
+
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
 
   const [product, setProduct] = useState({
     title: "",
@@ -71,12 +80,16 @@ const UpdateProduct = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
+      setLoad(true)
       console.log('soy el product: ', product)
-      await updateProduct(id, product, onClose);
+      await updateProduct(id, product, onClose, rejectOnClose);
     }
   };
   return (
     <div className="imageBack">
+      {load?
+      <Loading/>
+        :
       <div className="coverBack">
         <div className="container-md modal-content colorBack backgroundFormColor formProductContainer rounded-4 shadow">
           <div className="container mt-5">
@@ -194,6 +207,7 @@ const UpdateProduct = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 }

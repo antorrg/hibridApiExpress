@@ -33,7 +33,7 @@ Esta aplicación fue construida con:
 Al descargar esta app encontrará un archivo `.env.example` el cual contiene la información que debe utilizarse en las variables de entorno, las variables a declarar (deberá crear los archivos y llenarlos en base a `.env.example`) son: 
 - `.env`
 - `.env.development`
-- `.env.production`.
+- `.env.test`.
 
 Para inicializar el proyecto es necesario luego de clonar o descargar el mismo, abrir la consola (linea de comandos) en directorio raíz (donde está el `package.json`) y ejecutar:
 
@@ -60,12 +60,12 @@ No se utilizan funciones mock para simular la base de datos, hay una instancia d
 Los comandos para ejecutar los test son: 
 - Para tests unitarios:
 ```bash
--->> npm run unit-test
+-->> npm run unit:test
 ```
 Este comando ejecutará todos los test sin excepción, para hacer correr solo uno basta escribir su numero, por ejemplo: 
 
 ```bash
--->> npm run unit-test 01
+-->> npm run unit:test 01
 ```
 
 En este caso en particular probará que las variables de entorno estén correctas y la base de datos de pruebas funcional.

@@ -17,6 +17,12 @@ const CreateLanding = () => {
     navigate(-1);
   };
 
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
+
   const [item, setItem] = useState({
     title: "",
     picture: "",
@@ -41,8 +47,8 @@ const CreateLanding = () => {
     if (confirmed) {
       setLoad(true)
       // Aquí iría la lógica para crear el producto
-      await landingCreate(item, itemOnClose);
-      console.log('soy el nuevo item: ',item);
+      await landingCreate(item, itemOnClose, rejectOnClose);
+      //console.log('soy el nuevo item: ',item);
     }
   };
 

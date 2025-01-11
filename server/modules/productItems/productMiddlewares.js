@@ -11,6 +11,6 @@ export default {
     createProd : productMidd.validateFieldsWithItems(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'items'], ['img', 'text']),
     updateProd : productUpdateMidd.validateFields(['title', 'logo', 'landing', 'info_header', 'info_body', 'url', 'enable',]),
     createItem: itemMidd.validateFields(),
-    updateItem : itemMidd.validateFields(['id', 'text', 'img', 'enable']),
+    updateItem : itemMidd.validateFields(['text', 'img', 'enable']),
     validId : productMidd.validateINT('id'),
 }

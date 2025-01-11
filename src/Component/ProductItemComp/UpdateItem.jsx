@@ -6,6 +6,7 @@ import { updateItem } from "../../Redux/endPoints";
 import { Form } from "react-bootstrap";
 import showConfirmationDialog from "../../Utils/sweetalert";
 import ImageUploader from "../../Utils/ImageUploader";
+import Loading from '../Loading'
 
 
 
@@ -14,6 +15,7 @@ const UpdateItem = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [load, setLoad] = useState(false)
  
   const item1 = useSelector((state) => state.Item);
   useEffect(() => {
@@ -21,8 +23,15 @@ const UpdateItem = () => {
   }, [id]);
 
   const onClose = () => {
+    setLoad(false)
     navigate(-1);
   };
+
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
 
   const [item, setItem] = useState({
     text: "",
@@ -66,12 +75,16 @@ const UpdateItem = () => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      await updateItem(id, item, onClose);
+      setLoad(true)
+      await updateItem(id, item, onClose, rejectOnClose);
       
     }
   };
   return (
     <div className="backgroundPages">
+      {load?
+      <Loading/>
+      :
       <div className="coverBack">
         <div className="container-md modal-content backgroundFormColor formProductContainer rounded-4 shadow">
           <div className="container mt-5">
@@ -143,6 +156,7 @@ const UpdateItem = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 }

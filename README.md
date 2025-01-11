@@ -29,7 +29,7 @@ This application was built using:
 After downloading this app, you will find a `.env.example` file containing the information required for environment variables. You need to create and populate the following files based on `.env.example`:  
 - `.env`  
 - `.env.development`  
-- `.env.production`.  
+- `.env.test`.  
 
 To initialize the project, after cloning or downloading it, open the console (command line) in the root directory (where `package.json` is located) and run:  
 
@@ -55,12 +55,12 @@ Mock functions are not used to simulate the database; a real Postgres database i
 The commands to execute the tests are:  
 - For unit tests:  
 ```bash  
--->> npm run unit-test  
+-->> npm run unit:test  
 ```  
 This command runs all tests. To run a specific test, simply provide its number, for example:  
 
 ```bash  
--->> npm run unit-test 01  
+-->> npm run unit:test 01  
 ```  
 
 In this case, it will specifically test the correctness of environment variables and the functionality of the testing database.  

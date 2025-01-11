@@ -25,6 +25,12 @@ const UpdateLanding = () => {
     navigate(-1);
   };
 
+  const rejectOnClose = ()=>{
+    setTimeout(()=>{
+      navigate(-1)
+    },3000)
+  }
+
   const [item, setItem] = useState({
     title: "",
     picture: "",
@@ -70,8 +76,8 @@ const UpdateLanding = () => {
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       setLoad(true)
-      await landingUpdate(id, item, onClose);
-      console.log('actualizar : ', item)
+      await landingUpdate(id, item, onClose, rejectOnClose);
+      //console.log('actualizar : ', item)
       
     }
   };
