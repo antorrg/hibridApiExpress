@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as toast from "../Utils/toastify"
+import {showSuccess, handleError} from "../Utils/toastify"
 
 
 class Endpoints {
@@ -30,8 +30,8 @@ class Endpoints {
       if (auxFunction) await auxFunction();
       return response.data.results;
     } catch (error) {
-      toast.handleError(error);
-      console.error('Error en GET:', error);
+      handleError(error);
+      //console.error('Error en GET:', error);
     }
   }
 
@@ -40,13 +40,13 @@ class Endpoints {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.post(`${this.baseURL}/${endpoint}`, data, config);
-      toast.showSuccess(message);
+      showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
-      toast.handleError(error);
+      handleError(error);
       if(rejectFunction) await rejectFunction()
-      console.error('Error en POST:', error);
+      //console.error('Error en POST:', error);
     }
   }
 
@@ -54,13 +54,13 @@ class Endpoints {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.put(`${this.baseURL}/${endpoint}`, data, config);
-      toast.showSuccess(message);
+      showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
-      toast.handleError(error);
+      handleError(error);
       if(rejectFunction) await rejectFunction()
-      console.error('Error en PUT:', error);
+      //console.error('Error en PUT:', error);
     }
   }
 
@@ -68,13 +68,13 @@ class Endpoints {
     try {
       const config = admin ? this.setAuthHeader() : {};
       const response = await axios.delete(`${this.baseURL}/${endpoint}`, config);
-      toast.showSuccess(message);
+      showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
     } catch (error) {
-      toast.handleError(error);
+      handleError(error);
       if(rejectFunction) await rejectFunction()
-      console.error('Error en DELETE:', error);
+      //console.error('Error en DELETE:', error);
     }
   }
 }
