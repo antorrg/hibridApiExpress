@@ -99,7 +99,7 @@ const CreateProduct = () => {
       {load?
       <Loading/>
       :
-      <div className="coverAdmin">
+      <div className="coverBack">
         <div className="container-sm modal-content formProductContainer backgroundFormColor rounded-4 shadow">
           <div className="container mt-5">
             <h3>Creación de Producto: </h3>
