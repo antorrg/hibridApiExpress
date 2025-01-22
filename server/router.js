@@ -1,3 +1,7 @@
+/**
+ * Router principal de la aplicación.
+ * @module router
+ */
 import express from 'express'
 import * as img from './utils/uploaderImgs.js'
 import mvcRouter from './modules/mvcPages/mvcRouters.js';
