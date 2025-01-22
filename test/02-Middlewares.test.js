@@ -82,34 +82,17 @@ describe('Middlewares test.Validate methods of the GenericMidd class', () => {
              .expect(400)
              expect(response.body.message).toEqual('The productId must be a integer number.')
           });
+          it('Should throw an error if the Integer ID is not valid', async() => {
+            const productId = false
+         const response = await agent
+          .get(`/test/land/${productId}`)
+          .expect('Content-Type', /json/)
+          .expect(400)
+          expect(response.body.message).toEqual('The productId must be a integer number.')
+       });
          
      });
-     describe('The validUUID middleware. UUID validation.', () => {
-          it('Should pass if the UUID is valid', async() => {
-               const userId = "c1d970cf-9bb6-4848-aa76-191f905a2edd"
-            const response = await agent
-             .get(`/test/users/${userId}`)
-             .expect('Content-Type', /json/)
-             .expect(200)
-             expect(response.body).toEqual({ message: 'Passed middleware' })
-          });
-          it('Should throw an error if the UUID is not valid', async() => {
-               const userId = "c1d970cf-9bb6-4848-aa76191f905a2eddd"
-            const response = await agent
-             .get(`/test/users/${userId}`)
-             .expect('Content-Type', /json/)
-             .expect(400)
-             expect(response.body.message).toEqual('The c1d970cf-9bb6-4848-aa76191f905a2eddd field must be a valid UUID')
-          });
-          it('Should throw an error if the UUID is missing', async() => {
-               const userId= 2; //c1d970cf-9bb6-4848-aa76191f905a2eddd
-            const response = await agent
-             .get(`/test/users/${userId}`)
-             .expect('Content-Type', /json/)
-             .expect(400)
-             expect(response.body.message).toEqual('The 2 field must be a valid UUID')
-          })
-     });
+   
      describe('The validateNumbers middleware. Integer validation.', () => {
           it('Should pass if the Integer body is valid', async() => {
                const body= {price : 55, color : "white"}

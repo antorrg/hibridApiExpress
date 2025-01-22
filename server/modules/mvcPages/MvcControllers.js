@@ -23,7 +23,7 @@ export default {
       const response = await landing()
       const products = await prodGetAll()
       const admin = req.session && req.session.isAuthenticated ? true : false;
-      console.log('permisos en el admin: ',admin)
+      //console.log('permisos en el admin: ',admin)
       //console.log('soy response', products )
       res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
    }),
