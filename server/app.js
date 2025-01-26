@@ -6,6 +6,9 @@ import helmet from 'helmet'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
+import swaggerUi from "swagger-ui-express"
+import swaggerJsDoc from "swagger-jsdoc"
+import swaggerOptions from "./swaggerDocs/swaggerOptions.js";
 import env from './envConfig.js'
 import mainRouter from './router.js'
 
@@ -20,6 +23,9 @@ const staticPath = env.Status === 'development'
 ? path.resolve('src') 
 : path.resolve('dist/assets');
 
+//Swagger:
+const swaggerDocs = swaggerJsDoc(swaggerOptions)
+
 const app = express()
 //setear automatizacion en el build para pug
 
@@ -32,22 +38,7 @@ if (env.Status !== 'test') {
 app.use(morgan('dev'))}
 
 app.use(cors())
-// app.use(cors({
-//   origin: 'http://localhost:5173/', // Cambia al origen de tu frontend
-//   credentials: true // Habilita el uso de cookies
-// }))
 
-// app.use(helmet({
-//         contentSecurityPolicy: {
-//             useDefaults: true,
-//             directives: {
-//                 defaultSrc: ["'self'"],
-//                 imgSrc: ["'self'", 'https://firebasestorage.googleapis.com', 'data:'],
-                
-//             },
-//         },
-//     })
-// );
 app.set('view engine', 'pug')
 app.set('views', viewPath)
 
@@ -59,6 +50,10 @@ app.use(checkAuthentication);
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
 
+if(env.Status !== 'production'){
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+}
+
 
 
  app.use('*',(req, res, next)=>{
@@ -69,7 +64,8 @@ app.use(mainRouter)
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || 'Error';
-    console.error('Error: ', err);
+    if(env.Status==='development'){
+    console.error('Error: ', err);}
     //res.render('error', { message: message, status: status});
     res.status(status).json({
       success: false,

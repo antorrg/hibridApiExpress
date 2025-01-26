@@ -10,9 +10,12 @@
     "preview": "cross-env NODE_ENV=production concurrently \"vite preview\" \"nodemon server.js\"",
     "start": "cross-env NODE_ENV=production node server.js",
     "unit:test": "cross-env NODE_ENV=test jest --detectOpenHandles",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 09 run: 10 run: 11 --coverage"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 09 run: 10 run: 11 run: 12 --coverage"
   },
   "dependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
@@ -46,21 +49,20 @@
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "sequelize": "^6.37.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "sweetalert2": "^11.15.3",
-    "vite-plugin-static-copy": "^2.2.0",
     "vite": "^6.0.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1"
+    "vite-plugin-static-copy": "^2.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.17.0",
-    
     "babel-jest": "^29.7.0",
     "concurrently": "^9.1.0",
+    "cypress": "^14.0.0",
     "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-hooks": "^5.1.0",

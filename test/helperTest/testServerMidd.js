@@ -49,10 +49,10 @@ serverMidd.put('/test/product/create/:id', updateProd, (req, res) => {
 
 
 
-serverMidd.use((err, req, res, next) => {
-    const status = err.status || 500;
-    const message = err.message || 'Error';
-    console.error('Error: ', err);
+serverMidd.use((error, req, res, next) => {
+    const status = error.status || 500;
+    const message = error.message || 'Error';
+    console.error('Errorpp: ', error.message);
     //res.render('error', { message: message, status: status});
     res.status(status).json({
       success: false,

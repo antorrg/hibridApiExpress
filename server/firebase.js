@@ -1,7 +1,5 @@
-// Import the functions you need from the SDKs you need
 import en from './envConfig.js'
 import { initializeApp } from "firebase/app";
-//import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"; // Importa Firebase Storage
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,10 +23,6 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 //todo Aqui comienzan las funciones de subida y borrado de imagenes:
-
-//import { storage } from '../firebase.js';
-//import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-
 
 const uploadImageToFirebase = async (file) => {
   try {

@@ -80,6 +80,31 @@ export const dataCreated = {
       
     ]
   }
+  export const productMock ={
+    title: "Title2",
+    logo: "logo",
+    landing: "landing",
+    info_header: "info_header",
+    info_body: "info_body",
+    url: "url",
+    items :[
+      {
+        img:"img",
+        text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
+      },
+      {
+        img:"img",
+        text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
+      
+      },
+      {
+        img:"img",
+        text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
+        
+      },
+      
+    ]
+  }
 
   export const itemCreate = {
     id: 1,

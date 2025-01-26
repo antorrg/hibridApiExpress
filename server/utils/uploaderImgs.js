@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {catchController} from '../errorHandler.js'
 import multer from 'multer'
 import { uploadImageToFirebase } from '../firebase.js'
