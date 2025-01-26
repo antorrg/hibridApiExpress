@@ -64,7 +64,8 @@ if(env.Status !== 'production'){
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || 'Error';
-    console.error('Error: ', err);
+    if(env.Status==='development'){
+    console.error('Error: ', err);}
     //res.render('error', { message: message, status: status});
     res.status(status).json({
       success: false,

@@ -99,7 +99,7 @@ min-width: 80vw;
   border-radius: 5px; /* Bordes redondeados */
   color: black; /* Asegúrate de que el texto sea visible */
   min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
-  min-width: calc(fit-content(100%) + 10%);
+   min-width: calc(fit-content(100%) + 10%); 
 }
 
 [data-bs-theme="dark"] .coverBackPages {
@@ -109,10 +109,11 @@ min-width: 80vw;
   z-index: 10;
   padding: 0.2rem;
   min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la pantalla */
-  min-width: calc(fit-content(100%) + 10%);
+   min-width: calc(fit-content(100%) + 10%); 
 }
 .textFormPagesContainer {
-  margin-top:8%;
+  margin-top:10%;
+  min-width: 80%;
   max-width: 90%
 }
 @media (max-width: 768px) {

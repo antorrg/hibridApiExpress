@@ -34,7 +34,7 @@ mainRouter.use('/api/v1', verifyToken, productRouter)
 
 // Manejador de Rutas No Encontradas para MVC
 mainRouter.use((req, res, next) => {
-    if (req.originalUrl.startsWith('/api/v3/')) {
+    if (req.originalUrl.startsWith('/api/v1/')) {
       // Si es una ruta de la API, pasa al siguiente middleware
       return next();
     }
@@ -49,7 +49,7 @@ mainRouter.use((req, res, next) => {
       // Si es una ruta de la API, pasa al siguiente middleware
       return next(err);
     }
-    res.status(err.status || 500);
+    res.status(err.status || 400);
     res.render('error', { message: err.message, status: err.status || 500 });
   });
   
