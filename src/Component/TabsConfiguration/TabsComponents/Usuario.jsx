@@ -1,20 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../Redux/actions";
 import { booleanState } from "../../../Utils/generalHelpers";
+import Edition from "../../../Utils/Edition/Edition"
+import { userDelete } from "../../../Redux/endPoints";
+import showConfirmationDialog from "../../../Utils/sweetalert";
+import Loading from "../../Loading"
 
 const Usuario = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [load, setLoad]= useState(false)
   const users = useSelector((state) => state.Users);
 
   const { id } = useParams();
-  const goBack = () => navigate(-1);
+
+  const onClose = () => {
+    setLoad(false)
+  };
   const isAdmin = true;
   useEffect(() => {
     dispatch(getUsers());
   }, []);
+
+  const userDel = async (userId) => {
+    const confirmed = await showConfirmationDialog(
+      "¿Quiere eliminar el usuario? \n¡Esta accion no podra deshacerse!"
+    );
+    if (confirmed) {
+      // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
+      setLoad(true)
+      await userDelete(userId, onClose, onClose );
+    }
+  };
   return (
     <section className="container album py-1 mb-3 ">
       <div className=" row py-lg-5">
@@ -27,6 +46,9 @@ const Usuario = () => {
             Crear Usuario
           </Link>
         </div>
+        {load?
+        <Loading/>
+        :
         <div className="">
           {users?.map((info) => (
             <div
@@ -50,18 +72,25 @@ const Usuario = () => {
                     {booleanState(info.enable)}
                   </p>
                 </div>
-                <p className="mt-3 mt-lg-0">
+                <p className="mt-3 mt-lg-0"style={{display:'flex', flexDirection:'column'}}>
                   <Link
-                    className="btn btn-sm btn-outline-secondary me-3"
+                    className="btn btn-sm btn-outline-secondary me-3 mb-3"
                     to={`/admin/users/${info?.id}`}
                   >
                     Ver detalles
                   </Link>
+                  <Edition
+                    allowedRoles={["Administrador", "Moderador"]}
+                    className="btn btn-sm btn-outline-danger me-3"
+                    text="Eliminar"
+                    onClick={()=>userDel(info.id)}
+                  />
                 </p>
               </div>
             </div>
           ))}
         </div>
+        }
       </div>
     </section>
   );

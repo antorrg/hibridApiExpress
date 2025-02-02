@@ -73,4 +73,4 @@ export const userResetPass = (id, data, aux)=> userValid.put(`reset/${id}`, data
 
 export const userCreate = (data, aux)=> userValid.post('create',data, aux, true )
 
-export const userDelete = (id, aux)=> userValid.delete(`${id}`,aux, true)
+export const userDelete = (id, aux, auxReject)=> userValid.delete(`${id}`,aux, true, auxReject)
