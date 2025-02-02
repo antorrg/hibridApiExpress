@@ -22,6 +22,9 @@ const EditPassword = () => {
     setLoad(false)
     navigate(-1);
   };
+  const onFail = () => {
+    setLoad(false)
+  };
   const disabledOff = ()=>{
     setVerify(false)
     setLoad(false)
@@ -81,7 +84,7 @@ const EditPassword = () => {
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       setLoad(true)
-      userVerify(userData, disabledOff);
+      userVerify(userData, disabledOff, onFail);
     }
   };
 

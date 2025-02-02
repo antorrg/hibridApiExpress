@@ -22,6 +22,10 @@ const UpdateUser = () => {
     setLoad(false)
     navigate(-1);
   };
+  const onFail = () => {
+    setLoad(false)
+    navigate('/admin?tab=users')
+  };
 
   const [user, setUser] = useState({
     email: "",
@@ -66,7 +70,7 @@ const UpdateUser = () => {
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       setLoad(true)
-      await userProfile(id, user, onClose);
+      await userProfile(id, user, onClose, onFail);
     }
   };
   return (

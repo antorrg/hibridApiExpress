@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 
 const dataUser = (req, res, next)=>{
     const user = req.body;
-    if(!user || !user.email){return next(middError('Email is required', 400))}
+    if(!user || !user.email){return next(middError('Email es requerido', 400))}
    
     req.body.password = env.pass;
     req.body.role = 1;
@@ -33,8 +33,8 @@ const upgradeUserParser =(req, res, next) =>{
 const profileUserAccess = (req, res, next)=>{
     const {id} = req.params;
     const {userId}= req.userInfo;
-    if(!id || !userId){return next(middError('Missing parameters', 400))}
-    if(id !== userId){return next(middError('Only the owner can update his profile', 400))}
+    if(!id || !userId){return next(middError('Faltan parametros', 400))}
+    if(id !== userId){return next(middError('Solo el propietario puede actualizar su perfil', 400))}
 
     next();
 }
@@ -42,7 +42,7 @@ const profileUserAccess = (req, res, next)=>{
 const profileParserInfo = (req, res, next)=>{
     const { email } = req.body;
 
-    if( !email ){return next(middError('Missing email!', 400))}
+    if( !email ){return next(middError('Falta el email!', 400))}
     
     req.body.nickname = email.split('@')[0];
 
@@ -51,16 +51,16 @@ const profileParserInfo = (req, res, next)=>{
 const verifyOwnerActionsInBody = (req, res, next)=>{
     const {id} = req.body;
     const {userId}= req.userInfo;
-    if(!id || !userId){return next(middError('Missing parameters', 400))}
-    if(id !== userId){return next(middError('Only the owner can perform this action', 400))}
+    if(!id || !userId){return next(middError('Faltan parametros', 400))}
+    if(id !== userId){return next(middError('Solo el propietario puede ejecutar esta acción', 400))}
     next();
 };
 
 const verifyOwnerActionsInParam = (req, res, next)=>{
     const {id} = req.params;
     const {userId}= req.userInfo;
-    if(!id || !userId){return next(middError('Missing parameters', 400))}
-    if(id !== userId){return next(middError('Only the owner can perform this action', 400))}
+    if(!id || !userId){return next(middError('Faltan parametros', 400))}
+    if(id !== userId){return next(middError('Solo el propietario puede ejecutar esta acción', 400))}
     next();
 };
 

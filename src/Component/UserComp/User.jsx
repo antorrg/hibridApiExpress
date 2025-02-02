@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { useNavigate, useLocation } from "react-router-dom";
 import Edition from "../../Utils/Edition/Edition";
-
+import {userResetPass} from "../../Redux/endPoints"
 import showConfirmationDialog from "../../Utils/sweetalert";
 import Loading from "../Loading";
 
@@ -19,7 +19,10 @@ const User = ({ user, isSingleUser }) => {
 
   const onClose = () => {
     setLoad(false)
-    navigate("/admin")
+    navigate("/admin?tab=users")
+  };
+  const onFail = () => {
+    setLoad(false)
   };
 
  
@@ -32,12 +35,12 @@ const User = ({ user, isSingleUser }) => {
   };
   const resetPassword = async () => {
     const confirmed = await showConfirmationDialog(
-      "¿Quiere reiniciar su contraseña?"
+      "¿Quiere reiniciar esta contraseña?"
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      us.onResetPass(user.id, onClose);
       setLoad(true)
+      await userResetPass(user.id,null, onClose, onFail);
     }
   };
 
@@ -47,7 +50,7 @@ const User = ({ user, isSingleUser }) => {
     );
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
-      us.onDeleteUser(user.id, onClose);
+      //us.onDeleteUser(user.id, onClose);
       setLoad(true)
     }
   };
@@ -96,7 +99,7 @@ const User = ({ user, isSingleUser }) => {
                   Volver
                 </button>
                 <Edition
-                  allowedRoles={["Super Admin", "Administrador"]}
+                  allowedRoles={["Administrador", "Moderador"]}
                   className="btn btn-sm btn-outline-success"
                   userEditId={user.id}
                   text={isProfileRoute ? "Contraseña" : "Reset Contr"}
@@ -104,7 +107,7 @@ const User = ({ user, isSingleUser }) => {
                 />
                 {!isProfileRoute && (
                   <Edition
-                    allowedRoles={["Super Admin", "Administrador"]}
+                    allowedRoles={["Administrador", "Moderador"]}
                     className="btn btn-sm btn-outline-danger"
                     text="Rol-Bloqueo"
                     onClick={goToUpgrade}
@@ -126,7 +129,7 @@ const User = ({ user, isSingleUser }) => {
                   Detalles
                 </button>
                 <Edition
-                  allowedRoles={["Super Admin", "Administrador"]}
+                  allowedRoles={["Administrador", "Moderador"]}
                   className="btn btn-sm btn-outline-danger"
                   text="Eliminar"
                   onClick={userDelete}

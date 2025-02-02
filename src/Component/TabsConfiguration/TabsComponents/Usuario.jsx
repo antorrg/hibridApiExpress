@@ -17,12 +17,12 @@ const Usuario = () => {
   const { id } = useParams();
 
   const onClose = () => {
-    setLoad(false)
+      setLoad(false)
   };
   const isAdmin = true;
   useEffect(() => {
     dispatch(getUsers());
-  }, []);
+  }, [load]);
 
   const userDel = async (userId) => {
     const confirmed = await showConfirmationDialog(

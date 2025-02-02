@@ -47,12 +47,13 @@ app.use(express.static(staticPath))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(checkAuthentication);
-// Rutas para API y React en `/home`
-app.use(mainRouter) 
 
 if(env.Status !== 'production'){
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 }
+// Rutas para API y React en `/home`
+app.use(mainRouter) 
+
 
 
 
