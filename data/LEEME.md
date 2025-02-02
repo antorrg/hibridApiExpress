@@ -80,9 +80,15 @@ En este caso en particular probará que las variables de entorno estén correcta
 
 [Indice:](#indice-temático)
 
+### Swagger:
+
+La documentación para las rutas está escrita en `Swagger`y en `markdown` (.md). Para poder acceder a la documentacion de las rutas en Swagger debe levantar el proyecto en `dev` y hacer click en el enlace que aparecerá como opción en la terminal (`/api-doc`). Se abrirá una ventana en el navegador que tenga por defecto en la cual podrá ver y probar las rutas disponibles de la api REST.
+
+### Markdown:
+
 Para ver las rutas disponibles haga click en el siguiente enlace:
 
-[Rutas:]()
+[Rutas:](./rutas.md)
 
 ---
 

@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cancelButton.addEventListener('click', async () => {
         const accepted = await showConfirmationModal({
           type: 'info',
-          title :'¿Seguro quiere sali?',
+          title :'¿Seguro quiere salir?',
            message: 'Será redirigido a Home.',
         });
         if (accepted) {

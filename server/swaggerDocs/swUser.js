@@ -8,6 +8,67 @@
 
 /**
  * @swagger
+ * /api/v1/user/login:
+ *   post:
+ *     summary: Autenticación de usuario
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: bartolomiau@gmail.com
+ *                 description: Correo electrónico del usuario
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "D12345678"
+ *                 description: Contraseña del usuario
+ *     responses:
+ *       200:
+ *         description: Autenticación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Token de autenticación JWT
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *       400:
+ *         description: Solicitud inválida (faltan campos o son incorrectos)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "El correo y la contraseña son obligatorios"
+ *       401:
+ *         description: Credenciales inválidas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Correo o contraseña incorrectos"
+ */
+
+
+/**
+ * @swagger
  * /api/v1/user:
  *   get:
  *     summary: Arreglo de usuarios

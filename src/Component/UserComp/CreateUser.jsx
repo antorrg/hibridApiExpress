@@ -13,6 +13,9 @@ const CreateUser = () => {
     setLoad(false)
     navigate(-1);
   };
+  const onFail = () => {
+    setLoad(false)
+  };
   const [input, setInput] = useState({
     email: "",
   });
@@ -41,7 +44,7 @@ const CreateUser = () => {
     if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       setLoad(true)
-      await userCreate(input, onClose);
+      await userCreate(input, onClose, onFail);
     }
   };
   const permit = !input.email.trim() || error.email;

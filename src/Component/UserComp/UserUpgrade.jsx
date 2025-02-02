@@ -21,6 +21,9 @@ const UserUpgrade = () => {
     setLoad(false)
     navigate(-1);
   };
+  const onFail = () => {
+    setLoad(false)
+  };
 
   const [user, setUser] = useState({
     role: "",
@@ -53,7 +56,7 @@ const UserUpgrade = () => {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
       //console.log(user);
       setLoad(true)
-      await userUpgrade(id, user, onClose);
+      await userUpgrade(id, user, onClose, onFail);
     }
   };
 

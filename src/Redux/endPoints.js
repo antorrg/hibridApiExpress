@@ -59,18 +59,18 @@ export const deleteItem = (id, aux, auxReject) => itemAdmin.delete(`${id}`,aux, 
 
 export const userGet = ()=> userValid.get('', null, null, true)
 
-export const userGetbyid = (id)=> userValid.get(`${id}`, null, null, true)
+export const userGetbyid = (id, auxReject)=> userValid.get(`${id}`, null, null, true, auxReject)
 
-export const userVerify = (data, aux)=> userValid.post('verify',data, aux, true )
+export const userVerify = (data, aux, auxReject)=> userValid.post('verify',data, aux, true, auxReject )
 
-export const userChangePass = (id, data, aux)=> userValid.put(`update/${id}`, data, aux, true)
+export const userChangePass = (id, data, aux, auxReject)=> userValid.put(`update/${id}`, data, aux, true, auxReject)
 
-export const userProfile = (id, data, aux)=> userValid.put(`profile/${id}`, data, aux, true)
+export const userProfile = (id, data, aux, auxReject)=> userValid.put(`profile/${id}`, data, aux, true, auxReject)
 
-export const userUpgrade = (id, data, aux)=> userValid.put(`upgrade/${id}`, data, aux, true)
+export const userUpgrade = (id, data, aux, auxReject)=> userValid.put(`upgrade/${id}`, data, aux, true, auxReject)
 
-export const userResetPass = (id, data, aux)=> userValid.put(`reset/${id}`, data, aux, true)
+export const userResetPass = (id, data, aux, auxReject)=> userValid.put(`reset/${id}`, data, aux, true, auxReject)
 
-export const userCreate = (data, aux)=> userValid.post('create',data, aux, true )
+export const userCreate = (data, aux, auxReject)=> userValid.post('create',data, aux, true, auxReject )
 
 export const userDelete = (id, aux, auxReject)=> userValid.delete(`${id}`,aux, true, auxReject)

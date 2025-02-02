@@ -14,7 +14,7 @@ const swaggerOptions = {
         },
       ],
     },
-    apis: ['./swUser.js', './swProducts.js'], // Ruta a tus archivos de rutas
+    apis: ['./server/swaggerDocs/swUser.js', './server/swaggerDocs/swProducts.js'], // Ruta a tus archivos de rutas
   };
   
   export default swaggerOptions;
