@@ -25,14 +25,19 @@ const staticPath = env.Status === 'development'
 
 //Swagger:
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
+const swaggerUiOptions = {
+  swaggerOptions: {
+    docExpansion: "none", // 👈 Oculta todas las rutas al cargar
+  },
+};
 
 const app = express()
 //setear automatizacion en el build para pug
 
-
 app.locals.getAssetPath = getAssetPath;
 app.use(cookieParser())
 app.use(sessionMiddle)
+
 
 if (env.Status !== 'test') {
 app.use(morgan('dev'))}
@@ -49,12 +54,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(checkAuthentication);
 
 if(env.Status !== 'production'){
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, swaggerUiOptions))
 }
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
-
-
 
 
  app.use('*',(req, res, next)=>{
