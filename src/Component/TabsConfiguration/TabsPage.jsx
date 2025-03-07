@@ -3,7 +3,7 @@ import {basePath} from '../../main'
 import {useNavigate,useLocation} from 'react-router-dom'
 import {useAuth} from '../../Auth/AuthContext/AuthContext'
 import { showSuccess } from '../../Utils/toastify';
-//import showConfirmationDialog from '../../Utils/sweetalert';
+import showConfirmationDialog from '../../Utils/sweetalert';
 import TabsLayout from './TabsLayout';
 import Config from './TabsComponents/Config'
 import Portada from './TabsComponents/Portada'
@@ -33,13 +33,11 @@ const TabsPage = () => {
   };
    const landing = basePath? basePath : '/'
   const sessionCleaner = async()=>{
-    // const confirmed = await showConfirmationDialog(
-    //   "¿Está seguro de cerrar sesión?"
-    // );
-    // if (confirmed) {
+    const confirmed = await showConfirmationDialog(
+      "¿Está seguro de cerrar sesión?"
+    );
+    if (confirmed) {
       // Si el usuario hace clic en "Aceptar", ejecutar la funcion:
- 
-
         if (isLoading) return; // Prevenir múltiples clics
             setIsLoading(true);
             const response = await logout()
@@ -48,7 +46,7 @@ const TabsPage = () => {
               window.location.href=landing
             }
             setIsLoading(false);
-      
+          }
   }
 
   return (

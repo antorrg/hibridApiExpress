@@ -1,10 +1,33 @@
-import {GenericMidd} from '../../Classes/GenericMiddleware.js'
-
-
-const landingMidd = new GenericMidd(['title', 'description', 'info_header', 'picture'])
 
 export default {
-    createLand : landingMidd.validateFields(),
-    updateLand : landingMidd.validateFields(['title', 'description', 'info_header', 'picture', 'enable']),
-    validId : landingMidd.validateINT('id'),
+    createLand : [{
+        name: 'title', 
+        type: 'string'
+    },{
+        name: 'description', 
+        type: 'string'
+    },{
+        name: 'info_header', 
+        type: 'string'
+    },{
+        name: 'picture', 
+        type: 'string'
+    },],
+    updateLand : [{
+        name: 'title', 
+        type: 'string'
+    },{
+        name: 'description', 
+        type: 'string'
+    },{
+        name: 'info_header', 
+        type: 'string'
+    },{
+        name: 'picture', 
+        type: 'string'
+    },{
+        name: 'enable', 
+        type: 'boolean'
+    },
+    ],
 }
