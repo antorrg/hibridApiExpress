@@ -1,4 +1,3 @@
-import axios from "axios";
 import { landingGet, productGet, landingGetById, productGetById, getItemById, userGet, userGetbyid } from "./endPoints";
 import { handleError } from "../Utils/toastify";
 

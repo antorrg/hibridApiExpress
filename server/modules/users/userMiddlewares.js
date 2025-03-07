@@ -1,17 +1,47 @@
-import {GenericMidd} from '../../Classes/GenericMiddleware.js'
-
-
-const userMidd = new GenericMidd(['email'])
-
 
 
 export default {
-    validCreateUser: userMidd.validateFields(),
-    loginUser : userMidd.validateFields(['email', 'password']),
-    validatePassword: userMidd.validateFields(['id', 'password']),
-    upgradeUser: userMidd.validateFields(['role', 'enable']),
-    updateUser : userMidd.validateFields(['email', 'name','surname', 'picture', 'country']),
-    validUUid : userMidd.validateUUID('id'),
-    validPass : userMidd.validateFieldContent('password',/^(?=.*[A-Z]).{8,}$/, 'Invalid password. It must be at least 8 characters long and one uppercase letter.' ), //parametros: ('fieldName', 'fieldRegex', 'errorMessage')
-    validEmail : userMidd.validateFieldContent('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ,'Invalid email format'), //parametros: ('fieldName', 'fieldRegex', 'errorMessage')
+    password:/^(?=.*[A-Z]).{8,}$/ ,
+    email:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    createUser: [{
+        name: 'email', 
+        type: 'string'
+    }],
+    loginUser : [{
+            name: 'email', 
+            type: 'string'
+        },{
+            name: 'password', 
+            type: 'string'
+    }],
+    validatePassword: [{
+        name: 'id', 
+        type: 'string'
+    },{
+        name: 'password', 
+        type: 'string'
+}],
+    upgradeUser: [{
+        name: 'role', 
+        type: 'int'
+    },{
+        name: 'enable', 
+        type: 'boolean'
+}],
+    updateUser : [{
+        name: 'email', 
+        type: 'string'
+    },{
+        name: 'name', 
+        type: 'string'
+    },{
+        name: 'surname', 
+        type: 'string'
+    },{
+        name: 'picture', 
+        type: 'string'
+    },{
+        name: 'country', 
+        type: 'string'
+}],
 }

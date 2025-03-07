@@ -20,6 +20,8 @@ export const respUserCreate = {
   "id": expect.any(String),
   "country": null, 
   "email": "juangarcia@gmail.com", 
+  "name": null,
+  "surname": null,
   "enable": true, 
   "nickname": "juangarcia", 
   "picture": "https://firebasestorage.googleapis.com/v0/b/proyectopreact.appspot.com/o/images%2F1729212207478-silueta.webp?alt=media&token=f0534af7-2df4-4efc-af99-f3f44bf72926", 
@@ -41,7 +43,9 @@ export const respUserGet = {
   "message": null, 
   "results": [{
     "country": null, 
-    "email": "josenomeacuerdo@hotmail.com", 
+    "email": "josenomeacuerdo@hotmail.com",
+    "name": null,
+    "surname": null, 
     "enable": true, 
     "id": expect.any(String), 
     "nickname": "josenomeacuerdo", 
@@ -50,6 +54,8 @@ export const respUserGet = {
   }, {
     "country": null, 
     "email": "juangarcia@gmail.com", 
+    "name": null,
+    "surname": null,
     "enable": true, 
     "id": expect.any(String), 
     "nickname": "juangarcia", 
@@ -64,6 +70,8 @@ export const respGetById ={
   "results": {
     "country": null, 
     "email": "juangarcia@gmail.com", 
+    "name": null,
+    "surname": null,
     "enable": true, 
     "id": expect.any(String), 
     "nickname": "juangarcia", 
