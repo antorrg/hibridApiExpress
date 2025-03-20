@@ -238,18 +238,22 @@ class MiddlewareHandler {
     }
   }
 
-  static middUuid (req, res, next) {
-    const { id } = req.params
+  static middUuid(fieldName) {
+    return (req, res, next) => {
+      const id = req.params[fieldName]
     if (!id) return next(MiddlewareHandler.middError('Falta el id', 400))
     if (!uuidValidate(id)) return next(MiddlewareHandler.middError('Parametros no permitidos', 400))
     next()
+    }
   }
 
-  static middIntId (req, res, next) {
-    const { id } = req.params
+  static middIntId (fieldName){
+    return (req, res, next) => {
+    const id = req.params[fieldName]
     if (!id) return next(MiddlewareHandler.middError('Falta el id', 400))
     if (!Number.isInteger(Number(id))) return next(MiddlewareHandler.middError('Parametros no permitidos', 400))
     next()
+  }
   }
 
   static logRequestBody (req, res, next) {

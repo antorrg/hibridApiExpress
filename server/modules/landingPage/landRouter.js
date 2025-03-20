@@ -15,7 +15,7 @@ landRouter.get('/land',
     ctr.landGetAll)
 
 landRouter.put('/land/:id', 
-    MiddlewareHandler.middIntId, 
+    MiddlewareHandler.middIntId('id'), 
     MiddlewareHandler.validateFields(value.updateLand), 
      ctr.landUpdate)
 

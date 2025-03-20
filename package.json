@@ -10,7 +10,8 @@
     "preview": "cross-env NODE_ENV=production concurrently \"vite preview\" \"nodemon server.js\"",
     "start": "cross-env NODE_ENV=production node server.js",
     "unit:test": "cross-env NODE_ENV=test jest --detectOpenHandles",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 09 run: 10 run: 11 run: 12 --coverage"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles run: 09 run: 10 run: 11 run: 12 --coverage",
+    "e2e" : " \"npm run preview\" \"cypress open\""
   },
   "dependencies": {
     "@types/react": "^18.3.12",

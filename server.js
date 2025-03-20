@@ -17,7 +17,7 @@ app.listen(env.Port, async() => {
         await sequelize.sync({ force: false})
         await initialUser()
         console.log(`Server is listening at http://localhost:${env.Port}\nServer in ${env.Status}`);
-        if(env.Status !== 'production'){
+        if(env.Status === 'development'){
             console.log(`Swagger: Vea y pruebe los endpoints en http://localhost:${env.Port}/api-docs`)
         }
     } catch (error) {

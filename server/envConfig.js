@@ -11,17 +11,30 @@ const envFile = configEnv[process.env.NODE_ENV] || '.env';
 
 dotenv.config({path:envFile})
 
+const redirection = ()=>{
+  switch(process.env.NODE_ENV){
+    case 'development':
+      return 'http://localhost:5173/'
+    case 'preview':
+      return '/'
+    case 'test':
+      return 'http://localhost:5173/'
+    case 'production':
+      return '/'
+  }
+}
 // Derivar el estado desde el archivo de configuración
-const status = Object.keys(configEnv).find(key => configEnv[key] === envFile) || 'production';
+//const status = Object.keys(configEnv).find(key => configEnv[key] === envFile) || 'production';
 
 
 const {PORT, URL, DATABASE_URL, SECRET_KEY, ADMIN_USER, ADMIN_PASS, USER_IMG, API_KEY, PROJECT_ID, AUTH_DOMAIN, STORAGE_BUCKET, MESSAGIN_SEND_ID, APP_ID, MEASUREMENT_ID, GMAIL_USER, 
-  GMAIL_APP_PASS, WHATS_APP_NUMBER, WHATS_APP_MESSAGE,}= process.env;
+  GMAIL_APP_PASS, WHATS_APP_NUMBER, WHATS_APP_MESSAGE}= process.env;
 
 export default {
     Port : PORT,
     Url : URL,
-    Status :status,
+    Status :process.env.NODE_ENV,
+    Redirection : redirection(),
     SecretKey : SECRET_KEY,
     dbConnect: DATABASE_URL,
     user : ADMIN_USER,

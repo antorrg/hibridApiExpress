@@ -16,13 +16,11 @@ import mainRouter from './router.js'
 //cambio de carpetas para dev y production (views y statics)
 
 const viewPath = env.Status === 'development' 
-  ? path.resolve('views') 
+  ? path.resolve('views')
   : path.resolve('dist/views');
-
-const staticPath = env.Status === 'development' 
-? path.resolve('src') 
-: path.resolve('dist/assets');
-
+  const staticPath = env.Status === 'development' 
+  ? path.resolve('src')
+  : path.resolve('dist/assets');
 //Swagger:
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 const swaggerUiOptions = {
@@ -53,7 +51,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(checkAuthentication);
 
-if(env.Status !== 'production'){
+if(env.Status === 'development'){
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, swaggerUiOptions))
 }
 // Rutas para API y React en `/home`
