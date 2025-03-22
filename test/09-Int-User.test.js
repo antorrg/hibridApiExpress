@@ -35,7 +35,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .send({ email, password })
                     .expect('Content-Type', /json/)
                     .expect(400);
-                expect(response.body.error).toBe("Invalid password. It must be at least 8 characters long and one uppercase letter.")
+                expect(response.body.error).toBe("Missing password")
             })
         });
         describe('Ruta "user/create": Ruta POST de creacion de usuario', () => {

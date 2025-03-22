@@ -9,7 +9,9 @@ const prodGetAll = product.getProdMvc;
 const prodGetById = product.getProdByIdMvc;
 const prodGetItem = product.getItemMvc;
 const landing = land.landServGetAll;
-const appPath = env.Status==='production'? "/" : "http://localhost:5173/"
+//const appPath = env.Status==='production'? "/" : "http://localhost:5173/"
+const appPath = env.Redirection 
+//console.log('soy appPath: ', appPath)
 
 const uriWhatsApp=`https://wa.me/${env.WhatsAppNumber}?text=${encodeURIComponent(env.WhatsAppMessage)}`
 

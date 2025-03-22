@@ -50,7 +50,7 @@ export default {
 
     createItem: [{
         name: 'id', 
-        type: 'number'
+        type: 'int'
     },{
         name: 'text', 
         type: 'string'
@@ -60,7 +60,7 @@ export default {
     }],
     updateItem :[{
         name: 'id', 
-        type: 'number'
+        type: 'int'
     },{
         name: 'text', 
         type: 'string'

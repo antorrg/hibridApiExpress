@@ -43,7 +43,7 @@ describe("MVC Routes", () => {
   it("Route '/detalles/item/:id'. Should return 400 for invalid detail ID", async () => {
     const res = await request(app).get("/detalles/item/kk");
     expect(res.status).toBe(400); // Asegúrate de que tu middleware valide correctamente
-    expect(res.text).toContain("The id must be a integer number")
+    expect(res.text).toContain("Parametros no permitidos")
   });
 
   it("Route '/contacto'. Should render contact page", async () => {

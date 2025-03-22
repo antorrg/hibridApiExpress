@@ -12,11 +12,11 @@ mvcRouter.get('/detalles',
   controller.getProduct)
 
 mvcRouter.get('/detalles/:id',  
-  MiddlewareHandler.middIntId, 
+  MiddlewareHandler.middIntId('id'), 
   controller.getDetails)
 
 mvcRouter.get('/detalles/item/:id', 
-  MiddlewareHandler.middIntId, 
+  MiddlewareHandler.middIntId('id'), 
   controller.getItems)
 
 mvcRouter.get('/contacto', 

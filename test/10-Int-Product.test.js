@@ -70,7 +70,7 @@ describe('Test de rutas REST: Project', () => {
                     .get(`/api/v1/product/${id}`)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body).toEqual({ error: "The id must be a integer number." })
+                expect(response.body).toEqual({ error: "Parametros no permitidos" })
             })
         })
         describe('Rutas "/product/:id". Metodo PUT actualizacion de producto', () => {

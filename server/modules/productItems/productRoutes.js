@@ -16,16 +16,16 @@ productRouter.get('/product',
     ctr.getProduct);
 
 productRouter.get('/product/:id',  
-    MiddlewareHandler.middIntId, 
+    MiddlewareHandler.middIntId('id'), 
     ctr.getProductById);
 
 productRouter.put('/product/:id',  
-    MiddlewareHandler.middIntId, 
+    MiddlewareHandler.middIntId('id'), 
     MiddlewareHandler.validateFields(value.updateProd), 
     ctr.updateProduct);
 
 productRouter.delete('/product/:id',  
-    MiddlewareHandler.middIntId, 
+    MiddlewareHandler.middIntId('id'), 
     ctr.deleteProduct)
 
 //Rutas de item:
@@ -34,16 +34,16 @@ productRouter.post('/item/create',
     ctr.createItem);
 
 productRouter.get('/item/:id', 
-    MiddlewareHandler.middIntId,   
+    MiddlewareHandler.middIntId('id'),   
     ctr.getItem);
 
 productRouter.put('/item/:id',  
-    MiddlewareHandler.middIntId,  
+    MiddlewareHandler.middIntId('id'),  
     MiddlewareHandler.validateFields(value.updateItem), 
     ctr.updateItem);
 
 productRouter.delete('/item/:id',  
-    MiddlewareHandler.middIntId, 
+    MiddlewareHandler.middIntId('id'), 
     ctr.deleteItem);
 
 
