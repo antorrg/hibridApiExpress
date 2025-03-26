@@ -68,6 +68,7 @@ app.use((err, req, res, next) => {
     const message = err.message || 'Error';
     if(env.Status==='development'){
     console.error('Error: ', err);}
+    console.error('Error en stack: ', err.stack)
     res.status(status).json({
       success: false,
       data: null,
