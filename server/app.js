@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
 import swaggerUi from "swagger-ui-express"
 import swaggerJsDoc from "swagger-jsdoc"
-import swaggerOptions from "./swaggerDocs/swaggerOptions.js";
+import swaggerOptions from "../swaggerDocs/swaggerOptions.js";
 import env from './envConfig.js'
 import mainRouter from './router.js'
 
@@ -68,7 +68,6 @@ app.use((err, req, res, next) => {
     const message = err.message || 'Error';
     if(env.Status==='development'){
     console.error('Error: ', err);}
-    //res.render('error', { message: message, status: status});
     res.status(status).json({
       success: false,
       data: null,

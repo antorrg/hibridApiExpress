@@ -5,12 +5,13 @@
 //?  dP__Yb  88"""  88    888888 88 88""Yb 88"Yb  88  8I  dY    88""    dPYb  88"""  88"Yb  88""   o.`Y8b o.`Y8b 
 //? dP""""Yb 88     88    88  88 88 88oodP 88  Yb 88 888888     888888 dP  Yb 88     88  Yb 888888 8bodP' 8bodP'
 // todo :::::::::::::::::::::: Created at 12 - 12 - 2024 :::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//* :::::::::::::::::::::::::: Refactorized at 26 - 03 - 2025 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-import app from './server/app.js'
-import {sequelize} from "./server/database.js"
-import env from './server/envConfig.js'
-import initialUser from './server/helpers/initialUser.js';
+import app from './app.js'
+import {sequelize} from "./database.js"
+import env from './envConfig.js'
+import initialUser from './helpers/initialUser.js'
 
 app.listen(env.Port, async() => {
     try {
