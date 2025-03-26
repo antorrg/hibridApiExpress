@@ -15,12 +15,12 @@ import mainRouter from './router.js'
 
 //cambio de carpetas para dev y production (views y statics)
 
-const viewPath = env.Status === 'development' 
-  ? path.resolve('views')
-  : path.resolve('dist/views');
-  const staticPath = env.Status === 'development' 
-  ? path.resolve('src')
-  : path.resolve('dist/assets');
+const viewPath = env.Status === 'production' 
+  ? path.resolve('dist/views')
+  : path.resolve('views');
+  const staticPath = env.Status === 'production' 
+  ? path.resolve('dist/assets')
+  : path.resolve('src');
 //Swagger:
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 const swaggerUiOptions = {
