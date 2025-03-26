@@ -1,4 +1,4 @@
-import env from "../envConfig.js"
+import env from "../server/envConfig.js"
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -29,7 +29,7 @@ const swaggerOptions = {
         },
       ],
     },
-    apis: ['./server/swaggerDocs/swUser.js', './server/swaggerDocs/swLanding.js', './server/swaggerDocs/swProduct.js'], // Ruta a tus archivos de rutas
+    apis: ['./swaggerDocs/swUser.js', './swaggerDocs/swLanding.js', './swaggerDocs/swProduct.js'], // Ruta a tus archivos de rutas
     swaggerOptions: {
       docExpansion: "none", // 👈 Oculta todas las rutas al cargar
     },

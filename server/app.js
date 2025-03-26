@@ -8,19 +8,19 @@ import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
 import swaggerUi from "swagger-ui-express"
 import swaggerJsDoc from "swagger-jsdoc"
-import swaggerOptions from "./swaggerDocs/swaggerOptions.js";
+import swaggerOptions from "../swaggerDocs/swaggerOptions.js";
 import env from './envConfig.js'
 import mainRouter from './router.js'
 
 
 //cambio de carpetas para dev y production (views y statics)
 
-const viewPath = env.Status === 'development' 
-  ? path.resolve('views')
-  : path.resolve('dist/views');
-  const staticPath = env.Status === 'development' 
-  ? path.resolve('src')
-  : path.resolve('dist/assets');
+const viewPath = env.Status === 'production' 
+  ? path.resolve('dist/views')
+  : path.resolve('views');
+  const staticPath = env.Status === 'production' 
+  ? path.resolve('dist/assets')
+  : path.resolve('src');
 //Swagger:
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 const swaggerUiOptions = {
@@ -68,7 +68,6 @@ app.use((err, req, res, next) => {
     const message = err.message || 'Error';
     if(env.Status==='development'){
     console.error('Error: ', err);}
-    //res.render('error', { message: message, status: status});
     res.status(status).json({
       success: false,
       data: null,
