@@ -24,18 +24,20 @@ const redirection = ()=>{
   }
 }
 // Derivar el estado desde el archivo de configuración
-//const status = Object.keys(configEnv).find(key => configEnv[key] === envFile) || 'production';
+const status = process.env.NODE_ENV;
 
 
 const {PORT, URL, DATABASE_URL, SECRET_KEY, ADMIN_USER, ADMIN_PASS, USER_IMG, API_KEY, PROJECT_ID, AUTH_DOMAIN, STORAGE_BUCKET, MESSAGIN_SEND_ID, APP_ID, MEASUREMENT_ID, GMAIL_USER, 
   GMAIL_APP_PASS, WHATS_APP_NUMBER, WHATS_APP_MESSAGE}= process.env;
 
+
 export default {
     Port : PORT,
     Url : URL,
-    Status :process.env.NODE_ENV,
+    Status : status,
     Redirection : redirection(),
     SecretKey : SECRET_KEY,
+    optionRender: process.env.NODE_ENV === 'production',
     dbConnect: DATABASE_URL,
     user : ADMIN_USER,
     pass : ADMIN_PASS,
