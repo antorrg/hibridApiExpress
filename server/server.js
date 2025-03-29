@@ -15,7 +15,7 @@ import initialUser from './helpers/initialUser.js'
 
 app.listen(env.Port, async() => {
     try {
-        await sequelize.sync({ forde: false})
+        await sequelize.sync({ force: false})
         await initialUser()
         console.log(`Server is listening at http://localhost:${env.Port}\nServer in ${env.Status}`);
         if(env.Status === 'development'){
