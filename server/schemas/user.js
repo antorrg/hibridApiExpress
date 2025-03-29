@@ -39,7 +39,6 @@ export default (sequelize)=>{
             },
             allRecords: {} // No aplica ningún filtro
         },
-        paranoid: true,
         timestamps: false,
        
     })
