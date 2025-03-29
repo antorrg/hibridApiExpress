@@ -4,10 +4,10 @@ import value from "./userMiddlewares.js"
 import MiddlewareHandler from '../../middlewares/MiddlewareHandler.js'
 import { dataUser, upgradeUserParser, profileUserAccess, profileParserInfo, verifyOwnerActionsInBody, verifyOwnerActionsInParam, hasheredPass, resetPassParser } from './userFunctions.js'
 import { verifyToken, checkRole} from '../../utils/authConfig.js'
-import { createLogLimiter } from '../../utils/rateLimits.js'
+//import { createLogLimiter } from '../../utils/rateLimits.js'
 
-const logLimiter5 = createLogLimiter(5)
-const logLimiter2 = createLogLimiter(2)
+//const logLimiter5 = createLogLimiter(5)
+//const logLimiter2 = createLogLimiter(2)
 
 const restRouter = express.Router()
 
@@ -71,14 +71,12 @@ restRouter.delete('/user/:id',
     ctr.userDelete)
 
 restRouter.post('/user/login', 
-    logLimiter5, 
     MiddlewareHandler.validateFields(value.loginUser),  
     MiddlewareHandler.validateRegex(value.email, 'email'),
     MiddlewareHandler.validateRegex(value.password, 'password', 'It must be at least 8 characters long and one uppercase letter'), 
     ctr.loginController)
 
 restRouter.post('/user/logout', 
-    logLimiter2, 
     ctr.logoutController);
 
 export default restRouter;
