@@ -5,7 +5,16 @@ import env from "./envConfig.js"
 const sequelize = new Sequelize(env.dbConnect, {
     logging: false,
     native: false,
+    dialectOptions: env.optionRender
+          ? {
+              ssl: {
+                require: true
+              }
+            }
+          : {}
 });
+
+
 
 Object.values(schemas).forEach((model)=> model(sequelize));
 
