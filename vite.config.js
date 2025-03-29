@@ -53,7 +53,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@files': path.resolve('src/files'), // Alias para facilitar la importación
-      sequelize: false
     },
   },
 });
