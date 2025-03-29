@@ -16,7 +16,7 @@ import initialUser from './helpers/initialUser.js'
 app.listen(env.Port, async() => {
     try {
         await sequelize.sync({ force: false})
-        //await initialUser()
+        await initialUser()
         console.log(`Server is listening at http://localhost:${env.Port}\nServer in ${env.Status}`);
         if(env.Status === 'development'){
             console.log(`Swagger: Vea y pruebe los endpoints en http://localhost:${env.Port}/api-docs`)
