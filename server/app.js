@@ -6,9 +6,9 @@ import helmet from 'helmet'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
-import swaggerUi from "swagger-ui-express"
-import swaggerJsDoc from "swagger-jsdoc"
-import swaggerOptions from "../swaggerDocs/swaggerOptions.js";
+//import swaggerUi from "swagger-ui-express"
+//import swaggerJsDoc from "swagger-jsdoc"
+//import swaggerOptions from "../swaggerDocs/swaggerOptions.js";
 import env from './envConfig.js'
 import mainRouter from './router.js'
 
@@ -22,12 +22,12 @@ const viewPath = env.Status === 'production'
   ? path.resolve('dist/assets')
   : path.resolve('src');
 //Swagger:
-const swaggerDocs = swaggerJsDoc(swaggerOptions)
-const swaggerUiOptions = {
+//const swaggerDocs = swaggerJsDoc(swaggerOptions)
+/*const swaggerUiOptions = {
   swaggerOptions: {
     docExpansion: "none", // 👈 Oculta todas las rutas al cargar
   },
-};
+};*/
 
 const app = express()
 //setear automatizacion en el build para pug
@@ -51,9 +51,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(checkAuthentication);
 
-if(env.Status === 'development'){
+/*if(env.Status === 'development'){
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, swaggerUiOptions))
-}
+}*/
 // Rutas para API y React en `/home`
 app.use(mainRouter) 
 
