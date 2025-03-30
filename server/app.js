@@ -66,7 +66,7 @@ app.use(mainRouter)
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || 'Error';
-    console.error('Error: ', err);
+    //console.error('Error: ', err);
     res.status(status).json({
       success: false,
       data: null,

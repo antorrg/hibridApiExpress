@@ -70,7 +70,7 @@ describe('Test de rutas REST: Project', () => {
                     .get(`/api/v1/product/${id}`)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body).toEqual({ error: "Parametros no permitidos" })
+                expect(response.body.message).toBe("Parametros no permitidos" )
             })
         })
         describe('Rutas "/product/:id". Metodo PUT actualizacion de producto', () => {
@@ -94,7 +94,7 @@ describe('Test de rutas REST: Project', () => {
                     .send(newData)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body).toEqual({error: "Missing parameters: enable"})
+                expect(response.body.message).toBe("Missing parameters: enable")
             })
         })
         describe('Rutas "/item/:id". Metodo PUT actualizacion de item', () => {
@@ -118,7 +118,7 @@ describe('Test de rutas REST: Project', () => {
                     .send(body)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400)
-                    expect(response.body).toMatchObject({error: "Missing parameters: text, enable"})
+                    expect(response.body.message).toBe("Missing parameters: text, enable")
                 })
         })
         describe('Ruta "/api/project/id". Metodo DELETE. Eliminar proyecto e items', ()=>{
@@ -129,7 +129,7 @@ describe('Test de rutas REST: Project', () => {
                 .delete(`/api/v1/item/${id}`)
                 .set('Authorization', `Bearer ${token}`)
                 .expect(200)
-                expect(response.body).toMatchObject({ message: 'Item deleted successfully' })
+                expect(response.body.message).toBe('Item deleted successfully' )
             })
             it('Borrado de producto y sus items: Deberia responder con status 200 y un mensaje de eliminacion exitosa', async()=>{
                 const token = store.getToken()

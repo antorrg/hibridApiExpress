@@ -42,7 +42,7 @@ describe('Test de rutas REST: Landing', () => {
                     .get(`/api/v1/land`)
                     .set('Authorization', `Bearer adsfakjfdkajsdsadjfsakdjfdsf`)
                     .expect(401);
-                expect(response.body).toEqual({ error: "Token invalido" })
+                expect(response.body.message).toBe("Token invalido" )
             })
         })
         describe('Rutas "/land/:id". Metodo PUT actualizacion de landing', () => {
@@ -66,7 +66,7 @@ describe('Test de rutas REST: Landing', () => {
                     .send(newData)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body).toEqual({error: "Missing parameters: enable"})
+                expect(response.body.message).toBe("Missing parameters: enable")
             })
         })
     })

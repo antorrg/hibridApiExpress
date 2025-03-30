@@ -35,7 +35,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .send({ email, password })
                     .expect('Content-Type', /json/)
                     .expect(400);
-                expect(response.body.error).toBe("Missing password")
+                expect(response.body).toEqual({"data": null, "message": "Missing password", "success": false})
             })
         });
         describe('Ruta "user/create": Ruta POST de creacion de usuario', () => {
@@ -60,7 +60,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .set('Authorization', `Bearer ${token}`)
                     .expect('Content-Type', /json/)
                     .expect(400);
-                expect(response.body.error).toBe("Invalid parameters")
+                expect(response.body).toEqual({success: false, message: "Invalid parameters",data: null})
             })
         })
       
@@ -77,7 +77,7 @@ describe('Test de rutas REST:  Usuario', () => {
                 const response = await agent
                     .get('/api/v1/user')
                     .expect(401);
-                expect(response.body.error).toBe('Acceso no autorizado. Token no proporcionado');
+                expect(response.body).toEqual({success: false, message: "Acceso no autorizado. Token no proporcionado",data: null});
             })
             it('Ruta "/user/:id": Deberia responder con status 200 y retornar un usuario', async () => {
                 const token = store.getToken();
@@ -94,7 +94,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .get(`/api/v1/user/${userId}`)
                     .set('Authorization', `Bearer 'eyW9yb2RyaWd1ZXp0a2RAZ21haWwuY29tIiwicmeHAiOjE3MTk2OTI3MjZ9.7Onxx2MjQdeJF-KccG'`)
                     .expect(401);
-                expect(response.body.error).toBe('Token invalido' );
+                expect(response.body).toEqual({success: false, message: "Token invalido",data: null});
             })
         })
         describe('Ruta "/user/profile/:id" Ruta PUT de actualizacion de perfil de usuario (ruta protegida con token).', () => {
@@ -116,7 +116,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .put(`/api/v1/user/profile/${userId}`)
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body.error).toBe('Invalid parameters' )
+                expect(response.body).toEqual({success: false, message: "Invalid parameters",data: null});
             })
         })
         describe('Ruta "/user/verify" de verificacion de password', () => {
@@ -140,7 +140,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .post(`/api/v1/user/verify`)
                     .send({ id, password })
                     .expect(401);
-                expect(response.body.error).toBe('Acceso no autorizado. Token no proporcionado' )
+                expect(response.body.message).toBe('Acceso no autorizado. Token no proporcionado' )
             })
             it('Deberia retornar un status 400 y un mensaje de error si el usuario no es propietario de la cuenta.', async () => {
                 const id = store.getUserId2();
@@ -151,7 +151,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .send({ id, password })
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body.error).toBe("Solo el propietario puede ejecutar esta acción")
+                expect(response.body.message).toBe("Solo el propietario puede ejecutar esta acción")
             });
         });
         describe('Ruta "/user/update" de actualizacion de password', () => {
@@ -175,7 +175,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .post(`/api/v1/user/verify`)
                     .send({ id, password })
                     .expect(401);
-                expect(response.body.error).toBe('Acceso no autorizado. Token no proporcionado' )
+                expect(response.body.message).toBe('Acceso no autorizado. Token no proporcionado' )
             });
             it('Deberia retornar un status 400 y un mensaje de error si el usuario no es propietario de la cuenta.', async () => {
                 const id = store.getUserId2();
@@ -186,7 +186,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .send({ id, password })
                     .set('Authorization', `Bearer ${token}`)
                     .expect(400);
-                expect(response.body.error).toBe("Solo el propietario puede ejecutar esta acción")
+                expect(response.body.message).toBe("Solo el propietario puede ejecutar esta acción")
             });
             it('Deberia responder con status 200 al hacer login con el nuevo password', async () => {
             
@@ -219,7 +219,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .put(`/api/v1/user/reset/${id}`)
                     .send({})
                     .expect(401);
-                expect(response.body).toEqual({ error: 'Acceso no autorizado. Token no proporcionado' })
+                expect(response.body.message).toBe('Acceso no autorizado. Token no proporcionado' )
             });
             it('Deberia responder con status 200 al hacer login con el nuevo password', async () => {
             
@@ -268,7 +268,7 @@ describe('Test de rutas REST:  Usuario', () => {
                     .send({ role, enable })
                     .set('Authorization', `Bearer ${token}`)
                     .expect(401);
-                expect(response.body).toEqual({ error: 'Token invalido' })
+                expect(response.body.message).toBe('Token invalido' )
             })
         })
         describe('Ruta "/user/:id" de eliminacion de usuario', () => {

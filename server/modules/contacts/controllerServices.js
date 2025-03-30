@@ -6,7 +6,7 @@ import { catchController } from '../../errorHandler.js';
 
 const  postContact = catchController(async (req, res)=>{
   const { email, subject, message } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
   //este console.log de arriba me da que la info es correcta: email es el remitente, 
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
