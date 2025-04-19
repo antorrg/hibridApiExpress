@@ -42,7 +42,7 @@ app.use(morgan('dev'))}
 
 app.use(cors())
 
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 app.set('views', viewPath)
 
 app.use(express.static(staticPath))

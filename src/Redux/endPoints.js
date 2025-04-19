@@ -1,4 +1,4 @@
-import BaseEndpoint from '../BaseClasses/BaseEndpoints';
+import BaseEndpoints from '../BaseClasses/BaseEndpoints';
 
 //* Info 
 // get(endpoint, params = {}, auxFunction = null, admin = false) 
@@ -10,13 +10,13 @@ import BaseEndpoint from '../BaseClasses/BaseEndpoints';
  * Post 
  */
 //(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction = null, message= 'Operación exitosa'
-export const userLogin = new BaseEndpoint('/api/v1/user', false)
+export const userLogin = new BaseEndpoints('/api/v1/user', false)
 
-export const userValid = new BaseEndpoint('/api/v1/user', true)//* Para las tareas de edición usar esta instancia.
+export const userValid = new BaseEndpoints('/api/v1/user', true)//* Para las tareas de edición usar esta instancia.
 
 //todo  Endpoints Landing:
 
-const landingAdmin = new BaseEndpoint('/api/v1/land', true)
+const landingAdmin = new BaseEndpoints('/api/v1/land', true)
 
 export const landingCreate = (data, aux, auxReject)=> landingAdmin.post('create', data, aux, true, auxReject, 'Portada creada exitosamente')
 
@@ -30,7 +30,7 @@ export const landingDelete = (id, aux, auxReject)=> landingAdmin.delete(`/${id}`
 
 //todo Endpoints Product:
 
-const productAdmin = new BaseEndpoint('/api/v1/product', true)
+const productAdmin = new BaseEndpoints('/api/v1/product', true)
 
 export const productGet = ()=> productAdmin.get('', null, null, true)
 
@@ -44,7 +44,7 @@ export const deleteProduct = (id, aux, auxReject)=> productAdmin.delete(`${id}`,
 
 //todo Endpoints Item
 
-const itemAdmin = new BaseEndpoint('/api/v1/item', true)
+const itemAdmin = new BaseEndpoints('/api/v1/item', true)
 
 export const createItem = (data, aux, auxReject)=> itemAdmin.post('create', data, aux, true, auxReject, 'Item creado exitosamente')
 

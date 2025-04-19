@@ -2,7 +2,7 @@ import axios from 'axios'
 import {showSuccess, handleError} from "../Utils/toastify"
 
 
-class Endpoints {
+class BaseEndpoints {
   constructor(baseURL, validHeader = false) {
     this.baseURL = baseURL;
     this.validHeader = validHeader;
@@ -79,4 +79,4 @@ class Endpoints {
   }
 }
 
-export default Endpoints;
+export default BaseEndpoints;

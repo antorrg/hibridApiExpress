@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= meta %>">
+    <meta name="author" content="Antorrg. Antonio Ricardo Rodriguez Gramajo">
+    <link rel="icon" href="/favicon.png">
+    <script type="module" crossorigin src="<%= getAssetPath('scripts.js') %>"></script>
+    <link rel="stylesheet" crossorigin href="/index.css">
+    <title>Antorrg</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top py-1 bg-dark bg-gradient">
+      <div class="container-fluid">
+        <img src="/favicon.png" alt="logo" style="max-width: 70px">
+        <a class="navbar-brand ms-1" href="/">Antorrg</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <% if (isAuthenticated) { %>
+                <a class="nav-link active" aria-current="page" href="<%= url %>admin">Admin</a>
+              <% } else { %>
+                <a class="nav-link active" aria-current="page" href="<%= url %>admin">.</a>
+              <% } %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/acerca">Sobre mi:</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/contacto">Contacteme:</a>
+            </li>
+          </ul>
+
+          <div class="dropdown me-3">
+            <button id="themeToggleBtn" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ☀️/🌙
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="light">☀️ Light</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="dark">🌙 Dark</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="auto">🔄 Auto</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main style="min-height: 70vh;">

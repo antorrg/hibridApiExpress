@@ -27,7 +27,9 @@ export default {
       const admin = req.session && req.session.isAuthenticated ? true : false;
       //console.log('permisos en el admin: ',admin)
       //console.log('soy response', products )
-      res.render('landing', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
+      console.time('⏱️ RenderTime-Pug');
+      res.render('landings', {url: appPath, landing:response.data[0], info: products.data, meta: response.data[0].info_header, isAuthenticated:admin})
+      console.timeEnd('⏱️ RenderTime-Pug');
    }),
 
    getProduct : renderError(async(req, res)=>{
@@ -54,11 +56,11 @@ export default {
    }),
 
    getContact : renderError(async(req, res)=>{
-      res.render('contact',{url: appPath, uriWhatsApp})
+      res.render('contact',{url: appPath, uriWhatsApp, meta: getStored()})
    }),
 
    getAbout: renderError(async(req, res)=>{
-    res.render('about', {url: appPath, })
+    res.render('about', {url: appPath, meta: getStored()})
    }),
 
    getReact: renderError(async(req, res)=>{
