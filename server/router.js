@@ -1,7 +1,4 @@
-/**
- * Router principal de la aplicación.
- * @module router
- */
+
 import express from 'express'
 import * as img from './utils/uploaderImgs.js'
 import mvcRouter from './modules/mvcPages/mvcRouters.js';
@@ -55,12 +52,14 @@ mainRouter.use((req, res, next) => {
   
   // Manejador de Rutas No Encontradas para API REST
   mainRouter.use('/api/v1/*', (req, res, next) => {
-    res.status(404).json({ error: 'Not Found' });
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
   });
   
   // Manejador de Errores para API REST
   mainRouter.use('/api/v1/*', (err, req, res, next) => {
-    res.status(err.status || 500).json({ error: err.message });
+    next(err)
   });
   
 

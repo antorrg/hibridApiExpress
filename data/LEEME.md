@@ -23,7 +23,13 @@ Esta aplicación fue construida con:
 
  - express.js; morgan; helmet, cors; dotenv; sequelize; postgres; pug; express-session; express-validator; bcrypt; jsonwebtoken; multer; firebase; node-cache; jest; supertest; babel; concurrently; nodemon;
 
+Nota: en 19 04 2025 se realizó una migracion de pug a ejs logrando una mejora en la renderización de las vistas:
 
+
+| Renderización                   | Pug        | EJS        |
+|---------------------------------|------------|------------|
+| Primer render (levantar app)    | ~919 ms    | ~20 ms     |
+| Recargar página                 | ~58 ms     | ~5.5 ms    |
 
 
 ### Inicializar la app:

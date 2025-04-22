@@ -22,6 +22,15 @@ This application was built using:
 
 - express.js; morgan; helmet; cors; dotenv; sequelize; postgres; pug; express-session; express-validator; bcrypt; jsonwebtoken; multer; firebase; node-cache; jest; supertest; babel; concurrently; nodemon.  
 
+- Note: On 2025-19-04 a migration was made from pug to ejs achieving an improvement in the rendering of the views:
+
+| Rendering                       | Pug        | EJS        |
+|---------------------------------|------------|------------|
+| First render (initialize app)   | ~919 ms    | ~20 ms     |
+| Reload page                     | ~58 ms     | ~5.5 ms    |
+
+
+
 ### Initialize the App:  
 
 [Back to Index:](#table-of-contents)  

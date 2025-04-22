@@ -59,9 +59,6 @@ export default {
         type: 'string'
     }],
     updateItem :[{
-        name: 'id', 
-        type: 'int'
-    },{
         name: 'text', 
         type: 'string'
     },{
