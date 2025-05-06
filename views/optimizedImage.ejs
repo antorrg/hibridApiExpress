@@ -1,0 +1,178 @@
+
+<style>
+    .optimized-image-container {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+  
+    .optimized-image {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    .optimized-image.loaded {
+      opacity: 1;
+    }
+  
+    .image-loading-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e5e7eb;
+      animation: imagePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  
+    .image-error-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+    }
+  
+    @keyframes imagePulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+  </style>
+  
+  <script>
+    // Función para inicializar imágenes optimizadas
+    function initOptimizedImages() {
+      const images = document.querySelectorAll('.optimized-image');
+      
+      images.forEach(img => {
+        if (img.complete) {
+          handleImageLoaded(img);
+        } else {
+          img.addEventListener('load', () => handleImageLoaded(img));
+          img.addEventListener('error', () => handleImageError(img));
+        }
+      });
+    }
+  
+    // Maneja cuando la imagen carga correctamente
+    function handleImageLoaded(img) {
+      img.classList.add('loaded');
+      const container = img.parentElement;
+      const placeholder = container.querySelector('.image-loading-placeholder');
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+    }
+  
+    // Maneja cuando hay error al cargar la imagen
+    function handleImageError(img) {
+      const container = img.parentElement;
+      img.style.display = 'none';
+      
+      const placeholder = container.querySelector('.image-loading-placeholder');
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+  
+      // Crear placeholder de error si no existe
+      if (!container.querySelector('.image-error-placeholder')) {
+        const errorPlaceholder = document.createElement('div');
+        errorPlaceholder.className = 'image-error-placeholder';
+        errorPlaceholder.innerHTML = `
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        `;
+        container.appendChild(errorPlaceholder);
+      }
+    }
+  
+    // Iniciar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initOptimizedImages);
+    } else {
+      initOptimizedImages();
+    }
+  </script>
+  
+  <%
+  // Función helper para generar HTML de imagen optimizada
+  function optimizedImage(options = {}) {
+    const {
+      src = '',
+      alt = '',
+      width = '',
+      height = '',
+      className = '',
+      placeholderColor = '#f0f0f0',
+      objectFit = 'cover'
+    } = options;
+  
+    // Estilos en línea para el contenedor
+    const containerStyle = `
+      width: ${width ? width + 'px' : '100%'};
+      height: ${height ? height + 'px' : 'auto'};
+      background-color: ${placeholderColor};
+    `;
+  
+    // Estilos en línea para la imagen
+    const imageStyle = `object-fit: ${objectFit};`;
+  
+    // Placeholder SVG para el skeleton loading
+    const placeholderSvg = `
+      <div class="image-loading-placeholder">
+        <svg 
+          width="32" 
+          height="32" 
+          fill="none" 
+          stroke="#d1d5db" 
+          viewBox="0 0 24 24">
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+          />
+        </svg>
+      </div>
+    `;
+  
+    // Construir HTML completo
+    return `
+      <div class="optimized-image-container ${className}" style="${containerStyle}">
+        ${placeholderSvg}
+        <img 
+          src="${src}" 
+          alt="${alt}" 
+          class="optimized-image" 
+          style="${imageStyle}"
+        />
+      </div>
+    `;
+  }
+  %>

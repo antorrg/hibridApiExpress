@@ -74,7 +74,7 @@ describe('Unit testing of the GenericService class: CRUD operations.', ()=>{
       expect(responseJs).toMatchObject(help.dataUpdated) 
     })
   });
-  describe('Delete function .', () => {
+  describe('Delete function', () => {
     it('should delete an element', async() => {
       const id = 1;
       const response = await test.delete(id)

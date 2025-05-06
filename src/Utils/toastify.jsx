@@ -7,32 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
     //console.error('hand: ',error)
     if (error.response) {
       const status = error.response.status;
-      const data = error.response.data.error;
-      if (status === 400) {
-        // Acceso no autorizado
+      const data = error.response.data.message;
         toast.error(`Error ${status}. ${data}`);
-      } else if (status === 401) {
-        // Acceso no autorizado
-        toast.error(`Error ${status}. ${data}`);
-      } else if (status === 404) {
-        // Recurso no encontrado
-        toast.error(`Error ${status}. ${data}`);
-      } else if (status === 403){
-        toast.error(`Error ${status}. ${data}`);
-      }else {
-        // Otro error del servidor
-        toast.error(`Error ${status}. ${data}`);
-        //alert('Ocurrió un error en el servidor. Por favor, inténtalo de nuevo más tarde.');
-      }
     } else if (error.request) {
       // La solicitud fue realizada pero no se recibió respuesta
       toast.error('No se recibió respuesta del servidor.');
-      //alert('No se recibió respuesta del servidor. Por favor, inténtalo de nuevo más tarde.');
-     } //else {
-    //   // Error durante la configuración de la solicitud
-    //   console.error('Error durante la configuración de la solicitud:', error.message);
-    //   alert('Ocurrió un error durante la configuración de la solicitud. Por favor, inténtalo de nuevo.');
-    // }
+     } else {
+      toast.error('Ocurrió un error durante la configuración de la solicitud. Por favor, inténte de nuevo.');
+    }
   };
 
 

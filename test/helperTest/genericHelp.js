@@ -218,7 +218,7 @@ export const dataCreated = {
       export const itemForUpdated = {
         id:1,
         ProductId:1,
-        img:"https://donpepitos.com",
+        img:"https://pepe.com",
         text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
         enable: true,
         
@@ -226,7 +226,7 @@ export const dataCreated = {
        export const itemUpdated = {
         id:1,
         ProductId:1,
-        img:"https://donpepitos.com",
+        img:"https://pepe.com",
         text: "Este es un texto de pruebas a fin de contar las palabras que se utilizan en el.",
         enable: true,
         

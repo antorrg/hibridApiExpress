@@ -23,7 +23,7 @@ export default {
 }],
     upgradeUser: [{
         name: 'role', 
-        type: 'int'
+        type: 'string'
     },{
         name: 'enable', 
         type: 'boolean'

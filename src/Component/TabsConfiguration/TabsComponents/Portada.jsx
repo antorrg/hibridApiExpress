@@ -2,6 +2,7 @@ import {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getInfo} from '../../../Redux/actions'
+import OptimizedImage from '../../../general-components/images/OptimizedImage'
 
 
 const Portada = () => {
@@ -28,11 +29,18 @@ const Portada = () => {
         </div>
         <h4>Titulo:</h4>
             <p className="lead text-muted">{info?.title}</p>
-        <img
+        {/* <img
               className="bd-placeholder-img-fluid mb-3"
               src={info?.picture}
               alt="Imagen"
               style={{ maxWidth: "100%", height:'auto' }}
+            /> */}
+            <OptimizedImage
+              src={info?.picture}
+              alt="Descripción de la imagen" 
+              className="rounded-lg shadow" 
+              placeholderColor="#e2e8f0"
+              objectFit="contain"
             />
             <h4>Info posicionamiento:</h4>
             <p className="lead text-muted">{info?.info_header}</p>

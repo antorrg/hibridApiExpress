@@ -76,7 +76,7 @@ describe('ProductServices Class Test, Product crud (product and item)', () => {
        });
        it('The Patcher function: Should update the item if the parameters are corrects', async() => {
         const id = 1;
-      const newData = {id, img: 'pepe'}
+      const newData = {id, img: 'https://pepe.com'}
       const response = await test.patcher(id, newData)
       const responseJs = clean.aux(response, true)
       expect(responseJs).toMatchObject(help.itemUpdated) 
