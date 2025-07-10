@@ -35,12 +35,11 @@ const Portada = () => {
               alt="Imagen"
               style={{ maxWidth: "100%", height:'auto' }}
             /> */}
-            <OptimizedImage
+            <img
+              className="bd-placeholder-img-fluid mb-3"
               src={info?.picture}
-              alt="Descripción de la imagen" 
-              className="rounded-lg shadow" 
-              placeholderColor="#e2e8f0"
-              objectFit="contain"
+              alt="Imagen"
+              style={{ maxWidth: "100%", height:'auto' }}
             />
             <h4>Info posicionamiento:</h4>
             <p className="lead text-muted">{info?.info_header}</p>

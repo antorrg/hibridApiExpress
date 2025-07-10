@@ -1,7 +1,7 @@
 import express from 'express'
 import controller from './MvcControllers.js'
-import midd from '../productItems/productMiddlewares.js'
 import MiddlewareHandler from '../../middlewares/MiddlewareHandler.js'
+
 
 const mvcRouter = express.Router()
 
@@ -35,6 +35,6 @@ mvcRouter.get('/detalles/false', (req, res, next)=>{
         // res.status(404).send('Not Found')
          res.render('error', { message: 'Not Found', status: 404});
        });
-
+      
 
 export default mvcRouter;
