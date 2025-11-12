@@ -236,7 +236,7 @@ describe('Test de rutas REST:  Usuario', () => {
         describe('Ruta "/user/upgrade/:id" de actualizacion de roles y bloqueo/desbloqueo de usuario', () => {
             it('Cambio de rol. Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
                 const id = store.getUserId2();
-                const role = 9
+                const role = 'Admin'
                 const enable = true
                 const token = store.getToken()
                 const response = await agent
@@ -247,9 +247,9 @@ describe('Test de rutas REST:  Usuario', () => {
                 expect(response.body.message).toBe("Upgrade successfully")
             })
             it('Bloqueo de usuario. Deberia retornar un status 200 y un mensaje de actualizacion exitosa', async () => {
-                const id = store.getUserId2();
+              const id = store.getUserId2();
                 const enable= false
-                const role = 9
+                const role = 'Admin'
                 const token = store.getToken()
                 const response = await agent
                     .put(`/api/v1/user/upgrade/${id}`)

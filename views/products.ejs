@@ -35,7 +35,7 @@
           <% row.forEach(info => { %>
             <div class="col">
               <div class="card shadow-sm">
-                <img class="card-img-top" src="<%= info.landing %>" alt="Card image">
+                <img class="card-img-top" src="<%= info.landing %>" alt="Card image" style="max-width: 25rem; height:15rem; object-fit:cover; object-position:center;">
                 <div class="card-body">
                   <p class="h5 card-text"><%= info.title %></p>
                   <div class="d-flex justify-content-between align-items-center">

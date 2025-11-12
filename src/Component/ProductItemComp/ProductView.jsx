@@ -92,7 +92,7 @@ const ProductView = () => {
             {items?.map((item) => (
                 <div className="col mb-3 backgroundElements" key={item.id}>
                 <div className="card shadow-sm">
-                  <img className="card-img-top" src={item.img} alt="Card image" />
+                  <img className="card-img-top" src={item.img} alt="Card image" style={{ maxWidth: "25rem", height:'15rem', objectFit:'cover', objectPosition:'center' }}/>
                   <div className="card-body">
                     <p className="card-text">{item.text}</p>
                     <div className="d-flex justify-content-between align-items-center">

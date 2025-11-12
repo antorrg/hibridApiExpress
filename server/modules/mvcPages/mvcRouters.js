@@ -25,6 +25,10 @@ mvcRouter.get('/contacto',
 mvcRouter.get('/acerca', 
   controller.getAbout);
 
+mvcRouter.get('/videos/:id',
+  controller.getVideos
+)
+
 mvcRouter.get('/login', 
   controller.getReact);
 

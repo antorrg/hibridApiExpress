@@ -2,6 +2,7 @@ import { renderError } from '../../errorHandler.js'
 import land from '../landingPage/landControllerService.js'
 import product from '../productItems/controllerService.js'
 import env from '../../envConfig.js'
+import {getVideoById} from './provisorio.js'
 
 
 
@@ -61,6 +62,12 @@ export default {
 
    getAbout: renderError(async(req, res)=>{
     res.render('about', {url: appPath, meta: getStored()})
+   }),
+
+   getVideos: renderError(async(req, res)=>{
+      const {id}  = req.params
+      const producto = getVideoById(id)
+      res.render('videos', {producto, url: appPath,  meta: getStored(), isAuthenticated: req.session.isAuthenticated})
    }),
 
    getReact: renderError(async(req, res)=>{

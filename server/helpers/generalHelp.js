@@ -17,7 +17,7 @@ const productCleaner = (cont, withItem)=>{
     
 };
 const aux = (info, detailItem,)=>{
-    let trunc = detailItem? info.text : truncateText(info.text, 12)
+    let trunc = detailItem? info.text : truncateWords(info.text, 36)
     return {
         id: info.id,
         img: info.img,
@@ -158,4 +158,19 @@ dataEmptyLanding,
 cleanerLanding,
 optionBoolean,
 };
- 
+ function truncateWords(text, maxLength = 100) {
+  if (text.length <= maxLength) return text;
+
+  let truncated = text.slice(0, maxLength);
+
+  // Buscamos el último espacio antes del límite
+  const lastSpace = truncated.lastIndexOf(' ');
+  if (lastSpace > 0) {
+    truncated = truncated.slice(0, lastSpace);
+  }
+
+  // Quitamos puntuación final si la hay (opcional)
+  truncated = truncated.replace(/[.,;!?]+$/, '');
+
+  return truncated + '...';
+}

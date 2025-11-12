@@ -20,7 +20,6 @@ const upgradeUserParser =(req, res, next) =>{
             const enable= req.body.enable;
             // Intentar convertir el role
             const newRole = help.revertScope(role);
-            //console.log('soy newRole', newRole)
             if (newRole === undefined || newRole === null) {
                 return next(middError('El campo role no es válido', 400 ));
             }

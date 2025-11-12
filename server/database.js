@@ -26,6 +26,8 @@ const {
     Product,
     Item,
     Landing,
+    VideoGroup,
+    Video
 
 }= sequelize.models;
 
@@ -33,11 +35,16 @@ const {
 Product.hasMany(Item)
 Item.belongsTo(Product)
 
+VideoGroup.hasMany(Video)
+Video.belongsTo(VideoGroup)
+
 export {
     User,
     Product,
     Item,
     Landing,
+    VideoGroup,
+    Video,
     
     sequelize
 }
