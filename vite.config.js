@@ -20,7 +20,10 @@ export default defineConfig({
         },
         {
           src: 'views/*',
-          dest: 'views'
+          dest: '.'
+        },
+        {src:'views/partials/*',
+         dest:'.'
         },
         { src: 'robots.txt', 
           dest: '.' }
