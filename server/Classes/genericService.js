@@ -1,10 +1,9 @@
 import { throwError } from "../errorHandler.js";
-import  parser from '../helpers/generalHelp.js'
 import NodeCache from 'node-cache';
 import bcrypt from 'bcrypt'
 
 
-const validator = parser.optionBoolean
+
 const cache = new NodeCache({ stdTTL: 1800 }); // TTL (Time To Live) de media hora
 
 class GenericService {
@@ -33,7 +32,7 @@ class GenericService {
         }
     }
     async create(data, uniqueField=null, parserFunction=null) {
-        try {
+
             const whereClause = {};
             if (uniqueField) {
                 whereClause[uniqueField] = data[uniqueField];
@@ -51,12 +50,9 @@ class GenericService {
             if (this.useCache) this.clearCache();
             return parserFunction ? parserFunction(newRecord) : newRecord;
             
-        } catch (error) {
-            throw error;
-        }
+    
     }
       async login(data, uniqueField= null, isVerify=null) {
-            try {
                 let whereClause = {};
             if (uniqueField) {
                 whereClause[uniqueField] = data[uniqueField];
@@ -74,9 +70,6 @@ class GenericService {
                 if (!passwordMatch) {throwError('Invalid password', 400)}
                 const response = isVerify? 'Verify succesfully' : existingRecord;
                 return response;
-            } catch (error) {
-                throw error;
-            }
         }
     async getAll(parserFunction = null, queryObject = null, emptyObject= null, isAdmin = false) {
         //console.log('service',emptyObject)
@@ -89,7 +82,7 @@ class GenericService {
                 };
             }
         }
-        try {
+    
             const query = queryObject? {where:queryObject}: {}; 
             let data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findAll(query);
             if (data.length === 0) {
@@ -105,12 +98,9 @@ class GenericService {
             return {data: dataParsed,
                    cache: false
                    }
-        } catch (error) {
-            throw error;
-        }
+
     }
     async getById(id, parserFunction = null, emptyObject= null,isAdmin = false) {
-        try {
             //const data = await this.Model.findByPk(id);
             const data = await this.Model.scope(isAdmin ? 'allRecords' : 'enabledOnly').findByPk(id);
             
@@ -120,9 +110,7 @@ class GenericService {
             }
             
             return parserFunction ? parserFunction(data) : data;
-        } catch (error) {
-            throw error;
-        }
+
     }
       /**
      * Método privado para realizar actualizaciones genéricas.
@@ -136,7 +124,6 @@ class GenericService {
         //console.log('soy newData en el service : ', newData)
        
         let imageUrl =''
-        try {
             const dataFound = await this.Model.findByPk(id);
             
             if (!dataFound) {
@@ -157,9 +144,6 @@ class GenericService {
             
             if (this.useCache) this.clearCache();
             return parserFunction ? parserFunction(upData) : upData;
-        } catch (error) {
-            throw error;
-        }
     }
 
     /**
@@ -176,7 +160,6 @@ class GenericService {
     
     async delete(id) {
         let imageUrl =''
-        try {
             const dataFound = await this.Model.findByPk(id);
             if (!dataFound) {
                 throwError(`${this.Model} not found`, 404);
@@ -189,9 +172,6 @@ class GenericService {
                 if (this.useCache) this.clearCache();
                 return `${this.Model.name} deleted successfully`;
             
-        } catch (error) {
-            throw error;
-        }
     }
 }
 

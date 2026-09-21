@@ -24,20 +24,3 @@ function getAssetPath(assetName) {
 }
 
 export default getAssetPath
-
-
-// app.locals.getAssetPath = (assetName) => {
-//   if (env.Status === 'production') {
-//     // Verificamos si el assetName existe en el manifiesto
-//     const key = `src/files/${assetName}`; // Asegúrate de que esta clave coincida con la del manifiesto
-//     if (manifest[key]) {
-//         //console.log(assetName)
-//         //return `/${manifest[key].file}`; // Retorna la ruta generada en dist
-//         return `/${assetName}`
-//     }
-//     console.warn(`Asset "${assetName}" no encontrado en el manifest.`);
-//     return assetName; // Fallback si no se encuentra el asset
-//   }
-//   console.log(assetName)
-//   return `/files/${assetName}`; // Ruta en desarrollo
-// };

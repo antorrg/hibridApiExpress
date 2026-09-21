@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 import morgan from 'morgan'
 import cors from 'cors'
-import helmet from 'helmet'
+//import helmet from 'helmet'
 import getAssetPath from './utils/assetsConfig.js'
 import cookieParser from 'cookie-parser'
 import {sessionMiddle, checkAuthentication} from './utils/authConfig.js'
@@ -58,12 +58,12 @@ if(env.Status === 'development'){
 app.use(mainRouter) 
 
 
- app.use('*',(req, res, next)=>{
+ app.use('*',(req, res, next)=>{ //eslint-disable-line
     res.status(404).json( { message: 'Not Found', status: 404});
   });
 
 // Manejador de errores
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {//eslint-disable-line
     const status = err.status || 500;
     const message = err.message || 'Error';
     //console.error('Error: ', err);

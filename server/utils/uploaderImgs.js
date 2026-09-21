@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import {catchController} from '../errorHandler.js'
+import {catchController, throwError} from '../errorHandler.js'
 import multer from 'multer'
 import { uploadImageToFirebase } from '../firebase.js'
 
@@ -20,6 +20,5 @@ export const imageUploader = catchController(async(req, res)=>{
                         message: 'Imagen subida exitosamente',
                         data: {url: imageUrl}
                       }
-    //console.log('response: ', response)
     res.status(200).json(response)
 });

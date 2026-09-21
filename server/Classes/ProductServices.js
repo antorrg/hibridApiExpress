@@ -34,7 +34,7 @@ class ProductServices extends GenericService {
       const items = data.items;
       const newRecord = await this.Model.create(data, { transaction: t });
 
-      const newitems = await Promise.all(
+       await Promise.all(
         items.map(async (item) => {
           const newItem = await this.Model2.create(item, { transaction : t });
           await newRecord.addItem(newItem, { transaction : t});
@@ -54,7 +54,7 @@ class ProductServices extends GenericService {
     }
   }
   async addItem(data) {
-    try {
+
       const id = data.id;
       const body= {img:data.img, text:data.text}
       const referenceFound = await this.Model.findByPk(id);
@@ -68,17 +68,13 @@ class ProductServices extends GenericService {
       const newItem = await this.Model2.create(body);
       await referenceFound.addItem(newItem);
       return "Item created successfully";
-    } catch (error) {
-      throw error;
-    }
+
   }
   async getById(
     id,
     parserFunction = null,
-    parserFunction2 = null,
     isAdmin = false
   ) {
-    try {
       //const data = await this.Model.findByPk(id);
       const data = await this.Model.scope(isAdmin ? "allRecords" : "enabledOnly").findByPk(id, {
         include: [
@@ -97,9 +93,7 @@ class ProductServices extends GenericService {
       }
 
       return parserFunction ? parserFunction(data, true) : data;
-    } catch (error) {
-      throw error;
-    }
+
   }
   async getDetail(
     id,
@@ -107,7 +101,6 @@ class ProductServices extends GenericService {
     emptyObject = null,
     isAdmin = false
   ) {
-    try {
       //const data = await this.Model.findByPk(id);
       const data = await this.Model2.scope(
         isAdmin ? "allRecords" : "enabledOnly"
@@ -123,14 +116,12 @@ class ProductServices extends GenericService {
       }
 
       return parserFunction ? parserFunction(data, true) : data;
-    } catch (error) {
-      throw error;
-    }
+
   }
   async patcher(id, newData, parserFunction = null) {
     //console.log('soy newData en el patcher: ', newData)
     let imageUrl = "";
-    try {
+
       const dataFound = await this.Model2.findByPk(id);
 
       if (!dataFound) {
@@ -156,9 +147,7 @@ class ProductServices extends GenericService {
 
       return parserFunction ? parserFunction(upData, true) : upData;
       //return `${this.Model.name} updated succesfully`;
-    } catch (error) {
-      throw error;
-    }
+
   }
   async deleteAll(id) {
     let imageUrl = "";
@@ -193,7 +182,7 @@ class ProductServices extends GenericService {
   }
   async delete(id) {
     let imageUrl = "";
-    try {
+  
       const dataFound = await this.Model2.findByPk(id);
       if (!dataFound) {
         throwError(`${this.Model2} not found`, 404);
@@ -205,9 +194,6 @@ class ProductServices extends GenericService {
 
       if (this.useCache) this.clearCache();
       return `${this.Model2.name} deleted successfully`;
-    } catch (error) {
-      throw error;
-    }
   }
 }
 

@@ -8,12 +8,12 @@ class UserService extends GenericService{
     constructor(Model){
         super(Model)
     }
-
+    //eslint-disable-next-line
     async create(data, uniqueField= null, parserFunction= null) {
         const hashedPassword = await bcrypt.hash(data.password, 12);
         data.password = hashedPassword;
         data.nickname = data.email.split("@")[0];
-        try{
+   
         const existingRecord = await this.Model.findOne({ where: {email:data.email} });
             
         if (existingRecord) {
@@ -21,14 +21,10 @@ class UserService extends GenericService{
         }
         const newRecord = await this.Model.create(data);
         return parserFunction ? parserFunction(newRecord) : newRecord;
-       }catch(error){
-        throw error;
-       }
+
     }
     async login(data, isVerify = null) {
-        //console.log('soy el loginservice: ',data)
-        //console.log('soy verify en el service:', isVerify)
-        try {
+   
             // Buscar usuario según el caso
             const user = isVerify 
                 ? await this.Model.findByPk(data.id)
@@ -49,9 +45,6 @@ class UserService extends GenericService{
 
             // Retornar según el caso
             return isVerify ? 'Password verified successfully' : user;
-        } catch (error) {
-            throw error;
-        }
     }
 
 }

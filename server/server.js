@@ -7,22 +7,29 @@
 // todo :::::::::::::::::::::: Created at 12 - 12 - 2024 :::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //* :::::::::::::::::::::::::: Refactorized at 26 - 03 - 2025 ::::::::::::::::::::::::::::::::::::::::::::::::::
 //? :::::::::::::::::::::::::: Replace pug with ejs 19 - 04 - 2025 :::::::::::::::::::::::::::::::::::::::::::::
+//* :::::::::::::::::::::::::: Refactorized at 04 - 09 - 2026  :::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 import app from './app.js'
-import {sequelize} from "./database.js"
+import {startUp} from "./database.js"
 import env from './envConfig.js'
 import initialUser from './helpers/initialUser.js'
 
-app.listen(env.Port, async() => {
+async function serverBootstrap(){
     try {
-        await sequelize.sync({ force:false})
+        await startUp()
         await initialUser()
+        app.listen(env.Port, async() => {
         console.log(`Server is listening at http://localhost:${env.Port}\nServer in ${env.Status}`);
         if(env.Status === 'development'){
             console.log(`Swagger: Vea y pruebe los endpoints en http://localhost:${env.Port}/api-docs`)
         }
+        });
     } catch (error) {
         console.error('Error syncing database: ',error)
+        process.exit(1)//eslint-disable-line
     }
-});
+}
+
+serverBootstrap()
+

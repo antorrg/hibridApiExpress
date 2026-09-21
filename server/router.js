@@ -1,20 +1,16 @@
 
 import express from 'express'
 import * as img from './utils/uploaderImgs.js'
-import mvcRouter from './modules/mvcPages/mvcRouters.js';
-import landRouter from './modules/landingPage/landRouter.js'
-import productRouter from './modules/productItems/productRoutes.js'
-import userRouter from './modules/users/userRouter.js'
-import contactRouter from './modules/contacts/contacRouter.js';
-import sanit from './utils/expressValidator.js'
+import mvcRouter from './modules/mvcPages/mvc.routes.js';
+import landRouter from './modules/landingPage/frontPage.routes.js'
+import productRouter from './modules/productItems/product.routes.js'
+import userRouter from './modules/users/user.routes.js'
+import contactRouter from './modules/contacts/contac.routes.js';
 import {verifyToken} from './utils/authConfig.js'
 
 
 const mainRouter = express.Router()
 
-//mainRouter.use(sanit.sanitizeHeaders)
-//mainRouter.use(sanit.sanitizeBody)
-//mainRouter.use(sanit.sanitizeQuery)
 
 mainRouter.use(mvcRouter)
 

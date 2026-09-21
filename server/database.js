@@ -38,6 +38,36 @@ Item.belongsTo(Product)
 VideoGroup.hasMany(Video)
 Video.belongsTo(VideoGroup)
 
+//* StarUp methods
+function getNameDb(dbUri) {
+ return dbUri.split('/').slice(-1).join()
+}
+async function startUp (syncDb = false, rewrite = false) {
+  try {
+    if (env.Status !== 'production' && syncDb===true) {
+      try {
+        await sequelize.sync({ force: rewrite })
+       const message = `🧪 Synced database ${getNameDb(env.dbConnect)}: "force ${rewrite}"`
+       console.log(message)
+      } catch (error) {
+        console.error(`❗Error syncing database ${getNameDb(env.dbConnect)}`, error)
+        throw error
+      }
+    }
+    await sequelize.authenticate()
+    //eslint-disable-next-line
+    const successMessage =`🟢​ Database postgreSQL "${getNameDb(env.dbConnect)}" initialized successfully!!`
+    console.log(successMessage)
+  } catch (error) {
+    console.error('❌ Error conecting database!', error)
+    throw error
+  }
+}
+const closeDatabase = async () => {
+  await sequelize.close()
+  console.log('🛑 Database disconnect')
+}
+
 export {
     User,
     Product,
@@ -45,6 +75,7 @@ export {
     Landing,
     VideoGroup,
     Video,
-    
+    startUp,
+    closeDatabase,
     sequelize
 }

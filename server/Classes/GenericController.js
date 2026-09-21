@@ -32,7 +32,7 @@ class GenericController {
         return GenericController.responder(res, 501, false, "Login is not implemented in this service",null,);
     }
     const data  = req.body;
-    const response = await this.service.login(data, uniqueField, isVerify);
+    const response = await this.service.login(data, 'email', true);
     return GenericController.responder(res, 200, true, "Login succesfully", response,);
 });
 

@@ -145,14 +145,14 @@ export const dataCreated = {
         id:1,
         ProductId:1,
         img:"img",
-        text: "Este es un texto de pruebas a fin de contar las palabras...",
+        text: "Este es un texto de pruebas a fin...",
         enable: true,
       },
       {
         id:2,
         ProductId:1,
         img:"img",
-        text: "Este es un texto de pruebas a fin de contar las palabras...",
+        text: "Este es un texto de pruebas a fin...",
         enable: true,
       
       },
@@ -160,7 +160,7 @@ export const dataCreated = {
         id:3,
         ProductId:1,
         img:"img",
-        text: "Este es un texto de pruebas a fin de contar las palabras...",
+        text: "Este es un texto de pruebas a fin...",
         enable: true,
         
       },
@@ -168,7 +168,7 @@ export const dataCreated = {
         id:4,
         ProductId:1,
         img:"img",
-        text: "Este es un texto de pruebas a fin de contar las palabras...",
+        text: "Este es un texto de pruebas a fin...",
         enable: true,
         
       }
