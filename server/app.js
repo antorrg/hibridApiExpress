@@ -19,7 +19,7 @@ const viewPath = env.Status === 'production'
   ? path.resolve('dist/views')
   : path.resolve('views');
   const staticPath = env.Status === 'production' 
-  ? path.resolve('dist')
+  ? path.resolve('dist/assets')
   : path.resolve('src');
 //Swagger:
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
