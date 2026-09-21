@@ -13,20 +13,21 @@ export default defineConfig({
           // Copia las fuentes de Bootstrap Icons a la carpeta dist/assets/fonts
           src: 'node_modules/bootstrap-icons/font/fonts/*',
           dest: 'assets/fonts',
+          rename: { stripBase: true },
         },
         {
-        src: 'public/*',
-        dest: '.assets'
+          src: 'public/*',
+          dest: 'assets',
+          rename: { stripBase: true },
         },
         {
-          src: 'views/*',
-          dest: '.'
+          src: 'views',
+          dest: '.',
         },
-        {src:'views/partials/*',
-         dest:'.'
+        {
+          src: 'robots.txt',
+          dest: '.',
         },
-        { src: 'robots.txt', 
-          dest: '.' }
       ],
     }),
   ],
