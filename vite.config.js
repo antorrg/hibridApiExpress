@@ -16,7 +16,7 @@ export default defineConfig({
         },
         {
         src: 'public/*',
-        dest: 'assets'
+        dest: '.'
         },
         {
           src: 'views/*',
