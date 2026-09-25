@@ -5,6 +5,9 @@ import Item from "./item.js"
 import Landing from './landing.js'
 import VideoGroup from "./videoGroup.js"
 import Video from './video.js'
+import ApiKey from './apiKey.model.js'
+import Letter from './letters.model.js'
+import Client from './client.model.js'
 
 export default {
     User,
@@ -13,4 +16,7 @@ export default {
     Landing,
     VideoGroup,
     Video,
+    ApiKey,
+    Letter,
+    Client
 }

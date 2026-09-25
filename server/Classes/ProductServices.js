@@ -1,4 +1,4 @@
-import GenericService from "./genericService.js";
+import GenericService from "./GenericService.js";
 import { sequelize } from "../database.js";
 import {throwError} from '../errorHandler.js'
 
@@ -53,6 +53,7 @@ class ProductServices extends GenericService {
       throw error;
     }
   }
+
   async addItem(data) {
 
       const id = data.id;

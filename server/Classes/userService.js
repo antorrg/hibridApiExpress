@@ -1,4 +1,4 @@
-import GenericService from './genericService.js';
+import GenericService from './GenericService.js';
 import * as eh from '../errorHandler.js'
 import bcrypt from 'bcrypt'
 

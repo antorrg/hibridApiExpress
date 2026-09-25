@@ -1,5 +1,5 @@
 import {Landing} from '../../database.js'
-import GenericService from '../../Classes/genericService.js'
+import GenericService from '../../Classes/GenericService.js'
 import GenericController from '../../Classes/GenericController.js'
 import { deleteImageFromStorage } from '../../firebase.js'
 import help from '../../helpers/generalHelp.js'; // dataEmptyLanding, cleanerLanding

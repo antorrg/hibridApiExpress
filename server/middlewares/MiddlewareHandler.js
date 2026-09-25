@@ -1,4 +1,5 @@
 import { validate as uuidValidate } from 'uuid'
+import env from '../envConfig.js'
 
 class MiddlewareHandler {
   static middError (message, status = 500) {
@@ -257,7 +258,7 @@ class MiddlewareHandler {
   }
 
   static logRequestBody (req, res, next) {
-    if (process.env.NODE_ENV !== 'test') {
+    if (env.Status !== 'test') {
       return next()
     }
     const timestamp = new Date().toISOString()

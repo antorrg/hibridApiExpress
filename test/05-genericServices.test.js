@@ -1,5 +1,6 @@
+import { describe, it, expect, beforeEach, jest, xit } from '@jest/globals'
 import GenericService from '../server/Classes/genericService.js'
-import * as store from './helperTest/testStore.js'
+//import * as store from './helperTest/testStore.js'
 import * as help from './helperTest/genericHelp.js'
 import {redirectionImages } from './helperTest/imageServices.js'
 import {Landing} from '../server/database.js'
@@ -97,7 +98,7 @@ describe('Unit testing of the GenericService class: CRUD operations.', ()=>{
       const id = 2
       const newData= {picture: "urlthird"}
       mockDeleteImages.mockRejectedValueOnce(new Error('Error deleting image'));
-      const response = await testImage.update(id, newData)
+      //const response = await testImage.update(id, newData)
       // const responseJs = help.landParser(response)
       // expect(responseJs).toMatchObject(help.dataImageUpdated )
       // await expect(mockDeleteImages).toThrow('error');

@@ -1,14 +1,15 @@
+import { describe, it, expect } from '@jest/globals'
 import ProductService from '../server/Classes/ProductServices.js'
-import * as store from './helperTest/testStore.js'
+//import * as store from './helperTest/testStore.js'
 import * as help from './helperTest/genericHelp.js'
 import clean from '../server/helpers/generalHelp.js'
-import {redirectionImages } from './helperTest/imageServices.js'
+//import {redirectionImages } from './helperTest/imageServices.js'
 import {Product, Item} from '../server/database.js'
 
-const mockDeleteImages = jest.fn(); // Creamos el mock de deleteImages
+//const mockDeleteImages = jest.fn(); // Creamos el mock de deleteImages
 
 const test = new ProductService(Product, Item, false,false, null)
-const testImage = new ProductService(Product, Item, redirectionImages, false)
+//const testImage = new ProductService(Product, Item, redirectionImages, false)
 
 describe('ProductServices Class Test, Product crud (product and item)', () => {
 

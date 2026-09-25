@@ -1,4 +1,5 @@
-import {createMock, admin, setTokens} from './helperTest/jwtHelper.js'
+import { describe, it, expect } from '@jest/globals'
+//import {createMock, admin } from './helperTest/jwtHelper.js'
 import * as store from './helperTest/testStore.js'
 import app from '../server/app.js'
 import session from 'supertest-session'
@@ -13,7 +14,7 @@ describe('Test de rutas REST:  Usuario', () => {
         describe('Ruta "user/login": Ruta POST de validacion de usuario', () => {
             it('Deberia responder con status 200 y retornar el usuario con el token', async () => {
                 // Creacion de usuario:
-                const user = await createMock(admin)
+                //const user = await createMock(admin)
                 //console.log('Response create: ',user)
                 const email = "josenomeacuerdo@hotmail.com";
                 const password = 'L1234567'
@@ -135,7 +136,7 @@ describe('Test de rutas REST:  Usuario', () => {
             it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
-                const token = store.getToken()
+                //const token = store.getToken()
                 const response = await agent
                     .post(`/api/v1/user/verify`)
                     .send({ id, password })
@@ -170,7 +171,7 @@ describe('Test de rutas REST:  Usuario', () => {
             it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
                 const id = store.getUserId();
                 const password = 'L1234567';
-                const token = store.getToken()
+                //const token = store.getToken()
                 const response = await agent
                     .post(`/api/v1/user/verify`)
                     .send({ id, password })
@@ -214,7 +215,7 @@ describe('Test de rutas REST:  Usuario', () => {
             });
             it('Deberia retornar un status 401 y un mensaje de error por falta de validacion.', async () => {
                 const id = store.getUserId();
-                const token = store.getToken()
+                //const token = store.getToken()
                 const response = await agent
                     .put(`/api/v1/user/reset/${id}`)
                     .send({})

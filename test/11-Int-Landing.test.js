@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals'
 import app from '../server/app.js'
 import session from 'supertest-session'
 const agent = session(app);
@@ -37,7 +38,7 @@ describe('Test de rutas REST: Landing', () => {
             })
             
             it('Deberia responder con status 401 y retornar un error si el token no estuviera presente', async () => {
-                const token = store.getToken()
+           
                 const response = await agent
                     .get(`/api/v1/land`)
                     .set('Authorization', `Bearer adsfakjfdkajsdsadjfsakdjfdsf`)

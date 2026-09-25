@@ -6,6 +6,8 @@ import landRouter from './modules/landingPage/frontPage.routes.js'
 import productRouter from './modules/productItems/product.routes.js'
 import userRouter from './modules/users/user.routes.js'
 import contactRouter from './modules/contacts/contac.routes.js';
+import apiKeyRouter from './modules/apiKey/apiKey.routes.js';
+import letterRouter from './modules/cartas/letter.routes.js';
 import {verifyToken} from './utils/authConfig.js'
 
 
@@ -17,6 +19,10 @@ mainRouter.use(mvcRouter)
 mainRouter.use('/api/v1', userRouter)
 
 mainRouter.use("/api/v1/", contactRouter)
+
+mainRouter.use("/api/v1/apikey", apiKeyRouter)
+
+mainRouter.use('/api/v1/letter', letterRouter)
 
 mainRouter.post('/api/v1/uploadImage', verifyToken, img.uploadMiddleware, img.imageUploader )
 

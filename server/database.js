@@ -27,7 +27,10 @@ const {
     Item,
     Landing,
     VideoGroup,
-    Video
+    Video,
+    Client,
+    ApiKey,
+    Letter
 
 }= sequelize.models;
 
@@ -37,6 +40,19 @@ Item.belongsTo(Product)
 
 VideoGroup.hasMany(Video)
 Video.belongsTo(VideoGroup)
+
+Client.hasMany(ApiKey, {
+    foreignKey: 'clientId',
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+})
+
+ApiKey.belongsTo(Client, {
+    foreignKey: 'clientId',
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+
+})
 
 //* StarUp methods
 function getNameDb(dbUri) {
@@ -75,6 +91,9 @@ export {
     Landing,
     VideoGroup,
     Video,
+    Client,
+    ApiKey,
+    Letter,
     startUp,
     closeDatabase,
     sequelize
