@@ -12,13 +12,14 @@ export class LetterController{
         return responder(res, 201, 'Carta creada exitosamente', response)
     })
         getAll = eh.catchController(async(req,res)=>{
-      
-        const response = await this.service.getAll()
+               const { page, limit} = req.context.query
+        const response = await this.service.getAll(page, limit)
         return responder(res, 200, '', response)
     })
         getAllAdmin = eh.catchController(async(req,res)=>{
-        const response = await this.service.findAllLetters()
-        return responder(res, 200, `${response.length} cartas halladas`, response)
+        const { page, aprobada, limit, tema } = req.context.query
+        const response = await this.service.findAllLetters(page, aprobada, limit, tema)
+        return responder(res, 200, `${response.data ? response.data.length : 0} cartas halladas`, response)
     })
         getById = eh.catchController(async(req,res)=>{
          const {id} = req.params

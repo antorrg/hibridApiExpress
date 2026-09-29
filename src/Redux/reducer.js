@@ -8,7 +8,7 @@ import {
     ALL_USERS,
     USER_BY_ID,
     CLEAN_STATE,
-    
+    ALL_LETTERS,
 
 } from './actions'
 
@@ -23,6 +23,7 @@ const initialState = {
     Media: [],
     MediaAd:[],
     MediaById:[],
+    Letters: [],
 
 }
 
@@ -63,6 +64,11 @@ const reducer = (state = initialState, {type, payload})=>{
                 ...state,
                 UserById : payload,
             }
+        case ALL_LETTERS:
+            return {
+                ...state,
+                Letters: payload
+            }
         case CLEAN_STATE: 
             return {
                 ...state,
@@ -70,6 +76,7 @@ const reducer = (state = initialState, {type, payload})=>{
                 ProductId : [],
                 Item : [],
                 UserById: [],
+                Letters: [],
             }
         default:
             return{

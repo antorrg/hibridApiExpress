@@ -13,7 +13,7 @@ export class ApiKeyController {
         return ApiKeyController.responder(res, 201, '', response)
     })
     getAll = eh.catchController(async(req,res)=>{
-        const options = {page:req.query.page, limit:req.query.limit}
+        const options = {page:req.context.query.page, limit:req.context.query.limit}
         const {message, info, data}  = await this.service.getAllClients(options)
         return ApiKeyController.responder(res, 200, message, {info, data})
     })

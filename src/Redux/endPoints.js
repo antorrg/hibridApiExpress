@@ -74,3 +74,34 @@ export const userResetPass = (id, data, aux, auxReject)=> userValid.put(`reset/$
 export const userCreate = (data, aux, auxReject)=> userValid.post('create',data, aux, true, auxReject )
 
 export const userDelete = (id, aux, auxReject)=> userValid.delete(`${id}`,aux, true, auxReject)
+
+//todo Endpoints ApiKey / Client:
+
+const apiKeyAdmin = new BaseEndpoints('/api/v1/apikey', true)
+
+export const getApiKeys = (page, limit) => apiKeyAdmin.get('', { page, limit }, null, true)
+
+export const getApiKeyById = (id) => apiKeyAdmin.get(id, null, null, true)
+
+export const createApiKeyClient = (data, aux, auxReject) => apiKeyAdmin.post('', data, aux, true, auxReject, 'Cliente API Key creado exitosamente')
+
+export const updateApiKeyClient = (id, data, aux, auxReject) => apiKeyAdmin.put(id, data, aux, true, auxReject, 'Cliente actualizado exitosamente')
+
+export const toggleApiKeyStatus = (id, data, aux, auxReject) => apiKeyAdmin.patch(id, data, aux, true, auxReject, 'Estado de API Key actualizado')
+
+export const deleteApiKeyClient = (id, aux, auxReject) => apiKeyAdmin.delete(id, aux, true, auxReject, 'Cliente eliminado exitosamente')
+
+export const deleteApiKey = (id, aux, auxReject) => apiKeyAdmin.delete(`${id}/apiKey`, aux, true, auxReject, 'API Key eliminada exitosamente')
+
+//todo Endpoints Cartas / Letters:
+
+const letterAdmin = new BaseEndpoints('/api/v1/letter', true)
+
+export const letterGetAllAdmin = (params = {}) => letterAdmin.get('admin', params, null, true)
+
+export const letterGetByIdAdmin = (id) => letterAdmin.get(`admin/${id}`, null, null, true)
+
+export const letterModerateAdmin = (id, data, aux, auxReject) => letterAdmin.patch(`admin/${id}`, data, aux, true, auxReject, 'Estado de carta actualizado exitosamente')
+
+export const letterDeleteAdmin = (id, aux, auxReject) => letterAdmin.delete(`admin/${id}`, aux, true, auxReject, 'Carta eliminada exitosamente')
+

@@ -10,6 +10,7 @@ import Portada from './TabsComponents/Portada'
 import Producto from './TabsComponents/Producto'
 import Loading from '../Loading';
 import Usuario from './TabsComponents/Usuario'
+import  Default  from './TabsComponents/Default';
 
 
 
@@ -68,10 +69,10 @@ const TabsPage = () => {
         <Usuario/>
       )}
       {activeTab === 'imagenes' && (
-        <Config/>
+        <Default/>
       )}
       {activeTab === 'videos' && (
-        <Config/>
+        <Default/>
       )}
       {activeTab === 'config' && (
         <Config/>

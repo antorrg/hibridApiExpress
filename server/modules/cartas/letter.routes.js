@@ -23,12 +23,14 @@ letterRouter.post(
 letterRouter.get(
     '/',
     apiMiddleware.verifyApiKey,
+    Validator.validateQuery(sch.publicQuery),
     cont.getAll
 )
 
 letterRouter.get(
     '/admin',
     verifyToken,
+    Validator.validateQuery(sch.adminQuery),
     checkRole([3,9]),
     cont.getAllAdmin
 )

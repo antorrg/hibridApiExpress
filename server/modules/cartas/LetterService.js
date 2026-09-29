@@ -22,23 +22,64 @@ export class LetterService{
         const letter = await this.Model.findByPk(id)
         await letter.update(newData)
     }
-    async getAll(){
-        const response = await sequelize.query(`
-            SELECT id, tema, mensaje
+    // async getAll(){
+    //     const response = await sequelize.query(`
+    //         SELECT id, tema, mensaje
+    //         FROM "Letters"
+    //         WHERE aprobada = :aprobada
+    //         `,
+    //            {
+    //       replacements: {aprobada: true},
+    //       type: QueryTypes.SELECT
+    //     })
+    //     const [{count}] = await sequelize.query(`
+    //         SELECT COUNT(*) AS count from "Letters"
+    //         WHERE aprobada = true
+    //         `,
+    //         {type: QueryTypes.SELECT}
+    //     )
+    //     return { data: response, count: Number(count) }
+    // }
+    async getAll(page = 1, limit = 10) {
+    const offset = (page - 1) * limit
+
+    const response = await sequelize.query(`
+        SELECT id, tema, mensaje
+        FROM "Letters"
+        WHERE aprobada = :aprobada
+        ORDER BY id
+        LIMIT :limit
+        OFFSET :offset
+        `,
+        {
+            replacements: {
+                aprobada: true,
+                limit,
+                offset
+            },
+            type: QueryTypes.SELECT
+        }
+      )
+
+        const [{ count }] = await sequelize.query(`
+            SELECT COUNT(*) AS count
             FROM "Letters"
             WHERE aprobada = :aprobada
             `,
-               {
-          replacements: {aprobada: true},
-          type: QueryTypes.SELECT
-        })
-        const [{count}] = await sequelize.query(`
-            SELECT COUNT(*) AS count from "Letters"
-            WHERE aprobada = true
-            `,
-            {type: QueryTypes.SELECT}
+            {
+                replacements: { aprobada: true },
+                type: QueryTypes.SELECT
+            }
         )
-        return { data: response, count: Number(count) }
+        const info = {
+            currentPage: page,
+            totalPages: Math.ceil(count / limit)
+        }
+        return {
+            info,
+            data: response,
+            count: Number(count)
+        }
     }
     async getById(id){
         const [result] = await sequelize.query(`
@@ -53,15 +94,65 @@ export class LetterService{
         )
         return result
     }
-    async findAllLetters(){
-        const found = await sequelize.query(`
-            SELECT *
-            FROM "Letters"
-            `,
-            {type: QueryTypes.SELECT}
-        )
-        return found
+   
+    async findAllLetters(page = 1, aprobada = false, limit = 10, tema = null) {
+      const pageNum = parseInt(page, 10) || 1;
+      const limitNum = parseInt(limit, 10) || 10;
+      const offset = (pageNum - 1) * limitNum;
+      
+      const isAprobada = help.validAprobada(aprobada);
+
+      let whereClause = `WHERE aprobada = :aprobada`;
+      const replacements = {
+        aprobada: isAprobada,
+        limit: limitNum,
+        offset
+      };
+
+      if (tema && tema !== '' && tema !== 'all') {
+        whereClause += ` AND tema = :tema`;
+        replacements.tema = tema;
+      }
+
+      const response = await sequelize.query(`
+          SELECT id, tema, mensaje, aprobada
+          FROM "Letters"
+          ${whereClause}
+          ORDER BY id
+          LIMIT :limit
+          OFFSET :offset
+          `,
+          {
+            replacements,
+            type: QueryTypes.SELECT
+          }
+      );
+
+      const [{ count }] = await sequelize.query(`
+          SELECT COUNT(*) AS count
+          FROM "Letters"
+          ${whereClause}
+          `,
+          {
+            replacements,
+            type: QueryTypes.SELECT
+          }
+      );
+
+      const totalElements = Number(count) || 0;
+      const info = {
+        currentPage: pageNum,
+        totalPages: Math.ceil(totalElements / limitNum) || 1,
+        total: totalElements
+      };
+
+      return {
+        info,
+        data: response,
+        count: totalElements
+      };
     }
+    
     async deleteLetter(id){
         return await this.base.delete(id)
     }

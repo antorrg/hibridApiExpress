@@ -1,4 +1,4 @@
-import { landingGet, productGet, landingGetById, productGetById, getItemById, userGet, userGetbyid } from "./endPoints";
+import { landingGet, productGet, landingGetById, productGetById, getItemById, userGet, userGetbyid, letterGetAllAdmin } from "./endPoints";
 import { handleError } from "../Utils/toastify";
 
 export const LANDING = "LANDING";
@@ -11,7 +11,8 @@ export const USER_BY_ID = "USER_BY_ID";
 export const CLEAN_STATE = "CLEAN_STATE";
 export const MEDIA = 'MEDIA';
 export const MEDIA_AD = 'MEDIA_AD';
-export const MEDIA_BY_ID = 'MEDIA_BY_ID'
+export const MEDIA_BY_ID = 'MEDIA_BY_ID';
+export const ALL_LETTERS = 'ALL_LETTERS';
    
 
 
@@ -118,3 +119,21 @@ export const cleanState = () =>{
     payload: []
   })
 }
+
+export const getLettersAdmin = (params = {}) => {
+  return async (dispatch) => {
+    try {
+      const response = await letterGetAllAdmin(params);
+      return dispatch({
+        type: ALL_LETTERS,
+        payload: response || { info: { currentPage: 1, totalPages: 1 }, data: [], count: 0 }
+      });
+    } catch (error) {
+      handleError(error);
+      return dispatch({
+        type: ALL_LETTERS,
+        payload: { info: { currentPage: 1, totalPages: 1 }, data: [], count: 0 }
+      });
+    }
+  };
+};

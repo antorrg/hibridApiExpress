@@ -20,10 +20,15 @@ class BaseEndpoints {
     return config;
   }
 
+  getUrl(endpoint) {
+    if (!endpoint) return this.baseURL;
+    return endpoint.startsWith('/') ? `${this.baseURL}${endpoint}` : `${this.baseURL}/${endpoint}`;
+  }
+
   async get(endpoint, params = {}, auxFunction = null, admin = false) {
     try {
       const config = admin ? this.setAuthHeader() : {};
-      const response = await axios.get(`${this.baseURL}/${endpoint}`, {
+      const response = await axios.get(this.getUrl(endpoint), {
         ...config,
         params, // Agrega los parámetros como query string
       });
@@ -39,7 +44,7 @@ class BaseEndpoints {
   async post(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction = null, message= 'Operación exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
-      const response = await axios.post(`${this.baseURL}/${endpoint}`, data, config);
+      const response = await axios.post(this.getUrl(endpoint), data, config);
       showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
@@ -53,7 +58,7 @@ class BaseEndpoints {
   async put(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction= null, message = 'Actualización exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
-      const response = await axios.put(`${this.baseURL}/${endpoint}`, data, config);
+      const response = await axios.put(this.getUrl(endpoint), data, config);
       showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
@@ -64,10 +69,23 @@ class BaseEndpoints {
     }
   }
 
+  async patch(endpoint, data = {}, auxFunction = null, admin = false, rejectFunction= null, message = 'Actualización exitosa') {
+    try {
+      const config = admin ? this.setAuthHeader() : {};
+      const response = await axios.patch(this.getUrl(endpoint), data, config);
+      if (message) showSuccess(message);
+      if (auxFunction) await auxFunction();
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      if(rejectFunction) await rejectFunction();
+    }
+  }
+
   async delete(endpoint, auxFunction = null, admin = false, rejectFunction= null, message= 'Eliminación exitosa') {
     try {
       const config = admin ? this.setAuthHeader() : {};
-      const response = await axios.delete(`${this.baseURL}/${endpoint}`, config);
+      const response = await axios.delete(this.getUrl(endpoint), config);
       showSuccess(message);
       if (auxFunction) await auxFunction();
       return response.data;
