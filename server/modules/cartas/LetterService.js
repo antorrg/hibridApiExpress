@@ -3,6 +3,8 @@ import { UuidHandler } from "../../utils/UuidHandler.js";
 import * as help from './helpers.js'
 import { QueryTypes } from 'sequelize'
 import { sequelize } from "../../database.js";
+import { emailService } from '../contacts/MailService.js';
+
 
 export class LetterService{
     constructor(Model){
@@ -15,31 +17,23 @@ export class LetterService{
             tema: help.validTema(data.tema),
             mensaje: data.mensaje
         }
+        const notificationSubject = 'Nueva carta para revisar'
+        const notificationLetter = `
+        Usted tiene una carta para revisar con tema ${dataNewLetter.tema} creada en ${new Date()}
+        `
       await this.Model.create(dataNewLetter)
+      void emailService
+        .sendEmail('letters@appmail.com', notificationSubject, notificationLetter)
+        .catch(error => {
+            console.error('No se pudo enviar la notificación de la carta', error)
+        })
+      return 'ok'
     }
     async moderateLetter(id, data){
         const newData = {aprobada: help.validAprobada(data.aprobada)}
         const letter = await this.Model.findByPk(id)
         await letter.update(newData)
     }
-    // async getAll(){
-    //     const response = await sequelize.query(`
-    //         SELECT id, tema, mensaje
-    //         FROM "Letters"
-    //         WHERE aprobada = :aprobada
-    //         `,
-    //            {
-    //       replacements: {aprobada: true},
-    //       type: QueryTypes.SELECT
-    //     })
-    //     const [{count}] = await sequelize.query(`
-    //         SELECT COUNT(*) AS count from "Letters"
-    //         WHERE aprobada = true
-    //         `,
-    //         {type: QueryTypes.SELECT}
-    //     )
-    //     return { data: response, count: Number(count) }
-    // }
     async getAll(page = 1, limit = 10) {
     const offset = (page - 1) * limit
 

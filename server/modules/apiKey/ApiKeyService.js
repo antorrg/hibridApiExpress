@@ -57,6 +57,7 @@ export class ApiKeyService{
       throw error;
     }
     }
+
     async apiKeyVerify(key) {
     const parsed = ApiKey.parse(key)
 
@@ -105,33 +106,7 @@ export class ApiKeyService{
         clientUrl: response.clientUrl
     }
     }
-    // async apiKeyVerify(key){
-    //     const parsed = ApiKey.parse(key)
-    //     if(!parsed){eh.throwError('Invalid API Key format', 400)}
-    //     const { keyId, secret } = parsed
-    //             let cacheKey = `${keyId}`;
-    //     if (this.useCache) { let cachedData = apiKeyCache.get(cacheKey);
-    //         if (cachedData) {
-    //             console.log('soy cache y funciono: ', keyId)
-    //             return cachedData
-    //         }
-    //     }
-    //     const response = await this.#searchClientAndApiKey(keyId)
-    //     if(!response){eh.throwError('Not found', 404)}
-    //     if(response.clientEnabled=== false || response.apiKeyEnabled ===false){eh.throwError('Access denied', 401)}
-    //     const keyMatch = ApiKey.verify(secret, response.keyHash)
-    //     if(keyMatch === false){eh.throwError('Access denied', 401)}
-    //     if(response && this.useCache){
-    //         apiKeyCache.set(keyId, response)
-    //     }
-    //     return {
-    //             apiKeyId: response.apiKeyId,
-    //             keyId: response.keyId,
-    //             clientId: response.clientId,
-    //             clientName: response.clientName,
-    //             clientUrl: response.clientUrl
-    //     }
-    // }
+   
     async getAllClients(options = {}){
       return await this.#getClients(options)
     }
@@ -285,86 +260,3 @@ export class ApiKeyService{
     }
 
 }
-/*
-  apiKeyId: '',
-  keyId: '',
-  keyHash: '',
-  apiKeyEnabled: '',
-  clientId: '',
-  clientName: '',
-  clientUrl: '',
-  clientEnabled: ''*/
-  /*
-    UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-  INTERNAL_ERROR: 'INTERNAL_ERROR',
-  NOT_IMPLEMENTED: 'NOT_IMPLEMENTED',
-  OPERATION_FAILED: 'OPERATION_FAILED',
-  NOT_FOUND: 'NOT_FOUND',
-  DUPLICATE_ENTRY: 'DUPLICATE_ENTRY',
-  DATABASE_ERROR: 'DATABASE_ERROR',
-
-  // validation
-  VALIDATION_ERROR: 'VALIDATION_ERROR',
-  INVALID_INPUT: 'INVALID_INPUT',
-  REQUIRED_FIELD_MISSING: 'REQUIRED_FIELD_MISSING',
-  INVALID_FORMAT: 'INVALID_FORMAT',
-  INVALID_TYPE: 'INVALID_TYPE',
-  OUT_OF_RANGE: 'OUT_OF_RANGE',
-  VALUE_NOT_ALLOWED: 'VALUE_NOT_ALLOWED',
-  DUPLICATE_VALUE: 'DUPLICATE_VALUE',
-
-  // authorization
-  ACCESS_DENIED: 'ACCESS_DENIED',
-  INSUFFICIENT_PERMISSIONS: 'INSUFFICIENT_PERMISSIONS',
-  ROLE_NOT_ALLOWED: 'ROLE_NOT_ALLOWED',
-  FORBIDDEN: 'FORBIDDEN',
-
-  // resources
-  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
-  RESOURCE_ALREADY_EXISTS: 'RESOURCE_ALREADY_EXISTS',
-  RESOURCE_CONFLICT: 'RESOURCE_CONFLICT',
-  RESOURCE_LOCKED: 'RESOURCE_LOCKED',
-
-  // system
-  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
-  SERVICE_TIMEOUT: 'SERVICE_TIMEOUT',
-  DEPENDENCY_FAILURE: 'DEPENDENCY_FAILURE',
-  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
-
-  // persistence
-  DATA_READ_ERROR: 'DATA_READ_ERROR',
-  DATA_WRITE_ERROR: 'DATA_WRITE_ERROR',
-  DATA_INTEGRITY_ERROR: 'DATA_INTEGRITY_ERROR',
-  DATA_CONSTRAINT_VIOLATION: 'DATA_CONSTRAINT_VIOLATION',
-  DATA_CONFLICT: 'DATA_CONFLICT',
-
-  // security
-  SECURITY_VIOLATION: 'SECURITY_VIOLATION',
-  CSRF_DETECTED: 'CSRF_DETECTED',
-  SUSPICIOUS_ACTIVITY: 'SUSPICIOUS_ACTIVITY',
-  REQUEST_BLOCKED: 'REQUEST_BLOCKED',
-
-  // operations
-  OPERATION_NOT_ALLOWED: 'OPERATION_NOT_ALLOWED',
-  OPERATION_CONFLICT: 'OPERATION_CONFLICT',
-  INVALID_OPERATION_STATE: 'INVALID_OPERATION_STATE',
-  PRECONDITION_FAILED: 'PRECONDITION_FAILED',
-
-  // files
-  FILE_REQUIRED: 'FILE_REQUIRED',
-  FILE_TOO_LARGE: 'FILE_TOO_LARGE',
-  FILE_TYPE_NOT_ALLOWED: 'FILE_TYPE_NOT_ALLOWED',
-  FILE_UPLOAD_FAILED: 'FILE_UPLOAD_FAILED',
-  FILE_DELETE_FAILED: 'FILE_DELETE_FAILED',
-
-
-  // session
-  SESSION_EXPIRED: 'SESSION_EXPIRED',
-  SESSION_INVALID: 'SESSION_INVALID',
-  CLIENT_STATE_INVALID: 'CLIENT_STATE_INVALID',
-
-  // environment
-  CONFIG_MISSING: 'CONFIG_MISSING',
-  CONFIG_INVALID: 'CONFIG_INVALID',
-  ENVIRONMENT_ERROR: 'ENVIRONMENT_ERROR'
-  */
